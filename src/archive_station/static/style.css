@@ -1532,6 +1532,29 @@ dialog > form {
   flex-wrap: wrap;
   gap: 12px;
 }
+.archive-account-settings {
+  margin-bottom: 20px;
+}
+#archive-account-form label[for="archive-account-password"] {
+  margin-top: 14px;
+}
+#archive-account-status {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+#archive-account-status[data-state="connected"] {
+  color: #287552;
+}
+#archive-account-status[data-state="expired"],
+.restricted-notice {
+  color: #84500a;
+}
+.preview-item .restricted-notice {
+  padding: 10px 12px;
+  background: #fff6e5;
+  border-inline-start: 3px solid #d89a31;
+  border-radius: 4px;
+}
 #update-status {
   overflow-wrap: anywhere;
 }

@@ -124,7 +124,10 @@ class Engine:
             retry = not permanent and attempts <= self.settings.get()["retries"]
             message = str(exc)
             if isinstance(exc, HTTPError) and exc.code in {401, 403}:
-                message = "Accès refusé : ce fichier nécessite une autorisation Archive.org."
+                message = (
+                    "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres "
+                    "et ses autorisations."
+                )
             delay = min(300, 5 * 2 ** (attempts - 1))
             if isinstance(exc, HTTPError) and exc.headers:
                 try:

@@ -6,10 +6,12 @@ import re
 import threading
 import time
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.parse import quote, unquote, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from . import __version__
+from .archive_account import CHANGED, AccountError, ArchiveAccount
 
 IDENTIFIER = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,199}\Z")
 USER_AGENT = f"ArchiveStation/{__version__} (personal archive downloader)"
@@ -75,34 +77,61 @@ class ArchiveRedirects(HTTPRedirectHandler):
             or not (host == "archive.org" or host.endswith(".archive.org"))
         ):
             raise ValueError("Redirection hors d’Archive.org refusée.")
+        if url.path.startswith(("/account/", "/services/xauthn")):
+            if fp is not None:
+                fp.close()
+            raise HTTPError(newurl, 403, "Internet Archive authorization required", headers, None)
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
 class ArchiveClient:
-    def __init__(self):
+    def __init__(self, account=None):
         self.lock = threading.Lock()
         self.cache = {}
+        self.account = account or ArchiveAccount()
+        self.cache_identity = self.account.snapshot()[0]
+
+    def clear_cache(self):
+        with self.lock:
+            self.cache.clear()
+            self.cache_identity = self.account.snapshot()[0]
 
     def open(self, identifier, name, offset=0):
         url = f"https://archive.org/download/{quote(identifier)}/{quote(name, safe='/')}"
         headers = {"User-Agent": USER_AGENT, "Accept-Encoding": "identity"}
+        _, cookie = self.account.snapshot()
+        if cookie:
+            headers["Cookie"] = cookie
         if offset:
             headers["Range"] = f"bytes={offset}-"
-        return build_opener(ArchiveRedirects()).open(Request(url, headers=headers), timeout=30)
+        response = build_opener(ArchiveRedirects()).open(Request(url, headers=headers), timeout=30)
+        # Some authentication failures redirect to an HTML login page with HTTP 200.
+        # Never publish that page in place of an archive or other non-HTML file.
+        if "text/html" in response.headers.get(
+            "Content-Type", ""
+        ).lower() and not name.lower().endswith((".html", ".htm")):
+            response.close()
+            raise HTTPError(url, 403, "Internet Archive authorization required", {}, None)
+        return response
 
     def manifest(self, identifier, mode="all", pattern="", refresh=False):
         if mode not in {"all", "original"}:
             raise ValueError("Sélection de fichiers invalide.")
         if not isinstance(pattern, str) or len(pattern) > 200:
             raise ValueError("Filtre trop long.")
+        identity, cookie = self.account.snapshot()
         with self.lock:
+            if self.cache_identity != identity:
+                self.cache.clear()
+                self.cache_identity = identity
             cached = self.cache.get(identifier)
         if cached and not refresh and time.monotonic() - cached[0] < 900:
             payload = cached[1]
         else:
-            request = Request(
-                f"https://archive.org/metadata/{identifier}", headers={"User-Agent": USER_AGENT}
-            )
+            headers = {"User-Agent": USER_AGENT}
+            if cookie:
+                headers["Cookie"] = cookie
+            request = Request(f"https://archive.org/metadata/{identifier}", headers=headers)
             with build_opener(ArchiveRedirects()).open(request, timeout=45) as response:
                 raw = response.read(64 * 1024 * 1024 + 1)
             if len(raw) > 64 * 1024 * 1024:
@@ -111,12 +140,15 @@ class ArchiveClient:
             if not isinstance(payload, dict) or not payload.get("files"):
                 raise ValueError("Élément introuvable, privé ou sans fichiers téléchargeables.")
             with self.lock:
+                if self.account.snapshot()[0] != identity:
+                    raise AccountError(CHANGED)
                 if len(self.cache) >= 4:
                     self.cache.pop(next(iter(self.cache)))
                 self.cache[identifier] = (time.monotonic(), payload)
-        files, seen, private = [], set(), 0
+        files, seen, private, restricted = [], set(), 0, 0
         for item in payload["files"]:
-            if item.get("private") in {True, "true", "1"}:
+            is_private = item.get("private") in {True, "true", "1"}
+            if is_private and not cookie:
                 private += 1
                 continue
             name = validate_name(item.get("name"))
@@ -127,6 +159,7 @@ class ArchiveClient:
             if name in seen:
                 continue
             seen.add(name)
+            restricted += is_private
             size = int(item["size"]) if item.get("size") is not None else None
             if size is not None and size < 0:
                 raise ValueError("Taille de fichier invalide dans les métadonnées.")
@@ -147,6 +180,8 @@ class ArchiveClient:
             if any("/".join(parts[:i]) in seen for i in range(1, len(parts))):
                 raise ValueError("La liste contient un conflit entre fichier et dossier.")
         title = payload.get("metadata", {}).get("title", identifier)
+        if self.account.snapshot()[0] != identity:
+            raise AccountError(CHANGED)
         return {
             "identifier": identifier,
             "title": str(title),
@@ -154,4 +189,5 @@ class ArchiveClient:
             "total_size": sum(f["size"] or 0 for f in files),
             "unknown_sizes": sum(f["size"] is None for f in files),
             "private_files": private,
+            "restricted_files": restricted,
         }

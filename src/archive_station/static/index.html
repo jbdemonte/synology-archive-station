@@ -553,8 +553,8 @@
                   >Fichiers à télécharger</span
                 ></label
               ><select id="file-mode">
-                <option value="all" data-i18n="Tous les fichiers publics">
-                  Tous les fichiers publics
+                <option value="all" data-i18n="Tous les fichiers accessibles">
+                  Tous les fichiers accessibles
                 </option>
                 <option
                   value="original"
@@ -742,6 +742,47 @@
             Par défaut, la langue de votre session DSM est utilisée.
           </p>
 
+          <section
+            class="archive-account-settings"
+            aria-labelledby="archive-account-heading"
+          >
+            <h3
+              id="archive-account-heading"
+              data-i18n="Compte Internet Archive"
+            >
+              Compte Internet Archive
+            </h3>
+            <p id="archive-account-status" role="status"></p>
+            <p
+              class="field-help"
+              data-i18n="Le compte doit être autorisé à télécharger les fichiers restreints."
+            >
+              Le compte doit être autorisé à télécharger les fichiers
+              restreints.
+            </p>
+            <div class="update-actions">
+              <button
+                id="archive-account-open"
+                type="button"
+                data-i18n="Se connecter"
+              >
+                Se connecter
+              </button>
+              <button
+                id="archive-account-disconnect"
+                type="button"
+                data-i18n="Déconnecter"
+                hidden
+              >
+                Déconnecter
+              </button>
+            </div>
+            <p
+              id="archive-account-settings-error"
+              class="error"
+              role="alert"
+            ></p>
+          </section>
           <h3>
             <span data-i18n="Dossier de destination par défaut"
               >Dossier de destination par défaut</span
@@ -980,6 +1021,87 @@
             <span data-i18n="Annuler">Annuler</span></button
           ><button class="primary" type="submit">
             <span data-i18n="Enregistrer">Enregistrer</span>
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="archive-account-dialog">
+      <form id="archive-account-form">
+        <div class="dialog-header">
+          <h2 data-i18n="Compte Internet Archive">Compte Internet Archive</h2>
+          <button
+            type="button"
+            data-close="archive-account-dialog"
+            class="close"
+            aria-label="Fermer"
+            data-i18n-aria-label="Fermer"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="m4 4 16 16M4 20 20 4" />
+            </svg>
+          </button>
+        </div>
+        <div class="dialog-body">
+          <p
+            class="field-help"
+            data-i18n="Mot de passe non conservé. Session partagée par les administrateurs du NAS."
+          >
+            Mot de passe non conservé. Session partagée par les administrateurs
+            du NAS.
+          </p>
+          <label for="archive-account-email" data-i18n="E-mail">E-mail</label>
+          <input
+            id="archive-account-email"
+            name="archive-email"
+            type="email"
+            autocomplete="username"
+            maxlength="254"
+            required
+          />
+          <label for="archive-account-password" data-i18n="Mot de passe"
+            >Mot de passe</label
+          >
+          <input
+            id="archive-account-password"
+            name="archive-password"
+            type="password"
+            autocomplete="current-password"
+            maxlength="4096"
+            required
+          />
+          <p
+            class="field-help"
+            data-i18n="Après connexion, utiliser « Actualiser la liste » sur la tâche existante."
+          >
+            Après connexion, utiliser « Actualiser la liste » sur la tâche
+            existante.
+          </p>
+          <p id="archive-account-error" class="error" role="alert"></p>
+          <p
+            id="archive-account-progress"
+            class="inspect-status"
+            role="status"
+            hidden
+          >
+            <span class="spinner" aria-hidden="true"></span
+            ><span data-i18n="Connexion en cours…">Connexion en cours…</span>
+          </p>
+        </div>
+        <div class="dialog-footer">
+          <button
+            type="button"
+            data-close="archive-account-dialog"
+            data-i18n="Annuler"
+          >
+            Annuler
+          </button>
+          <button
+            id="archive-account-submit"
+            type="submit"
+            class="primary"
+            data-i18n="Se connecter"
+          >
+            Se connecter
           </button>
         </div>
       </form>

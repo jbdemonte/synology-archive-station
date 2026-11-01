@@ -1049,7 +1049,88 @@ async function loadSettings() {
     : "0";
   $("version").textContent = s.version;
   renderUpdates(s.updates);
+  renderArchiveAccount(s.archive_account);
 }
+let archiveAccountBusy = false;
+function renderArchiveAccount(account = state.settings?.archive_account) {
+  const status = account?.connected
+    ? t("Compte connecté : {account}", { account: account.email })
+    : account?.state === "expired"
+      ? t("Session expirée. Reconnecter le compte.")
+      : t("Accès public uniquement.");
+  $("archive-account-status").textContent = status;
+  $("archive-account-status").dataset.state = account?.state || "disconnected";
+  $("archive-account-disconnect").hidden = !account?.email;
+  $("archive-account-disconnect").disabled = archiveAccountBusy;
+  $("archive-account-open").disabled = archiveAccountBusy;
+}
+function setArchiveAccountBusy(busy) {
+  archiveAccountBusy = busy;
+  $("archive-account-form").setAttribute("aria-busy", String(busy));
+  $("archive-account-form")
+    .querySelectorAll("input, button")
+    .forEach((control) => {
+      control.disabled = busy;
+    });
+  $("archive-account-progress").hidden = !busy;
+  renderArchiveAccount();
+}
+$("archive-account-open").onclick = () => {
+  $("archive-account-email").value =
+    state.settings?.archive_account?.email || "";
+  $("archive-account-password").value = "";
+  $("archive-account-error").textContent = "";
+  $("archive-account-settings-error").textContent = "";
+  $("archive-account-dialog").showModal();
+  $("archive-account-email").focus();
+};
+$("archive-account-dialog").addEventListener("cancel", (event) => {
+  if (archiveAccountBusy) event.preventDefault();
+});
+$("archive-account-dialog").addEventListener("close", () => {
+  $("archive-account-password").value = "";
+});
+$("archive-account-form").onsubmit = async (event) => {
+  event.preventDefault();
+  if (archiveAccountBusy) return;
+  $("archive-account-error").textContent = "";
+  setArchiveAccountBusy(true);
+  try {
+    const account = await api("/api/archive-account/login", {
+      email: $("archive-account-email").value,
+      password: $("archive-account-password").value,
+    });
+    state.settings.archive_account = account;
+    resetPlans();
+    $("archive-account-dialog").close();
+    toast(
+      t(
+        "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.",
+      ),
+    );
+  } catch (error) {
+    $("archive-account-error").textContent = error.message;
+  } finally {
+    $("archive-account-password").value = "";
+    setArchiveAccountBusy(false);
+  }
+};
+$("archive-account-disconnect").onclick = async () => {
+  if (archiveAccountBusy) return;
+  $("archive-account-settings-error").textContent = "";
+  setArchiveAccountBusy(true);
+  try {
+    state.settings.archive_account = await api(
+      "/api/archive-account/logout",
+      {},
+    );
+    resetPlans();
+  } catch (error) {
+    $("archive-account-settings-error").textContent = error.message;
+  } finally {
+    setArchiveAccountBusy(false);
+  }
+};
 function renderUpdates(update = state.updates) {
   if (!update) return;
   state.updates = update;
@@ -1568,12 +1649,26 @@ $("create-button").onclick = async () => {
   }
   await refresh();
 };
+function restrictedNotice(plan) {
+  const count = plan.private_files || plan.restricted_files;
+  if (!count) return "";
+  const message = plan.private_files
+    ? t(
+        "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.",
+        { count },
+      )
+    : t(
+        "Fichiers restreints inclus : {count}. Autorisation vérifiée au téléchargement.",
+        { count },
+      );
+  return `<p class="restricted-notice">${esc(message)}</p>`;
+}
 function renderPreviews() {
   updateCapacity();
   $("preview-list").innerHTML = state.plans
     .map(
       (plan) =>
-        `<div class="preview-item"><strong>▰ ${esc(plan.identifier)}</strong><p>${esc(fileCount(plan.file_count, plan.selected_count ?? plan.file_count))} · ${bytes(plan.selected_size ?? plan.total_size)}${plan.unknown_sizes ? t(" + tailles inconnues") : ""}</p>${plan.private_files ? `<p>${esc(t("{count} fichiers privés exclus", { count: plan.private_files }))}</p>` : ""}<p><code>↳ ${esc(plan.sample?.[0])}${plan.file_count > 1 ? "…" : ""}</code></p>${plan.plan_id ? `<button type="button" data-select-plan="${esc(plan.plan_id)}" ${state.inspection ? "disabled" : ""}>${esc(t("Choisir les fichiers…"))}</button>` : ""}</div>`,
+        `<div class="preview-item"><strong>▰ ${esc(plan.identifier)}</strong><p>${esc(fileCount(plan.file_count, plan.selected_count ?? plan.file_count))} · ${bytes(plan.selected_size ?? plan.total_size)}${plan.unknown_sizes ? t(" + tailles inconnues") : ""}</p>${restrictedNotice(plan)}<p><code>↳ ${esc(plan.sample?.[0])}${plan.file_count > 1 ? "…" : ""}</code></p>${plan.plan_id ? `<button type="button" data-select-plan="${esc(plan.plan_id)}" ${state.inspection ? "disabled" : ""}>${esc(t("Choisir les fichiers…"))}</button>` : ""}</div>`,
     )
     .join("");
 }

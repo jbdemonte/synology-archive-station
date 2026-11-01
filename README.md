@@ -6,9 +6,9 @@
 <p align="center"><strong>Internet Archive Downloader for Synology DSM</strong></p>
 <p align="center">One URL. One folder. Every file in its place.</p>
 
-Archive Station downloads the public files of Internet Archive items directly to your NAS. Paste an item URL, review its contents, and follow live transfers, upcoming files and an expandable folder tree — inside a native DSM desktop window.
+Archive Station downloads Internet Archive item files directly to your NAS. Paste an item URL, review its contents, and follow live transfers, upcoming files and an expandable folder tree — inside a native DSM desktop window. An optional Internet Archive account enables downloads that require your account's permission.
 
-**No Docker. No extra sign-in. Downloads keep running when you close the window.**
+**No Docker. Uses your DSM session. Downloads keep running when you close the window.**
 
 ![Archive Station activity view showing live transfers and upcoming files](docs/images/downloads.png)
 
@@ -17,6 +17,7 @@ Archive Station downloads the public files of Internet Archive items directly to
 ## What you can do
 
 - **One folder per URL** — add multiple `/details/` or `/download/` links and select files, folders or filename patterns before starting.
+- **Connect Internet Archive** — optionally sign in from Settings to include restricted files. Downloads use your account's permissions; your password is not saved.
 - **Follow large archives** — live transfers and upcoming files appear first; completed files and the folder tree have separate views.
 - **Control the queue** — pause, resume, cancel or retry from the toolbar; use each archive's **⋯** menu for priority, maintenance and reports.
 - **Plan transfers** — choose weekly time slots, alternate speed limits, live concurrency and a free-space reserve.
@@ -38,9 +39,11 @@ See the [usage guide](docs/USAGE.md) for scheduling, priorities, disk reserves, 
 | Tested NAS | DS918+, DSM 7.1.1 |
 | Runtime | Bundled Python 3.12 and Waitress; no separate Python package required |
 | Access | Existing **DSM administrator session**, on the same DSM address |
-| Download source | Public files belonging to an Internet Archive item |
+| Download source | Public item files, plus restricted files authorized for your connected Internet Archive account |
 
-ARM packages are not available yet. Other DSM versions and models need community testing. Archive Station does not recursively crawl collections, authenticate to restricted Archive.org files, or extract ZIP archives.
+ARM packages are not available yet. Other DSM versions and models need community testing. Archive Station does not recursively crawl collections or extract ZIP archives. Signing in does not grant access to every locked file: Internet Archive checks the account's authorization for each download.
+
+To connect an account, open **Settings → Internet Archive account → Log in** and enter your Internet Archive email and password. For an archive already added, use **⋯ → Refresh file list** to review the newly included files. See [account setup and session storage](docs/USAGE.md#connect-an-internet-archive-account).
 
 The published **1.0.0-1** package was freshly installed and tested on a DS918+ running DSM 7.1.1 on October 9, 2026. Checks covered a real Archive.org download with a matching SHA-1, pause/resume, automatic recovery after stopping the package mid-transfer, live transfer settings and a plain-text report. The installed 0.2.0-9 version also successfully detected this public release before replacement.
 
@@ -51,7 +54,7 @@ DSM access is restricted to administrator sessions. The internal API listens on 
 ## Install
 
 1. Download the `.spk` from [GitHub Releases](https://github.com/jbdemonte/synology-archive-downloader/releases), or build it with `make build` (see below).
-2. Open **Package Center → Manual Install** and select `ArchiveStation-1.0.2-2-x86_64.spk` (local builds place it in `dist/`).
+2. Open **Package Center → Manual Install** and select `ArchiveStation-1.1.0-1-x86_64.spk` (local builds place it in `dist/`).
 3. Launch **Archive Station** from the DSM main menu.
 4. Open **Settings** to choose a destination and transfer limits.
 
@@ -82,7 +85,7 @@ The folder picker marks **read/write in green**, **read-only in blue**, and **in
 1. Download the newer `.spk` and its `.spk.sha256` file from [GitHub Releases](https://github.com/jbdemonte/synology-archive-downloader/releases). To check the package download, run this command from their directory:
 
    ```sh
-   shasum -a 256 -c ArchiveStation-1.0.2-2-x86_64.spk.sha256
+   shasum -a 256 -c ArchiveStation-1.1.0-1-x86_64.spk.sha256
    ```
 
    On Linux, use `sha256sum -c` instead.
@@ -228,7 +231,7 @@ Build requirements: **Python 3.12+**, `make`, and network access for the first d
 ```sh
 make build                 # Build the x86_64 .spk and SHA-256 checksum
 make release               # Validate and prepare all GitHub release assets
-make build VERSION=1.0.2-2  # Override the package version
+make build VERSION=1.1.0-1  # Override the package version
 make deps                  # Create the virtual environment and install Waitress
 make run                   # Start locally at http://127.0.0.1:8274
 ```

@@ -13,6 +13,10 @@ class Plans:
         self.lock = threading.RLock()
         self.items = OrderedDict()
 
+    def clear(self):
+        with self.lock:
+            self.items.clear()
+
     def create(self, manifest, mode, pattern, job_id=None):
         if len(manifest["files"]) > 500_000:
             raise ValueError("Archive trop volumineuse. Affiner le filtre.")

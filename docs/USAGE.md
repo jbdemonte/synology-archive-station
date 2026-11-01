@@ -6,6 +6,25 @@ The toolbar acts on the selected archive or checked rows. The **⋯** menu alway
 
 ![Per-archive action menu](images/actions.png)
 
+## Connect an Internet Archive account
+
+Open **Settings → Internet Archive account → Log in**, then enter your Internet Archive email and password. Public downloads work without an account. Use DSM over HTTPS when entering account credentials.
+
+![Internet Archive account connection dialog](images/archive-account.png)
+
+The password is sent to Internet Archive over HTTPS and is not saved. Only the resulting session cookies and account email are retained in the package's private data directory, in `archive-account.json` with owner-only permissions (`0600`). The session survives restarts and package updates. It is shared by the DSM administrators using this installation; it is not a separate session per DSM user. Treat backups of that file as credentials. The normal settings API and download reports never contain the cookies or password.
+
+Without a connected account, analysis highlights how many restricted files were excluded. With an account, these files are included in the selection and their authorization is checked when downloaded. An account does not grant access to every locked file; Archive.org can still deny permission. A denial appears as a file error and does not publish a completed file. Reconnect an expired session in Settings, then retry failed files. **Disconnect** removes the saved session; transfers already open may finish, but subsequent requests use public access.
+
+For an existing task that contains only public metadata files:
+
+1. Connect your Internet Archive account.
+2. Pause the task if it is running and wait for active transfers to stop.
+3. Choose **⋯ → Refresh file list**, review the additional files and apply the selection.
+4. Resume the task as needed. Files already downloaded are retained.
+
+Account changes invalidate pending file selections; analyze the URLs again before adding a task. No account password is required to open Archive Station itself: access to the application still uses your DSM session.
+
 ## Receive DSM desktop notifications
 
 Receive alerts for task completion, persistent file errors and low disk space, even with the window closed. Disable them in Settings. Alerts go to DSM administrators and survive service restarts without duplicates.

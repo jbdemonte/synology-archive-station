@@ -180,6 +180,17 @@ class WebApp:
                 )
             )
             return response({"ok": True})
+        if (
+            path in {"/api/archive-account/login", "/api/archive-account/logout"}
+            and method == "POST"
+        ):
+            if path.endswith("/login"):
+                result = self.client.account.connect(body.get("email"), body.get("password"))
+            else:
+                result = self.client.account.disconnect()
+            self.client.clear_cache()
+            self.plans.clear()
+            return response(result)
         if path == "/api/settings":
             if method == "POST":
                 # Claims, task additions and resumes share this lock, so no new
@@ -212,6 +223,9 @@ class WebApp:
                     **settings,
                     "storage": storage,
                     "version": __package_version__,
+                    "archive_account": self.client.account.status()
+                    if hasattr(self.client, "account")
+                    else {"connected": False, "state": "disconnected", "email": ""},
                     "updates": self.updates.snapshot(),
                     "distribution": {
                         "service_user": self.distribution.service_user,

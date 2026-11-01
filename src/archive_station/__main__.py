@@ -11,6 +11,7 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 from .archive import ArchiveClient
+from .archive_account import ArchiveAccount
 from .auth import Auth
 from .config import Settings
 from .distribution import Distribution
@@ -69,7 +70,7 @@ def main():
     roots = [root for root in roots if root] or [str(Path(args.download_dir).resolve())]
     settings = Settings(data, args.download_dir, roots)
     store = Store(data / "archive-station.sqlite3")
-    client = ArchiveClient()
+    client = ArchiveClient(ArchiveAccount(data))
     engine = Engine(store, client, settings)
     reports = Reports(store, settings)
     notifications = Notifications(

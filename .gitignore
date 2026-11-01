@@ -4,6 +4,8 @@ __pycache__/
 *.egg-info/
 .ruff_cache/
 .env
+archive-account.json
+.archive-account-*
 data/
 downloads/
 dist/
