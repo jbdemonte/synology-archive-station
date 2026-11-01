@@ -513,6 +513,23 @@ main > * {
   scrollbar-gutter: stable;
   overscroll-behavior: contain;
 }
+/* Keep a draggable scrollbar visible even with macOS overlay scrollbars. */
+.selection-body::-webkit-scrollbar {
+  width: 12px;
+}
+.selection-body::-webkit-scrollbar-track {
+  background: #f0f4f8;
+  border-radius: 6px;
+}
+.selection-body::-webkit-scrollbar-thumb {
+  background: #8b9fb2;
+  border: 3px solid #f0f4f8;
+  border-radius: 6px;
+  min-height: 32px;
+}
+.selection-body::-webkit-scrollbar-thumb:hover {
+  background: #607d96;
+}
 .selection-controls {
   border: 0;
   margin: 0;

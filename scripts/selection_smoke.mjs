@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { chromium } from "playwright";
 const browser = await chromium.launch({
   headless: true,
+  // Playwright otherwise hides native scrollbars in headless Chromium.
+  ignoreDefaultArgs: ["--hide-scrollbars"],
   executablePath: process.env.CHROMIUM_PATH || undefined,
 });
 const page = await browser.newPage({
@@ -53,6 +55,10 @@ try {
     const footer = page.locator("#selection-dialog .dialog-footer");
     const footerBefore = await footer.boundingBox();
     const bounds = await body.boundingBox();
+    assert.ok(
+      await body.evaluate((el) => el.offsetWidth - el.clientWidth >= 12),
+      "The file list must reserve space for a visible scrollbar",
+    );
     await page.mouse.move(
       bounds.x + bounds.width / 2,
       bounds.y + bounds.height / 2,
@@ -62,6 +68,25 @@ try {
       () =>
         document.querySelector("#selection-dialog .dialog-body").scrollTop ===
         0,
+    );
+    // The thumb must also work without a wheel or trackpad.
+    await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 10);
+    await page.mouse.down();
+    await page.mouse.move(
+      bounds.x + bounds.width - 6,
+      bounds.y + bounds.height - 4,
+      { steps: 10 },
+    );
+    await page.mouse.up();
+    await page.waitForFunction(
+      () =>
+        document.querySelector("#selection-dialog .dialog-body").scrollTop > 0,
+      null,
+      { timeout: 3000 },
+    );
+    await page.mouse.move(
+      bounds.x + bounds.width / 2,
+      bounds.y + bounds.height / 2,
     );
     await page.mouse.wheel(0, 20000);
     await page.waitForFunction(
