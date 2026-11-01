@@ -509,9 +509,14 @@ main > * {
   border-bottom: 1px solid var(--line);
   font-size: 11px;
 }
+.selection-body {
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
 .selection-controls {
   border: 0;
   margin: 0;
+  padding: 0;
   min-width: 0;
 }
 .selection-actions {

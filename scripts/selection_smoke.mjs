@@ -41,6 +41,62 @@ try {
     .getByText("game-100.zip", { exact: true })
     .waitFor();
   assert.equal(await page.locator("#selection-rows input").count(), 50);
+  // Click() scrolls elements into view automatically, which can hide a broken
+  // scroll container. Exercise the mouse wheel as a user does in DSM.
+  for (const viewport of [
+    { width: 1000, height: 580 },
+    { width: 800, height: 460 },
+    { width: 1440, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const body = page.locator("#selection-dialog .dialog-body");
+    const footer = page.locator("#selection-dialog .dialog-footer");
+    const footerBefore = await footer.boundingBox();
+    const bounds = await body.boundingBox();
+    await page.mouse.move(
+      bounds.x + bounds.width / 2,
+      bounds.y + bounds.height / 2,
+    );
+    await page.mouse.wheel(0, -20000);
+    await page.waitForFunction(
+      () =>
+        document.querySelector("#selection-dialog .dialog-body").scrollTop ===
+        0,
+    );
+    await page.mouse.wheel(0, 20000);
+    await page.waitForFunction(
+      () => {
+        const body = document.querySelector("#selection-dialog .dialog-body");
+        return (
+          body.scrollTop > 0 &&
+          body.scrollTop + body.clientHeight >= body.scrollHeight - 2
+        );
+      },
+      null,
+      { timeout: 3000 },
+    );
+    const last = await page
+      .locator("#selection-rows .selection-row")
+      .last()
+      .boundingBox();
+    assert.ok(
+      last.y >= bounds.y && last.y + last.height <= bounds.y + bounds.height,
+    );
+    const next = await page.locator("#selection-next").boundingBox();
+    assert.ok(next.y + next.height <= bounds.y + bounds.height);
+    assert.deepEqual(await footer.boundingBox(), footerBefore);
+    assert.ok(footerBefore.y + footerBefore.height <= viewport.height);
+  }
+  await page.locator("#selection-rows input").last().uncheck();
+  await page
+    .locator("#selection-total")
+    .filter({ hasText: "148 / 151" })
+    .waitFor();
+  await page.locator("#selection-rows input").last().check();
+  await page
+    .locator("#selection-total")
+    .filter({ hasText: "149 / 151" })
+    .waitFor();
   assert.ok(
     await page
       .locator("#selection-close")
@@ -63,7 +119,7 @@ try {
   await page.request.post(base + `/api/jobs/${job.id}/remove`, { data: {} });
   assert.deepEqual(errors, []);
   console.log(
-    "File selection passed: patterns, folder navigation, pagination, counts, small window, exact job contents.",
+    "File selection passed: patterns, folders, pagination, mouse-wheel scrolling in three window sizes, fixed footer, exact job contents.",
   );
 } finally {
   await browser.close();
