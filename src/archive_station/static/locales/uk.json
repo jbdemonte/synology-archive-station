@@ -343,7 +343,6 @@
   "Accès public uniquement.": "Лише публічний доступ.",
   "Compte connecté : {account}": "Під’єднаний обліковий запис: {account}",
   "Session expirée. Reconnecter le compte.": "Сеанс завершився. Під’єднайте обліковий запис знову.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Пароль не зберігається. Сеанс спільний для адміністраторів NAS.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Обліковий запис повинен мати дозвіл на завантаження файлів з обмеженим доступом.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Після входу виберіть «Оновити список» для наявного завдання.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Виключено файлів з обмеженим доступом: {count}. Під’єднайте обліковий запис у налаштуваннях.",
@@ -356,5 +355,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Вхід уже виконується. Спробуйте за кілька секунд.",
   "Le compte Internet Archive a changé. Réessayer.": "Обліковий запис Internet Archive змінився. Спробуйте знову.",
   "Impossible d’enregistrer la session Internet Archive.": "Не вдалося зберегти сеанс Internet Archive.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive відмовив у доступі. Перевірте обліковий запис у налаштуваннях та його дозволи."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive відмовив у доступі. Перевірте обліковий запис у налаштуваннях та його дозволи.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Зберегти облікові дані для автоматичного повторного підключення.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Пароль зберігається на цьому NAS у зашифрованому вигляді. Зніміть прапорець, щоб зберегти лише сеанс.",
+  "Session partagée par les administrateurs du NAS.": "Сеанс спільний для адміністраторів NAS.",
+  "Reconnexion automatique activée.": "Автоматичне повторне підключення ввімкнено.",
+  "Reconnexion automatique désactivée.": "Автоматичне повторне підключення вимкнено.",
+  "Oublier le mot de passe": "Забути пароль",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Не вдалося прочитати або зберегти облікові дані. Підключіть обліковий запис знову.",
+  "La session sera renouvelée au prochain téléchargement.": "Сеанс буде оновлено під час наступного завантаження."
 }

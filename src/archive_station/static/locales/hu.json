@@ -323,7 +323,6 @@
   "Accès public uniquement.": "Csak nyilvános hozzáférés.",
   "Compte connecté : {account}": "Csatlakoztatott fiók: {account}",
   "Session expirée. Reconnecter le compte.": "A munkamenet lejárt. Csatlakoztassa újra a fiókot.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "A jelszót nem mentjük. A munkamenetet a NAS rendszergazdái közösen használják.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "A fióknak jogosultság kell a korlátozott fájlok letöltéséhez.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Bejelentkezés után használja a meglévő feladat „Lista frissítése” műveletét.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Kihagyott korlátozott fájlok: {count}. Csatlakoztasson fiókot a beállításokban.",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Már folyamatban van egy bejelentkezés. Próbálja meg kis idő múlva.",
   "Le compte Internet Archive a changé. Réessayer.": "Az Internet Archive-fiók megváltozott. Próbálja újra.",
   "Impossible d’enregistrer la session Internet Archive.": "Az Internet Archive-munkamenet nem menthető.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Az Internet Archive megtagadta a hozzáférést. Ellenőrizze a fiókot a beállításokban és a jogosultságait."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Az Internet Archive megtagadta a hozzáférést. Ellenőrizze a fiókot a beállításokban és a jogosultságait.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Bejelentkezési adatok megjegyzése az automatikus újracsatlakozáshoz.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "A jelszó titkosítva tárolódik ezen a NAS-on. A jelölés törlésével csak a munkamenet marad meg.",
+  "Session partagée par les administrateurs du NAS.": "A munkamenetet a NAS rendszergazdái közösen használják.",
+  "Reconnexion automatique activée.": "Automatikus újracsatlakozás bekapcsolva.",
+  "Reconnexion automatique désactivée.": "Automatikus újracsatlakozás kikapcsolva.",
+  "Oublier le mot de passe": "Jelszó elfelejtése",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "A mentett bejelentkezési adatok nem olvashatók vagy nem menthetők. Csatlakoztassa újra a fiókot.",
+  "La session sera renouvelée au prochain téléchargement.": "A munkamenet a következő letöltéskor megújul."
 }

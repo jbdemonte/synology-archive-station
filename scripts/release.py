@@ -264,7 +264,12 @@ def prepare(root, version):
             f"Commit date: {git(root, 'show', '-s', '--format=%cI', commit)}\n"
             f"Python runtime SHA-256: {lock['python']['sha256']}\n"
             f"Waitress wheel SHA-256: {lock['waitress']['sha256']}\n"
-            "Checks passed: make check; make test-ui; make build; package content validation\n"
+            + "".join(
+                f"{name} wheel SHA-256: {entry['sha256']}\n"
+                for name, entry in lock.items()
+                if name not in {"python", "waitress"}
+            )
+            + "Checks passed: make check; make test-ui; make build; package content validation\n"
             "Hardware validation is separate; see RELEASE_NOTES.md.\n"
         )
         write_checksums(bundle, version)

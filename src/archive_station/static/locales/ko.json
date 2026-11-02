@@ -323,7 +323,6 @@
   "Accès public uniquement.": "공개 파일만 접근할 수 있습니다.",
   "Compte connecté : {account}": "연결된 계정: {account}",
   "Session expirée. Reconnecter le compte.": "세션이 만료되었습니다. 계정을 다시 연결하세요.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "비밀번호는 저장되지 않습니다. NAS 관리자들이 세션을 공유합니다.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "제한된 파일을 다운로드하려면 계정에 권한이 있어야 합니다.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "로그인 후 기존 작업에서 “목록 새로 고침”을 사용하세요.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "제외된 제한 파일: {count}. 설정에서 계정을 연결하세요.",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "이미 로그인 중입니다. 잠시 후 다시 시도하세요.",
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive 계정이 변경되었습니다. 다시 시도하세요.",
   "Impossible d’enregistrer la session Internet Archive.": "Internet Archive 세션을 저장할 수 없습니다.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive가 접근을 거부했습니다. 설정의 계정과 권한을 확인하세요."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive가 접근을 거부했습니다. 설정의 계정과 권한을 확인하세요.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "자동으로 다시 연결하도록 로그인 정보를 저장합니다.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "비밀번호는 이 NAS에 암호화되어 저장됩니다. 세션만 유지하려면 선택을 해제하세요.",
+  "Session partagée par les administrateurs du NAS.": "세션은 NAS 관리자 간에 공유됩니다.",
+  "Reconnexion automatique activée.": "자동 재연결이 활성화되었습니다.",
+  "Reconnexion automatique désactivée.": "자동 재연결이 비활성화되었습니다.",
+  "Oublier le mot de passe": "저장된 비밀번호 삭제",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "저장된 로그인 정보를 읽거나 저장할 수 없습니다. 계정을 다시 연결하세요.",
+  "La session sera renouvelée au prochain téléchargement.": "다음 다운로드 시 세션이 갱신됩니다."
 }

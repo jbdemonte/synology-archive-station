@@ -338,7 +338,6 @@
   "Accès public uniquement.": "Somente acesso público.",
   "Compte connecté : {account}": "Conta conectada: {account}",
   "Session expirée. Reconnecter le compte.": "Sessão expirada. Conecte a conta novamente.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "A senha não é salva. A sessão é compartilhada pelos administradores do NAS.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "A conta precisa ter permissão para baixar arquivos restritos.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Após entrar, use «Atualizar a lista» na tarefa existente.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Arquivos restritos excluídos: {count}. Conecte uma conta nas configurações.",
@@ -351,5 +350,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Já existe um login em andamento. Aguarde alguns instantes.",
   "Le compte Internet Archive a changé. Réessayer.": "A conta do Internet Archive mudou. Tente novamente.",
   "Impossible d’enregistrer la session Internet Archive.": "Não foi possível salvar a sessão do Internet Archive.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Acesso negado pelo Internet Archive. Verifique a conta nas configurações e suas permissões."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Acesso negado pelo Internet Archive. Verifique a conta nas configurações e suas permissões.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Lembrar as credenciais para reconectar automaticamente.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "A senha é criptografada neste NAS. Desmarque para manter apenas a sessão.",
+  "Session partagée par les administrateurs du NAS.": "Sessão compartilhada pelos administradores do NAS.",
+  "Reconnexion automatique activée.": "Reconexão automática ativada.",
+  "Reconnexion automatique désactivée.": "Reconexão automática desativada.",
+  "Oublier le mot de passe": "Esquecer senha",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Não foi possível ler ou salvar as credenciais armazenadas. Reconecte a conta.",
+  "La session sera renouvelée au prochain téléchargement.": "A sessão será renovada no próximo download."
 }

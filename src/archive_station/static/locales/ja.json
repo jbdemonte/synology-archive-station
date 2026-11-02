@@ -323,7 +323,6 @@
   "Accès public uniquement.": "公開ファイルのみアクセス可能です。",
   "Compte connecté : {account}": "接続中のアカウント：{account}",
   "Session expirée. Reconnecter le compte.": "セッションの期限が切れました。アカウントに再接続してください。",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "パスワードは保存されません。セッションは NAS 管理者間で共有されます。",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "制限付きファイルをダウンロードするには、アカウントにアクセス権が必要です。",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "ログイン後、既存のタスクで「一覧を更新」を使用してください。",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "除外された制限付きファイル：{count}。設定でアカウントに接続してください。",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "ログインはすでに進行中です。少し待ってから再試行してください。",
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive アカウントが変更されました。再試行してください。",
   "Impossible d’enregistrer la session Internet Archive.": "Internet Archive セッションを保存できません。",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive がアクセスを拒否しました。設定のアカウントとその権限を確認してください。"
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive がアクセスを拒否しました。設定のアカウントとその権限を確認してください。",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "認証情報を保存して自動的に再接続する。",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "パスワードはこのNAS上で暗号化されます。セッションのみを保存する場合はチェックを外してください。",
+  "Session partagée par les administrateurs du NAS.": "セッションはこのNASの管理者間で共有されます。",
+  "Reconnexion automatique activée.": "自動再接続は有効です。",
+  "Reconnexion automatique désactivée.": "自動再接続は無効です。",
+  "Oublier le mot de passe": "保存したパスワードを削除",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "保存した認証情報を読み取りまたは保存できません。アカウントを再接続してください。",
+  "La session sera renouvelée au prochain téléchargement.": "次のダウンロード時にセッションが更新されます。"
 }

@@ -323,7 +323,6 @@
   "Accès public uniquement.": "僅可存取公開檔案。",
   "Compte connecté : {account}": "已連線帳戶：{account}",
   "Session expirée. Reconnecter le compte.": "工作階段已過期。請重新連接帳戶。",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "不儲存密碼。工作階段由 NAS 管理員共用。",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "帳戶必須擁有下載受限檔案的權限。",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "登入後，請在現有工作中使用「重新整理清單」。",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "已排除的受限檔案：{count}。請在設定中連接帳戶。",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "正在登入。請稍後重試。",
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive 帳戶已變更。請重試。",
   "Impossible d’enregistrer la session Internet Archive.": "無法儲存 Internet Archive 工作階段。",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive 拒絕存取。請檢查設定中的帳戶及其權限。"
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive 拒絕存取。請檢查設定中的帳戶及其權限。",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "記住登入資訊以自動重新連線。",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "密碼將在此 NAS 上加密儲存。取消勾選則僅保留工作階段。",
+  "Session partagée par les administrateurs du NAS.": "此工作階段由 NAS 管理員共用。",
+  "Reconnexion automatique activée.": "已啟用自動重新連線。",
+  "Reconnexion automatique désactivée.": "已停用自動重新連線。",
+  "Oublier le mot de passe": "忘記密碼",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "無法讀取或儲存已記住的登入資訊。請重新連線帳戶。",
+  "La session sera renouvelée au prochain téléchargement.": "工作階段將在下次下載時更新。"
 }

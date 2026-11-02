@@ -181,11 +181,20 @@ class WebApp:
             )
             return response({"ok": True})
         if (
-            path in {"/api/archive-account/login", "/api/archive-account/logout"}
+            path
+            in {
+                "/api/archive-account/login",
+                "/api/archive-account/logout",
+                "/api/archive-account/forget",
+            }
             and method == "POST"
         ):
             if path.endswith("/login"):
-                result = self.client.account.connect(body.get("email"), body.get("password"))
+                result = self.client.account.connect(
+                    body.get("email"), body.get("password"), body.get("remember", False)
+                )
+            elif path.endswith("/forget"):
+                return response(self.client.account.forget_credentials())
             else:
                 result = self.client.account.disconnect()
             self.client.clear_cache()

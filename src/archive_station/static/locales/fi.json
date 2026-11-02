@@ -338,7 +338,6 @@
   "Accès public uniquement.": "Vain julkinen käyttö.",
   "Compte connecté : {account}": "Yhdistetty tili: {account}",
   "Session expirée. Reconnecter le compte.": "Istunto vanheni. Yhdistä tili uudelleen.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Salasanaa ei tallenneta. NAS-ylläpitäjät jakavat istunnon.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Tilillä on oltava oikeus ladata rajoitettuja tiedostoja.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Kirjautumisen jälkeen käytä olemassa olevan tehtävän ”Päivitä luettelo” -toimintoa.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Pois jätetyt rajoitetut tiedostot: {count}. Yhdistä tili asetuksissa.",
@@ -351,5 +350,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Kirjautuminen on jo käynnissä. Yritä hetken kuluttua.",
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive -tili muuttui. Yritä uudelleen.",
   "Impossible d’enregistrer la session Internet Archive.": "Internet Archive -istuntoa ei voitu tallentaa.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive esti käytön. Tarkista tili asetuksissa ja sen oikeudet."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive esti käytön. Tarkista tili asetuksissa ja sen oikeudet.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Muista kirjautumistiedot automaattista uudelleenyhdistämistä varten.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Salasana salataan tällä NAS-laitteella. Poista valinta, jos haluat säilyttää vain istunnon.",
+  "Session partagée par les administrateurs du NAS.": "Istunto on yhteinen NAS-laitteen ylläpitäjille.",
+  "Reconnexion automatique activée.": "Automaattinen uudelleenyhdistäminen käytössä.",
+  "Reconnexion automatique désactivée.": "Automaattinen uudelleenyhdistäminen pois käytöstä.",
+  "Oublier le mot de passe": "Unohda salasana",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Tallennettuja kirjautumistietoja ei voi lukea tai tallentaa. Yhdistä tili uudelleen.",
+  "La session sera renouvelée au prochain téléchargement.": "Istunto uusitaan seuraavan latauksen yhteydessä."
 }

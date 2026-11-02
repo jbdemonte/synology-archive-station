@@ -12,6 +12,7 @@ import uuid
 from urllib.error import HTTPError
 
 from .archive import safe_path
+from .archive_account import AccountError
 from .schedule import policy
 
 LOG = logging.getLogger(__name__)
@@ -121,6 +122,8 @@ class Engine:
             permanent = isinstance(exc, (Conflict, ValueError, PermissionError)) or (
                 isinstance(exc, HTTPError) and exc.code in {401, 403, 404}
             )
+            if isinstance(exc, AccountError) and exc.retryable:
+                permanent = False
             retry = not permanent and attempts <= self.settings.get()["retries"]
             message = str(exc)
             if isinstance(exc, HTTPError) and exc.code in {401, 403}:

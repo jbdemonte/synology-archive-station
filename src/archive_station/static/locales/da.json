@@ -338,7 +338,6 @@
   "Accès public uniquement.": "Kun offentlig adgang.",
   "Compte connecté : {account}": "Tilsluttet konto: {account}",
   "Session expirée. Reconnecter le compte.": "Sessionen er udløbet. Tilslut kontoen igen.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Adgangskoden gemmes ikke. Sessionen deles af NAS-administratorerne.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Kontoen skal have tilladelse til at hente begrænsede filer.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Efter login skal du bruge ”Opdater listen” på den eksisterende opgave.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Udeladte begrænsede filer: {count}. Tilslut en konto i indstillingerne.",
@@ -351,5 +350,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Et login er allerede i gang. Prøv igen om lidt.",
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive-kontoen er ændret. Prøv igen.",
   "Impossible d’enregistrer la session Internet Archive.": "Internet Archive-sessionen kunne ikke gemmes.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive nægtede adgang. Kontrollér kontoen i indstillingerne og dens tilladelser."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive nægtede adgang. Kontrollér kontoen i indstillingerne og dens tilladelser.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Husk loginoplysninger for automatisk at oprette forbindelse igen.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Adgangskoden krypteres på denne NAS. Fjern markeringen for kun at gemme sessionen.",
+  "Session partagée par les administrateurs du NAS.": "Sessionen deles af NAS-administratorerne.",
+  "Reconnexion automatique activée.": "Automatisk genforbindelse aktiveret.",
+  "Reconnexion automatique désactivée.": "Automatisk genforbindelse deaktiveret.",
+  "Oublier le mot de passe": "Glem adgangskoden",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "De gemte loginoplysninger kan ikke læses eller gemmes. Tilslut kontoen igen.",
+  "La session sera renouvelée au prochain téléchargement.": "Sessionen fornyes ved næste download."
 }

@@ -323,7 +323,6 @@
   "Accès public uniquement.": "Chỉ truy cập công khai.",
   "Compte connecté : {account}": "Tài khoản đã kết nối: {account}",
   "Session expirée. Reconnecter le compte.": "Phiên đã hết hạn. Kết nối lại tài khoản.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Mật khẩu không được lưu. Các quản trị viên NAS dùng chung phiên.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Tài khoản phải có quyền tải các tệp bị hạn chế.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Sau khi đăng nhập, dùng “Làm mới danh sách” trên tác vụ hiện có.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Tệp bị hạn chế đã loại trừ: {count}. Kết nối tài khoản trong cài đặt.",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Đang có một lần đăng nhập. Vui lòng thử lại sau giây lát.",
   "Le compte Internet Archive a changé. Réessayer.": "Tài khoản Internet Archive đã thay đổi. Vui lòng thử lại.",
   "Impossible d’enregistrer la session Internet Archive.": "Không thể lưu phiên Internet Archive.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive từ chối truy cập. Kiểm tra tài khoản trong cài đặt và các quyền của tài khoản."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive từ chối truy cập. Kiểm tra tài khoản trong cài đặt và các quyền của tài khoản.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Ghi nhớ thông tin đăng nhập để tự động kết nối lại.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Mật khẩu được mã hóa trên NAS này. Bỏ chọn để chỉ lưu phiên đăng nhập.",
+  "Session partagée par les administrateurs du NAS.": "Phiên đăng nhập được chia sẻ giữa các quản trị viên NAS.",
+  "Reconnexion automatique activée.": "Đã bật tự động kết nối lại.",
+  "Reconnexion automatique désactivée.": "Đã tắt tự động kết nối lại.",
+  "Oublier le mot de passe": "Quên mật khẩu",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Không thể đọc hoặc lưu thông tin đăng nhập đã ghi nhớ. Hãy kết nối lại tài khoản.",
+  "La session sera renouvelée au prochain téléchargement.": "Phiên đăng nhập sẽ được gia hạn khi tải xuống tiếp theo."
 }

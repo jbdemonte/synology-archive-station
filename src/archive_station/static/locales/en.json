@@ -338,7 +338,6 @@
   "Accès public uniquement.": "Public access only.",
   "Compte connecté : {account}": "Connected account: {account}",
   "Session expirée. Reconnecter le compte.": "Session expired. Reconnect the account.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Password not saved. The session is shared by NAS administrators.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "The account must have permission to download restricted files.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "After signing in, use “Refresh file list” on the existing task.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Restricted files excluded: {count}. Connect an account in Settings.",
@@ -351,5 +350,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "A sign-in is already in progress. Try again shortly.",
   "Le compte Internet Archive a changé. Réessayer.": "The Internet Archive account changed. Try again.",
   "Impossible d’enregistrer la session Internet Archive.": "Unable to save the Internet Archive session.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Access denied by Internet Archive. Check the account in Settings and its permissions."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Access denied by Internet Archive. Check the account in Settings and its permissions.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Remember credentials to reconnect automatically.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "The password is encrypted on this NAS. Uncheck to keep only the session.",
+  "Session partagée par les administrateurs du NAS.": "Session shared by this NAS’s administrators.",
+  "Reconnexion automatique activée.": "Automatic reconnection enabled.",
+  "Reconnexion automatique désactivée.": "Automatic reconnection disabled.",
+  "Oublier le mot de passe": "Forget password",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Unable to read or save remembered credentials. Reconnect the account.",
+  "La session sera renouvelée au prochain téléchargement.": "The session will be renewed on the next download."
 }

@@ -323,7 +323,6 @@
   "Accès public uniquement.": "Hanya akses publik.",
   "Compte connecté : {account}": "Akun terhubung: {account}",
   "Session expirée. Reconnecter le compte.": "Sesi kedaluwarsa. Hubungkan kembali akun.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Kata sandi tidak disimpan. Sesi digunakan bersama oleh administrator NAS.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Akun harus memiliki izin untuk mengunduh berkas terbatas.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Setelah masuk, gunakan “Perbarui daftar” pada tugas yang sudah ada.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Berkas terbatas yang dikecualikan: {count}. Hubungkan akun di pengaturan.",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Login sedang berlangsung. Coba lagi sebentar.",
   "Le compte Internet Archive a changé. Réessayer.": "Akun Internet Archive berubah. Coba lagi.",
   "Impossible d’enregistrer la session Internet Archive.": "Sesi Internet Archive tidak dapat disimpan.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Akses ditolak oleh Internet Archive. Periksa akun di pengaturan dan izinnya."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Akses ditolak oleh Internet Archive. Periksa akun di pengaturan dan izinnya.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Ingat kredensial untuk menyambung kembali secara otomatis.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Kata sandi dienkripsi di NAS ini. Hapus centang untuk hanya menyimpan sesi.",
+  "Session partagée par les administrateurs du NAS.": "Sesi dibagikan kepada administrator NAS.",
+  "Reconnexion automatique activée.": "Penyambungan ulang otomatis diaktifkan.",
+  "Reconnexion automatique désactivée.": "Penyambungan ulang otomatis dinonaktifkan.",
+  "Oublier le mot de passe": "Lupakan kata sandi",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Tidak dapat membaca atau menyimpan kredensial yang diingat. Hubungkan kembali akun.",
+  "La session sera renouvelée au prochain téléchargement.": "Sesi akan diperbarui pada unduhan berikutnya."
 }

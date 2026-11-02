@@ -323,7 +323,6 @@
   "Accès public uniquement.": "Yalnızca herkese açık erişim.",
   "Compte connecté : {account}": "Bağlı hesap: {account}",
   "Session expirée. Reconnecter le compte.": "Oturumun süresi doldu. Hesabı yeniden bağlayın.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Parola kaydedilmez. Oturum NAS yöneticileri arasında paylaşılır.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Hesabın kısıtlı dosyaları indirme izni olmalıdır.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Oturum açtıktan sonra mevcut görevde “Listeyi yenile” işlemini kullanın.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Hariç tutulan kısıtlı dosyalar: {count}. Ayarlardan bir hesap bağlayın.",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Zaten bir oturum açma işlemi sürüyor. Birazdan yeniden deneyin.",
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive hesabı değişti. Yeniden deneyin.",
   "Impossible d’enregistrer la session Internet Archive.": "Internet Archive oturumu kaydedilemiyor.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive erişimi reddetti. Ayarlardaki hesabı ve izinlerini kontrol edin."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive erişimi reddetti. Ayarlardaki hesabı ve izinlerini kontrol edin.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Otomatik olarak yeniden bağlanmak için giriş bilgilerini hatırla.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Parola bu NAS üzerinde şifrelenir. Yalnızca oturumu saklamak için işareti kaldırın.",
+  "Session partagée par les administrateurs du NAS.": "Oturum NAS yöneticileri arasında paylaşılır.",
+  "Reconnexion automatique activée.": "Otomatik yeniden bağlantı etkin.",
+  "Reconnexion automatique désactivée.": "Otomatik yeniden bağlantı devre dışı.",
+  "Oublier le mot de passe": "Parolayı unut",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Hatırlanan giriş bilgileri okunamıyor veya kaydedilemiyor. Hesabı yeniden bağlayın.",
+  "La session sera renouvelée au prochain téléchargement.": "Oturum bir sonraki indirmede yenilenecektir."
 }

@@ -338,7 +338,6 @@
   "Accès public uniquement.": "Alleen openbare toegang.",
   "Compte connecté : {account}": "Verbonden account: {account}",
   "Session expirée. Reconnecter le compte.": "Sessie verlopen. Verbind het account opnieuw.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Het wachtwoord wordt niet opgeslagen. NAS-beheerders delen de sessie.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Het account moet toestemming hebben om afgeschermde bestanden te downloaden.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Gebruik na het aanmelden «Bestandslijst vernieuwen» bij de bestaande taak.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Uitgesloten afgeschermde bestanden: {count}. Verbind een account in de instellingen.",
@@ -351,5 +350,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Er loopt al een aanmelding. Probeer het zo opnieuw.",
   "Le compte Internet Archive a changé. Réessayer.": "Het Internet Archive-account is gewijzigd. Probeer het opnieuw.",
   "Impossible d’enregistrer la session Internet Archive.": "De Internet Archive-sessie kan niet worden opgeslagen.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive weigert toegang. Controleer het account in de instellingen en de rechten ervan."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive weigert toegang. Controleer het account in de instellingen en de rechten ervan.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Aanmeldgegevens onthouden om automatisch opnieuw te verbinden.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Het wachtwoord wordt op deze NAS versleuteld. Vink dit uit om alleen de sessie te bewaren.",
+  "Session partagée par les administrateurs du NAS.": "Sessie gedeeld door de beheerders van deze NAS.",
+  "Reconnexion automatique activée.": "Automatisch opnieuw verbinden ingeschakeld.",
+  "Reconnexion automatique désactivée.": "Automatisch opnieuw verbinden uitgeschakeld.",
+  "Oublier le mot de passe": "Wachtwoord vergeten",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Opgeslagen aanmeldgegevens kunnen niet worden gelezen of opgeslagen. Verbind het account opnieuw.",
+  "La session sera renouvelée au prochain téléchargement.": "De sessie wordt bij de volgende download vernieuwd."
 }

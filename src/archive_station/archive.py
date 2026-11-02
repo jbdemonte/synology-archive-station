@@ -96,22 +96,49 @@ class ArchiveClient:
             self.cache.clear()
             self.cache_identity = self.account.snapshot()[0]
 
+    def _open(self, url, *, timeout, session=None, offset=0, reject_html=False):
+        identity, cookie = session or self.account.request_snapshot()
+        for attempt in range(2):
+            headers = {"User-Agent": USER_AGENT, "Accept-Encoding": "identity"}
+            if cookie:
+                headers["Cookie"] = cookie
+            if offset:
+                headers["Range"] = f"bytes={offset}-"
+            try:
+                response = build_opener(ArchiveRedirects()).open(
+                    Request(url, headers=headers), timeout=timeout
+                )
+                if (
+                    reject_html
+                    and "text/html"
+                    in getattr(response, "headers", {}).get("Content-Type", "").lower()
+                ):
+                    response.close()
+                    raise HTTPError(url, 403, "Internet Archive authorization required", {}, None)
+                return response, identity, cookie
+            except HTTPError as error:
+                if attempt or error.code not in {401, 403}:
+                    raise
+                try:
+                    renewed = self.account.refresh(identity)
+                except Exception:
+                    error.close()
+                    raise
+                if not renewed:
+                    raise
+                error.close()
+                identity, cookie = self.account.snapshot()
+
     def open(self, identifier, name, offset=0):
         url = f"https://archive.org/download/{quote(identifier)}/{quote(name, safe='/')}"
-        headers = {"User-Agent": USER_AGENT, "Accept-Encoding": "identity"}
-        _, cookie = self.account.snapshot()
-        if cookie:
-            headers["Cookie"] = cookie
-        if offset:
-            headers["Range"] = f"bytes={offset}-"
-        response = build_opener(ArchiveRedirects()).open(Request(url, headers=headers), timeout=30)
-        # Some authentication failures redirect to an HTML login page with HTTP 200.
-        # Never publish that page in place of an archive or other non-HTML file.
-        if "text/html" in response.headers.get(
-            "Content-Type", ""
-        ).lower() and not name.lower().endswith((".html", ".htm")):
-            response.close()
-            raise HTTPError(url, 403, "Internet Archive authorization required", {}, None)
+        # Repeat the same Range after renewal; no bytes are published before
+        # authentication, length and checksum validation by the transfer engine.
+        response, _, _ = self._open(
+            url,
+            timeout=30,
+            offset=offset,
+            reject_html=not name.lower().endswith((".html", ".htm")),
+        )
         return response
 
     def manifest(self, identifier, mode="all", pattern="", refresh=False):
@@ -119,7 +146,7 @@ class ArchiveClient:
             raise ValueError("Sélection de fichiers invalide.")
         if not isinstance(pattern, str) or len(pattern) > 200:
             raise ValueError("Filtre trop long.")
-        identity, cookie = self.account.snapshot()
+        identity, cookie = self.account.request_snapshot()
         with self.lock:
             if self.cache_identity != identity:
                 self.cache.clear()
@@ -128,11 +155,13 @@ class ArchiveClient:
         if cached and not refresh and time.monotonic() - cached[0] < 900:
             payload = cached[1]
         else:
-            headers = {"User-Agent": USER_AGENT}
-            if cookie:
-                headers["Cookie"] = cookie
-            request = Request(f"https://archive.org/metadata/{identifier}", headers=headers)
-            with build_opener(ArchiveRedirects()).open(request, timeout=45) as response:
+            response, identity, cookie = self._open(
+                f"https://archive.org/metadata/{identifier}",
+                timeout=45,
+                session=(identity, cookie),
+                reject_html=True,
+            )
+            with response:
                 raw = response.read(64 * 1024 * 1024 + 1)
             if len(raw) > 64 * 1024 * 1024:
                 raise ValueError("La liste des fichiers dépasse la limite de 64 Mo.")
@@ -142,6 +171,9 @@ class ArchiveClient:
             with self.lock:
                 if self.account.snapshot()[0] != identity:
                     raise AccountError(CHANGED)
+                if self.cache_identity != identity:
+                    self.cache.clear()
+                    self.cache_identity = identity
                 if len(self.cache) >= 4:
                     self.cache.pop(next(iter(self.cache)))
                 self.cache[identifier] = (time.monotonic(), payload)

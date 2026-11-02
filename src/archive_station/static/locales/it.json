@@ -332,7 +332,6 @@
   "Accès public uniquement.": "Solo accesso pubblico.",
   "Compte connecté : {account}": "Account connesso: {account}",
   "Session expirée. Reconnecter le compte.": "Sessione scaduta. Ricollegare l’account.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "La password non viene salvata. La sessione è condivisa dagli amministratori del NAS.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "L’account deve essere autorizzato a scaricare i file con accesso limitato.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Dopo l’accesso, usare «Aggiornare l’elenco» sull’attività esistente.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "File con accesso limitato esclusi: {count}. Collegare un account nelle impostazioni.",
@@ -345,5 +344,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Un accesso è già in corso. Riprovare tra qualche istante.",
   "Le compte Internet Archive a changé. Réessayer.": "L’account Internet Archive è cambiato. Riprovare.",
   "Impossible d’enregistrer la session Internet Archive.": "Impossibile salvare la sessione Internet Archive.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Accesso negato da Internet Archive. Verificare l’account nelle impostazioni e i suoi permessi."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Accesso negato da Internet Archive. Verificare l’account nelle impostazioni e i suoi permessi.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Memorizzare le credenziali per riconnettersi automaticamente.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "La password viene cifrata su questo NAS. Deselezionare per conservare solo la sessione.",
+  "Session partagée par les administrateurs du NAS.": "Sessione condivisa dagli amministratori del NAS.",
+  "Reconnexion automatique activée.": "Riconnessione automatica attivata.",
+  "Reconnexion automatique désactivée.": "Riconnessione automatica disattivata.",
+  "Oublier le mot de passe": "Dimenticare la password",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Impossibile leggere o salvare le credenziali memorizzate. Riconnettere l’account.",
+  "La session sera renouvelée au prochain téléchargement.": "La sessione verrà rinnovata al prossimo download."
 }

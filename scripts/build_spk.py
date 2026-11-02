@@ -53,6 +53,14 @@ def build(runtime, wheel, output, version):
     lock = json.loads((PACKAGING / "runtime-lock.json").read_text())
     check(runtime, lock["python"]["sha256"])
     check(wheel, lock["waitress"]["sha256"])
+    dependencies = [
+        wheel.parent / entry["filename"]
+        for name, entry in lock.items()
+        if name not in {"python", "waitress"}
+    ]
+    for name, entry in lock.items():
+        if name not in {"python", "waitress"}:
+            check(wheel.parent / entry["filename"], entry["sha256"])
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="archive-station-build-") as temporary:
         stage = Path(temporary)
@@ -73,8 +81,9 @@ def build(runtime, wheel, output, version):
         for directory in list(payload.rglob("__pycache__")):
             shutil.rmtree(directory)
         stage_synology(payload, version)
-        with zipfile.ZipFile(wheel) as archive:
-            archive.extractall(payload / "vendor")
+        for dependency in [wheel, *dependencies]:
+            with zipfile.ZipFile(dependency) as archive:
+                archive.extractall(payload / "vendor")
         shutil.copytree(PACKAGING / "runtime-licenses", payload / "python/licenses")
         for name in ["conf", "scripts", "WIZARD_UIFILES"]:
             shutil.copytree(PACKAGING / name, package / name)
@@ -110,8 +119,8 @@ if __name__ == "__main__":
     parser.add_argument("--runtime", type=Path, required=True)
     parser.add_argument("--waitress-wheel", type=Path, required=True)
     parser.add_argument(
-        "--output", type=Path, default=ROOT / "dist/ArchiveStation-1.1.0-2-x86_64.spk"
+        "--output", type=Path, default=ROOT / "dist/ArchiveStation-1.1.0-3-x86_64.spk"
     )
-    parser.add_argument("--version", default="1.1.0-2")
+    parser.add_argument("--version", default="1.1.0-3")
     args = parser.parse_args()
     build(args.runtime, args.waitress_wheel, args.output, args.version)

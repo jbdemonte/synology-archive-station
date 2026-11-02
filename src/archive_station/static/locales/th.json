@@ -323,7 +323,6 @@
   "Accès public uniquement.": "เข้าถึงได้เฉพาะไฟล์สาธารณะ",
   "Compte connecté : {account}": "บัญชีที่เชื่อมต่อ: {account}",
   "Session expirée. Reconnecter le compte.": "เซสชันหมดอายุ โปรดเชื่อมต่อบัญชีอีกครั้ง",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "ไม่มีการบันทึกรหัสผ่าน ผู้ดูแล NAS ใช้เซสชันร่วมกัน",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "บัญชีต้องมีสิทธิ์ดาวน์โหลดไฟล์ที่จำกัดการเข้าถึง",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "หลังเข้าสู่ระบบ ให้ใช้ “รีเฟรชรายการ” กับงานที่มีอยู่",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "ไฟล์ที่จำกัดการเข้าถึงซึ่งถูกยกเว้น: {count} โปรดเชื่อมต่อบัญชีในการตั้งค่า",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "กำลังเข้าสู่ระบบอยู่ โปรดรอสักครู่แล้วลองใหม่",
   "Le compte Internet Archive a changé. Réessayer.": "บัญชี Internet Archive เปลี่ยนไป โปรดลองอีกครั้ง",
   "Impossible d’enregistrer la session Internet Archive.": "ไม่สามารถบันทึกเซสชัน Internet Archive ได้",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive ปฏิเสธการเข้าถึง โปรดตรวจสอบบัญชีในการตั้งค่าและสิทธิ์ของบัญชี"
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive ปฏิเสธการเข้าถึง โปรดตรวจสอบบัญชีในการตั้งค่าและสิทธิ์ของบัญชี",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "จดจำข้อมูลเข้าสู่ระบบเพื่อเชื่อมต่อใหม่โดยอัตโนมัติ",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "รหัสผ่านจะถูกเข้ารหัสบน NAS นี้ ยกเลิกการเลือกเพื่อเก็บเฉพาะเซสชัน",
+  "Session partagée par les administrateurs du NAS.": "ผู้ดูแลระบบ NAS ใช้เซสชันนี้ร่วมกัน",
+  "Reconnexion automatique activée.": "เปิดการเชื่อมต่อใหม่อัตโนมัติแล้ว",
+  "Reconnexion automatique désactivée.": "ปิดการเชื่อมต่อใหม่อัตโนมัติแล้ว",
+  "Oublier le mot de passe": "ลืมรหัสผ่านที่บันทึกไว้",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "ไม่สามารถอ่านหรือบันทึกข้อมูลเข้าสู่ระบบที่จดจำไว้ได้ โปรดเชื่อมต่อบัญชีใหม่",
+  "La session sera renouvelée au prochain téléchargement.": "เซสชันจะได้รับการต่ออายุเมื่อดาวน์โหลดครั้งถัดไป"
 }

@@ -77,7 +77,17 @@ class AccountTests(AccountBase):
             self.assertNotIn(PASSWORD, request.full_url)
             self.assertIsInstance(opener.call_args.args[0], NoLoginRedirects)
             self.assertEqual(opener.return_value.open.call_args.kwargs["timeout"], 15)
-        self.assertEqual(status, {"connected": True, "state": "connected", "email": EMAIL})
+        self.assertEqual(
+            status,
+            {
+                "connected": True,
+                "state": "connected",
+                "email": EMAIL,
+                "remember_credentials": False,
+                "remember_choice": False,
+                "reconnect_error": None,
+            },
+        )
         saved = self.account.path.read_text()
         for secret in (PASSWORD, "unused-access", "unused-secret"):
             self.assertNotIn(secret, saved)
@@ -378,7 +388,7 @@ class AccountApiTests(AccountBase):
         return int(result[0].split()[0]), json.loads(data)
 
     def test_account_endpoints_require_dsm_and_same_origin(self):
-        for endpoint in ("login", "logout"):
+        for endpoint in ("login", "logout", "forget"):
             with patch.object(self.account, "connect") as login:
                 self.assertEqual(
                     self.request("/api/archive-account/" + endpoint, {}, auth=False)[0], 401
@@ -420,6 +430,47 @@ class AccountApiTests(AccountBase):
             )
         self.assertEqual(code, 400)
         self.assertEqual(data["error"], DENIED)
+
+    def test_remember_is_explicit_and_forget_keeps_the_session_and_pending_plans(self):
+        with patch("archive_station.archive_account.build_opener") as opener:
+            opener.return_value.open.return_value = login_response()
+            code, status = self.request(
+                "/api/archive-account/login",
+                {
+                    "email": EMAIL,
+                    "password": PASSWORD,
+                    "remember": True,
+                },
+            )
+        self.assertEqual(code, 200)
+        self.assertTrue(status["remember_credentials"])
+        token = self.app.plans.create(
+            {"identifier": "item", "files": [{"name": "file", "size": 1}]}, "all", ""
+        )
+        cookies = self.account.snapshot()[1]
+        code, settings = self.request("/api/settings")
+        for secret in (PASSWORD, SIGNATURE, self.account.credentials):
+            self.assertNotIn(secret, json.dumps(settings))
+        code, status = self.request("/api/archive-account/forget", {})
+        self.assertEqual(code, 200)
+        self.assertTrue(status["connected"])
+        self.assertFalse(status["remember_credentials"])
+        self.assertEqual(cookies, self.account.snapshot()[1])
+        self.app.plans.selection(token, "item")
+
+    def test_non_boolean_remember_option_is_rejected_before_login(self):
+        for value in ("false", "true", 0, 1, [], None):
+            with patch("archive_station.archive_account.build_opener") as opener:
+                code, _ = self.request(
+                    "/api/archive-account/login",
+                    {
+                        "email": EMAIL,
+                        "password": PASSWORD,
+                        "remember": value,
+                    },
+                )
+                self.assertEqual(code, 400)
+                opener.assert_not_called()
 
     def test_existing_public_task_can_add_restricted_files_after_login(self):
         payload = {

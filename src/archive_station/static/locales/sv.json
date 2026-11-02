@@ -338,7 +338,6 @@
   "Accès public uniquement.": "Endast offentlig åtkomst.",
   "Compte connecté : {account}": "Anslutet konto: {account}",
   "Session expirée. Reconnecter le compte.": "Sessionen har gått ut. Anslut kontot igen.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Lösenordet sparas inte. Sessionen delas av NAS-administratörerna.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Kontot måste ha behörighet att hämta begränsade filer.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Efter inloggning, använd ”Uppdatera listan” för den befintliga uppgiften.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Uteslutna begränsade filer: {count}. Anslut ett konto i inställningarna.",
@@ -351,5 +350,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "En inloggning pågår redan. Försök igen om en stund.",
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive-kontot har ändrats. Försök igen.",
   "Impossible d’enregistrer la session Internet Archive.": "Det går inte att spara Internet Archive-sessionen.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive nekade åtkomst. Kontrollera kontot i inställningarna och dess behörigheter."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive nekade åtkomst. Kontrollera kontot i inställningarna och dess behörigheter.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Kom ihåg inloggningsuppgifterna för automatisk återanslutning.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Lösenordet krypteras på denna NAS. Avmarkera för att endast spara sessionen.",
+  "Session partagée par les administrateurs du NAS.": "Sessionen delas av NAS-enhetens administratörer.",
+  "Reconnexion automatique activée.": "Automatisk återanslutning aktiverad.",
+  "Reconnexion automatique désactivée.": "Automatisk återanslutning inaktiverad.",
+  "Oublier le mot de passe": "Glöm lösenordet",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Det går inte att läsa eller spara inloggningsuppgifterna. Anslut kontot igen.",
+  "La session sera renouvelée au prochain téléchargement.": "Sessionen förnyas vid nästa nedladdning."
 }

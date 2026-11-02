@@ -343,7 +343,6 @@
   "Accès public uniquement.": "Doar acces public.",
   "Compte connecté : {account}": "Cont conectat: {account}",
   "Session expirée. Reconnecter le compte.": "Sesiunea a expirat. Reconectați contul.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Parola nu este salvată. Sesiunea este partajată de administratorii NAS.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Contul trebuie să aibă permisiunea de a descărca fișiere restricționate.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "După conectare, folosiți „Actualizare listă” pentru sarcina existentă.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Fișiere restricționate excluse: {count}. Conectați un cont în setări.",
@@ -356,5 +355,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "O conectare este deja în curs. Încercați din nou în câteva momente.",
   "Le compte Internet Archive a changé. Réessayer.": "Contul Internet Archive s-a schimbat. Încercați din nou.",
   "Impossible d’enregistrer la session Internet Archive.": "Sesiunea Internet Archive nu poate fi salvată.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive a refuzat accesul. Verificați contul din setări și permisiunile sale."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive a refuzat accesul. Verificați contul din setări și permisiunile sale.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Memorează datele de autentificare pentru reconectare automată.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Parola este criptată pe acest NAS. Debifează pentru a păstra doar sesiunea.",
+  "Session partagée par les administrateurs du NAS.": "Sesiune partajată de administratorii NAS-ului.",
+  "Reconnexion automatique activée.": "Reconectare automată activată.",
+  "Reconnexion automatique désactivée.": "Reconectare automată dezactivată.",
+  "Oublier le mot de passe": "Uită parola",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Datele de autentificare memorate nu pot fi citite sau salvate. Reconectează contul.",
+  "La session sera renouvelée au prochain téléchargement.": "Sesiunea va fi reînnoită la următoarea descărcare."
 }

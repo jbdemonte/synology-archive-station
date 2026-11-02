@@ -338,7 +338,6 @@
   "Accès public uniquement.": "Μόνο δημόσια πρόσβαση.",
   "Compte connecté : {account}": "Συνδεδεμένος λογαριασμός: {account}",
   "Session expirée. Reconnecter le compte.": "Η συνεδρία έληξε. Συνδέστε ξανά τον λογαριασμό.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Ο κωδικός δεν αποθηκεύεται. Η συνεδρία είναι κοινή για τους διαχειριστές του NAS.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Ο λογαριασμός πρέπει να έχει άδεια λήψης των περιορισμένων αρχείων.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Μετά τη σύνδεση, χρησιμοποιήστε «Ανανέωση λίστας» στην υπάρχουσα εργασία.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Εξαιρούμενα περιορισμένα αρχεία: {count}. Συνδέστε έναν λογαριασμό στις ρυθμίσεις.",
@@ -351,5 +350,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Μια σύνδεση βρίσκεται ήδη σε εξέλιξη. Δοκιμάστε ξανά σε λίγο.",
   "Le compte Internet Archive a changé. Réessayer.": "Ο λογαριασμός Internet Archive άλλαξε. Δοκιμάστε ξανά.",
   "Impossible d’enregistrer la session Internet Archive.": "Δεν είναι δυνατή η αποθήκευση της συνεδρίας Internet Archive.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Το Internet Archive αρνήθηκε την πρόσβαση. Ελέγξτε τον λογαριασμό στις ρυθμίσεις και τα δικαιώματά του."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Το Internet Archive αρνήθηκε την πρόσβαση. Ελέγξτε τον λογαριασμό στις ρυθμίσεις και τα δικαιώματά του.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Αποθήκευση στοιχείων σύνδεσης για αυτόματη επανασύνδεση.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Ο κωδικός πρόσβασης κρυπτογραφείται σε αυτό το NAS. Αποεπιλέξτε για να διατηρηθεί μόνο η συνεδρία.",
+  "Session partagée par les administrateurs du NAS.": "Η συνεδρία είναι κοινή για τους διαχειριστές του NAS.",
+  "Reconnexion automatique activée.": "Η αυτόματη επανασύνδεση είναι ενεργή.",
+  "Reconnexion automatique désactivée.": "Η αυτόματη επανασύνδεση είναι ανενεργή.",
+  "Oublier le mot de passe": "Διαγραφή αποθηκευμένου κωδικού",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Δεν είναι δυνατή η ανάγνωση ή η αποθήκευση των στοιχείων σύνδεσης. Συνδέστε ξανά τον λογαριασμό.",
+  "La session sera renouvelée au prochain téléchargement.": "Η συνεδρία θα ανανεωθεί στην επόμενη λήψη."
 }

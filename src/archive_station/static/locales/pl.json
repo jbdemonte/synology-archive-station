@@ -343,7 +343,6 @@
   "Accès public uniquement.": "Tylko dostęp publiczny.",
   "Compte connecté : {account}": "Połączone konto: {account}",
   "Session expirée. Reconnecter le compte.": "Sesja wygasła. Połącz konto ponownie.",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "Hasło nie jest zapisywane. Administratorzy NAS współdzielą sesję.",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "Konto musi mieć uprawnienia do pobierania plików z ograniczonym dostępem.",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "Po zalogowaniu użyj opcji „Odśwież listę” w istniejącym zadaniu.",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "Pominięte pliki z ograniczonym dostępem: {count}. Połącz konto w ustawieniach.",
@@ -356,5 +355,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "Logowanie już trwa. Spróbuj za chwilę.",
   "Le compte Internet Archive a changé. Réessayer.": "Konto Internet Archive uległo zmianie. Spróbuj ponownie.",
   "Impossible d’enregistrer la session Internet Archive.": "Nie można zapisać sesji Internet Archive.",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive odmówiło dostępu. Sprawdź konto w ustawieniach i jego uprawnienia."
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive odmówiło dostępu. Sprawdź konto w ustawieniach i jego uprawnienia.",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Zapamiętaj dane logowania, aby automatycznie nawiązywać połączenie ponownie.",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Hasło jest szyfrowane na tym serwerze NAS. Odznacz, aby zachować tylko sesję.",
+  "Session partagée par les administrateurs du NAS.": "Sesja współdzielona przez administratorów serwera NAS.",
+  "Reconnexion automatique activée.": "Automatyczne ponowne łączenie włączone.",
+  "Reconnexion automatique désactivée.": "Automatyczne ponowne łączenie wyłączone.",
+  "Oublier le mot de passe": "Zapomnij hasło",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Nie można odczytać lub zapisać zapamiętanych danych logowania. Połącz konto ponownie.",
+  "La session sera renouvelée au prochain téléchargement.": "Sesja zostanie odnowiona przy następnym pobieraniu."
 }

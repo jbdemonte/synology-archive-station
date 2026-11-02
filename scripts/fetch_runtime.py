@@ -11,11 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 lock = json.loads((ROOT / "packaging/synology/runtime-lock.json").read_text())
 cache = ROOT / "build/cache"
 cache.mkdir(parents=True, exist_ok=True)
-for key, filename in [
-    ("python", "python-runtime.tar.gz"),
-    ("waitress", lock["waitress"]["filename"]),
-]:
-    entry = lock[key]
+for key, entry in lock.items():
+    filename = "python-runtime.tar.gz" if key == "python" else entry["filename"]
     target = cache / filename
     if target.exists() and hashlib.sha256(target.read_bytes()).hexdigest() == entry["sha256"]:
         print(f"Verified cached {filename}")

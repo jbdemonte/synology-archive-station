@@ -323,7 +323,6 @@
   "Accès public uniquement.": "仅可访问公开文件。",
   "Compte connecté : {account}": "已连接账户：{account}",
   "Session expirée. Reconnecter le compte.": "会话已过期。请重新连接账户。",
-  "Mot de passe non conservé. Session partagée par les administrateurs du NAS.": "不保存密码。会话由 NAS 管理员共享。",
   "Le compte doit être autorisé à télécharger les fichiers restreints.": "账户必须拥有下载受限文件的权限。",
   "Après connexion, utiliser « Actualiser la liste » sur la tâche existante.": "登录后，请在现有任务中使用“刷新列表”。",
   "Fichiers restreints exclus : {count}. Connecter un compte dans les paramètres.": "已排除的受限文件：{count}。请在设置中连接账户。",
@@ -336,5 +335,13 @@
   "Une connexion est déjà en cours. Réessayer dans quelques instants.": "正在登录。请稍后重试。",
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive 账户已更改。请重试。",
   "Impossible d’enregistrer la session Internet Archive.": "无法保存 Internet Archive 会话。",
-  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive 拒绝访问。请检查设置中的账户及其权限。"
+  "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive 拒绝访问。请检查设置中的账户及其权限。",
+  "Mémoriser les identifiants pour se reconnecter automatiquement.": "记住登录信息以自动重新连接。",
+  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "密码将在此 NAS 上加密保存。取消勾选则仅保留会话。",
+  "Session partagée par les administrateurs du NAS.": "此会话由 NAS 管理员共享。",
+  "Reconnexion automatique activée.": "已启用自动重新连接。",
+  "Reconnexion automatique désactivée.": "已禁用自动重新连接。",
+  "Oublier le mot de passe": "忘记密码",
+  "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "无法读取或保存已记住的登录信息。请重新连接账户。",
+  "La session sera renouvelée au prochain téléchargement.": "会话将在下次下载时续期。"
 }
