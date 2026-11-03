@@ -79,7 +79,7 @@ Click the document icon on an archive row, or **Read report** in its **⋯** men
 
 **Completed file integrity** counts the checks actually performed: matching SHA-1, matching MD5, size only, no reference check, and checks not recorded by older versions. Results are saved with each completed file and survive restarts and settings changes. An in-progress or failed file is never counted as hash verified. Without a usable checksum or expected size, a completed transfer cannot establish integrity against a reference.
 
-Files completed before this tracking was introduced remain **Check not recorded**; the current setting cannot prove which checks ran earlier. **Verify and repair** can check them and record the result. This recheck reads the files from disk and is never started automatically by an upgrade. Recorded results describe the file at completion, not a continuous check for later disk corruption or external changes.
+Files completed before this tracking was introduced remain **Check not recorded**; the current setting cannot prove which checks ran earlier. **Verify and complete** can check them and record the result. This recheck reads the files from disk and is never started automatically by an upgrade. Recorded results describe the file at completion, not a continuous check for later disk corruption or external changes.
 
 The icon turns amber when incidents have been recorded, including incidents that were later resolved. The history lists the affected file, first and last occurrence, count, latest attempt number, diagnostic message and resolution date. Repeated identical errors are grouped per file. A successful transfer resolves its recorded errors; retrying, restarting or repairing does not erase them. Low-space pauses are also recorded.
 

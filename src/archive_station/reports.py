@@ -157,9 +157,9 @@ def render_report(job, settings, now, incidents=()):
         lines.append(
             tr(
                 "Older versions did not record the check performed. "
-                "Use Verify and repair to check those files and record the result.",
+                "Use Verify and complete to check those files and record the result.",
                 "Les anciennes versions ne consignaient pas le contrôle effectué. "
-                "Utiliser Vérifier et réparer pour contrôler ces fichiers "
+                "Utiliser Vérifier et compléter pour contrôler ces fichiers "
                 "et consigner le résultat.",
             )
         )
