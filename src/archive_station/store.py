@@ -78,6 +78,13 @@ class Store:
                 self.db.execute("ALTER TABLE files ADD COLUMN repair INTEGER NOT NULL DEFAULT 0")
             if "priority" not in file_columns:
                 self.db.execute("ALTER TABLE files ADD COLUMN priority INTEGER NOT NULL DEFAULT 0")
+            # A published checksum or today's setting cannot prove an older check ran.
+            for name, definition in {
+                "verification_method": "TEXT",
+                "verification_at": "REAL",
+            }.items():
+                if name not in file_columns:
+                    self.db.execute(f"ALTER TABLE files ADD COLUMN {name} {definition}")
             self.db.execute(
                 "CREATE INDEX IF NOT EXISTS file_priority ON files(job_id,status,priority DESC,id)"
             )
@@ -146,6 +153,17 @@ class Store:
                     COALESCE(SUM(CASE WHEN j.status IN ('running','queued')
                         THEN f.speed ELSE 0 END),0) AS speed,
                     SUM(f.status='completed') AS completed_files,
+                    SUM(CASE WHEN f.status='completed' AND f.verification_method='sha1'
+                        THEN 1 ELSE 0 END) AS verified_sha1_files,
+                    SUM(CASE WHEN f.status='completed' AND f.verification_method='md5'
+                        THEN 1 ELSE 0 END) AS verified_md5_files,
+                    SUM(CASE WHEN f.status='completed' AND f.verification_method='size'
+                        THEN 1 ELSE 0 END) AS verified_size_files,
+                    SUM(CASE WHEN f.status='completed' AND f.verification_method='unverified'
+                        THEN 1 ELSE 0 END) AS unverified_files,
+                    SUM(CASE WHEN f.status='completed' AND (f.verification_method IS NULL OR
+                        f.verification_method NOT IN ('sha1','md5','size','unverified'))
+                        THEN 1 ELSE 0 END) AS verification_unknown_files,
                     SUM(f.status='downloading') AS active_files,
                     COALESCE(SUM(CASE WHEN f.status='completed' THEN f.downloaded ELSE 0 END),0)
                         AS completed_bytes,
@@ -279,7 +297,8 @@ class Store:
                     raise ValueError("Mettez la tâche en pause et attendez l’arrêt des transferts.")
                 self.db.execute(
                     "UPDATE files SET status='queued', downloaded=0, speed=0, "
-                    "attempts=0, available_at=0, error=NULL, repair=1 WHERE job_id=?",
+                    "attempts=0, available_at=0, error=NULL, repair=1, "
+                    "verification_method=NULL,verification_at=NULL WHERE job_id=?",
                     (job_id,),
                 )
                 self.db.execute(
@@ -335,7 +354,8 @@ class Store:
                     self.db.execute(
                         "UPDATE files SET size=?,algorithm=?,digest=?, status='queued', "
                         "downloaded=0,speed=0,attempts=0,available_at=0,error=NULL, "
-                        "repair=1,reset_partial=1 WHERE job_id=? AND name=?",
+                        "repair=1,reset_partial=1,verification_method=NULL,verification_at=NULL "
+                        "WHERE job_id=? AND name=?",
                         (file["size"], file["algorithm"], file["digest"], job_id, file["name"]),
                     )
                 self.db.execute(
@@ -505,6 +525,8 @@ class Store:
             "size",
             "repair",
             "reset_partial",
+            "verification_method",
+            "verification_at",
         }
         if not values.keys() <= allowed:
             raise ValueError("Unknown file field")

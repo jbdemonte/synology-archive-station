@@ -122,6 +122,47 @@ def render_report(job, settings, now, incidents=()):
             "sans compter les retransferts.",
         )
     )
+    section(tr("COMPLETED FILE INTEGRITY", "INTÉGRITÉ DES FICHIERS TERMINÉS"))
+    sha1 = job.get("verified_sha1_files", 0)
+    md5 = job.get("verified_md5_files", 0)
+    size_only = job.get("verified_size_files", 0)
+    unverified = job.get("unverified_files", 0)
+    unknown = job.get(
+        "verification_unknown_files", job["completed_files"] - sha1 - md5 - size_only - unverified
+    )
+    row(tr("Hash verified", "Vérifiés par hash"), f"{sha1 + md5} / {job['completed_files']}")
+    row(tr("SHA-1 matched", "SHA-1 conforme"), sha1)
+    row(tr("MD5 matched", "MD5 conforme"), md5)
+    row(tr("Size only", "Taille seule contrôlée"), size_only)
+    row(tr("No reference check", "Sans contrôle de référence"), unverified)
+    row(tr("Check not recorded", "Contrôle non consigné"), unknown)
+    lines.append(
+        tr(
+            "These are recorded results at completion, independent of the current settings. "
+            "Incomplete files are not counted as verified.",
+            "Ces résultats sont consignés à la fin de chaque fichier, indépendamment des "
+            "paramètres actuels. Les fichiers non terminés ne sont pas comptés comme vérifiés.",
+        )
+    )
+    if size_only or unverified:
+        lines.append(
+            tr(
+                "A size check alone does not establish a hash match. "
+                "Without a usable checksum or an expected size, no reference check is possible.",
+                "Le contrôle de taille seul ne prouve pas la conformité du hash. Sans empreinte "
+                "utilisable ni taille attendue, aucun contrôle de référence n’est possible.",
+            )
+        )
+    if unknown:
+        lines.append(
+            tr(
+                "Older versions did not record the check performed. "
+                "Use Verify and repair to check those files and record the result.",
+                "Les anciennes versions ne consignaient pas le contrôle effectué. "
+                "Utiliser Vérifier et réparer pour contrôler ces fichiers "
+                "et consigner le résultat.",
+            )
+        )
     section(tr("ERROR HISTORY", "HISTORIQUE DES ERREURS"))
     row(tr("Incidents recorded", "Incidents consignés"), job.get("incident_count", 0))
     row(tr("Still unresolved", "Encore non résolus"), job.get("unresolved_incidents", 0))
@@ -165,7 +206,15 @@ def render_report(job, settings, now, incidents=()):
         tr("Source file mode", "Mode des fichiers source"),
         tr("Original files only", "Fichiers originaux uniquement")
         if job["mode"] == "original"
-        else tr("All public files", "Tous les fichiers publics"),
+        else tr("All accessible files", "Tous les fichiers accessibles"),
+    )
+    lines.append(
+        tr(
+            "This mode selects file types, not access permissions. "
+            "Restricted files require an authorized Internet Archive account.",
+            "Ce mode filtre les types de fichiers, pas leurs droits d’accès. "
+            "Les fichiers restreints nécessitent un compte Internet Archive autorisé.",
+        )
     )
     row(tr("Filename filter", "Filtre de noms"), job["pattern"] or tr("None", "Aucun"))
     row(
@@ -235,6 +284,11 @@ class Reports:
                 job["status"],
                 job["downloaded"],
                 job["completed_files"],
+                job["verified_sha1_files"],
+                job["verified_md5_files"],
+                job["verified_size_files"],
+                job["unverified_files"],
+                job["verification_unknown_files"],
                 job["failed_files"],
                 job["file_count"],
                 job["total_size"],

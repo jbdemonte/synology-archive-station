@@ -154,22 +154,31 @@ class Engine:
             self.store.pause_for_space(job_id)
             raise Interrupted()
 
-    def verified(self, path, row):
+    def verify_file(self, path, row):
+        """Return the check actually passed, or None on failure (never infer it later)."""
         if row["size"] is not None and path.stat().st_size != row["size"]:
-            return False
+            return None
         if row["digest"] and (row.get("repair") or self.settings.get()["verify_checksums"]):
             digest = hashlib.new(row["algorithm"], usedforsecurity=False)
             with path.open("rb") as source:
                 while chunk := source.read(1024 * 1024):
                     self.check(row["job_id"])
                     digest.update(chunk)
-            return digest.hexdigest() == row["digest"]
-        return row["size"] is not None
+            return row["algorithm"] if digest.hexdigest() == row["digest"] else None
+        return "size" if row["size"] is not None else None
 
-    def complete(self, row, path):
+    def complete(self, row, path, verification):
         size = path.stat().st_size
         self.store.update(
-            row["id"], status="completed", downloaded=size, size=size, speed=0, error=None, repair=0
+            row["id"],
+            status="completed",
+            downloaded=size,
+            size=size,
+            speed=0,
+            error=None,
+            repair=0,
+            verification_method=verification,
+            verification_at=time.time(),
         )
 
     def transfer(self, row):
@@ -189,8 +198,9 @@ class Engine:
                 partial.rename(backup)
             self.store.update(row["id"], reset_partial=0)
         if target.exists():
-            if target.is_file() and self.verified(target, row):
-                self.complete(row, target)
+            verification = self.verify_file(target, row) if target.is_file() else None
+            if verification:
+                self.complete(row, target, verification)
                 return
             if not row.get("repair") or not target.is_file():
                 raise Conflict("Un fichier différent existe déjà. Déplacez-le avant de réessayer.")
@@ -207,8 +217,9 @@ class Engine:
             partial.unlink()
             offset = 0
         if partial.exists() and row["size"] == offset:
-            if self.verified(partial, row):
-                self.publish(partial, target, row)
+            verification = self.verify_file(partial, row)
+            if verification:
+                self.publish(partial, target, row, verification)
                 return
             partial.unlink()
             offset = 0
@@ -288,15 +299,19 @@ class Engine:
         self.check(row["job_id"])
         # Unknown-size files can be checked against the response length or checksum.
         verification_row = {**row, "size": expected if expected is not None else received}
-        if not self.verified(partial, verification_row):
+        verification = self.verify_file(partial, verification_row)
+        if not verification:
             partial.unlink()
             self.store.update(row["id"], downloaded=0)
             raise OSError("Somme de contrôle incorrecte. Le fichier sera téléchargé à nouveau.")
-        self.publish(partial, target, row)
+        if verification == "size" and expected is None:
+            # Matching our own byte counter is not an independent size reference.
+            verification = "unverified"
+        self.publish(partial, target, row, verification)
 
-    def publish(self, partial, target, row):
+    def publish(self, partial, target, row, verification):
         self.check(row["job_id"])
         # Hard-link publication is atomic and refuses to overwrite an existing destination.
         os.link(partial, target)
         partial.unlink()
-        self.complete(row, target)
+        self.complete(row, target, verification)

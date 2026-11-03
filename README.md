@@ -54,7 +54,7 @@ DSM access is restricted to administrator sessions. The internal API listens on 
 ## Install
 
 1. Download the `.spk` from [GitHub Releases](https://github.com/jbdemonte/synology-archive-downloader/releases), or build it with `make build` (see below).
-2. Open **Package Center → Manual Install** and select `ArchiveStation-1.1.0-3-x86_64.spk` (local builds place it in `dist/`).
+2. Open **Package Center → Manual Install** and select `ArchiveStation-1.1.0-4-x86_64.spk` (local builds place it in `dist/`).
 3. Launch **Archive Station** from the DSM main menu.
 4. Open **Settings** to choose a destination and transfer limits.
 
@@ -85,7 +85,7 @@ The folder picker marks **read/write in green**, **read-only in blue**, and **in
 1. Download the newer `.spk` and its `.spk.sha256` file from [GitHub Releases](https://github.com/jbdemonte/synology-archive-downloader/releases). To check the package download, run this command from their directory:
 
    ```sh
-   shasum -a 256 -c ArchiveStation-1.1.0-3-x86_64.spk.sha256
+   shasum -a 256 -c ArchiveStation-1.1.0-4-x86_64.spk.sha256
    ```
 
    On Linux, use `sha256sum -c` instead.
@@ -168,6 +168,8 @@ An active task resumes automatically after a package restart or upgrade. Paused 
 
 With checksum verification enabled, Archive Station reads the downloaded file from disk, computes its SHA-1 (or MD5 when only MD5 is available), and compares it with the value supplied by Archive.org. A mismatch triggers another attempt within the configured retry limit. When no checksum is supplied, verification is limited to the expected size when available.
 
+The report's **Completed file integrity** section records how many completed files passed SHA-1, MD5 or size-only checks, and how many lack a reference check or a recorded result. These counts reflect the checks actually performed, even after settings change. Earlier downloads are marked **Check not recorded**; use **Verify and repair** to check them explicitly. An upgrade does not automatically reread downloaded files.
+
 Increasing parallel downloads starts additional transfers without restarting the task. Decreasing the limit lets current files finish, then restricts new transfers. The global bandwidth limit is also applied while transfers run.
 
 Removing a task preserves complete and partial files. Re-adding its URL reuses verified complete files, but the old task’s partial files are not reused automatically.
@@ -231,7 +233,7 @@ Build requirements: **Python 3.12+**, `make`, and network access for the first d
 ```sh
 make build                 # Build the x86_64 .spk and SHA-256 checksum
 make release               # Validate and prepare all GitHub release assets
-make build VERSION=1.1.0-3  # Override the package version
+make build VERSION=1.1.0-4  # Override the package version
 make deps                  # Create the virtual environment and install Waitress
 make run                   # Start locally at http://127.0.0.1:8274
 ```
@@ -287,7 +289,7 @@ GitHub Releases supports direct `.spk` distribution for manual DSM installation.
 ## Troubleshooting and contributing
 
 - **A share is missing or orange:** check the package system user’s DSM permissions, then reopen the picker.
-- **A file needs authorization:** restricted Archive.org files are not supported. Public files continue independently.
+- **A file needs authorization:** connect an Internet Archive account in Settings. Restricted files require permission from Archive.org; signing in does not grant access to every file. Public files continue independently.
 - **Downloads stop on one file:** open its task report or the **Needs attention** view, correct the cause and select Retry.
 - **The startup screen reports a connection error:** check that the package is running, then select Retry.
 - **DSM sign-in is refused:** open Archive Station from an administrator's DSM desktop, using the same address. The app automatically attempts session recovery. If DSM has actually signed you out, sign in again and click **Retry**. If your DSM session is still active, report your DSM version and connection method (local address, reverse proxy or QuickConnect); never share cookies or session tokens.
