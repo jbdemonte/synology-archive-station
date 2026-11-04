@@ -43,7 +43,7 @@ class WebApp:
         self.auth = Auth(data_dir)
         self.no_auth = no_auth
         self.dsm_auth = dsm_auth
-        self.plans = Plans()
+        self.plans = Plans(identity=lambda: self.client.account.account_generation)
         self.distribution = distribution or Distribution.from_env()
         self.updates = updates or Updates(
             settings, data_dir, enabled=self.distribution.update_checks
@@ -232,9 +232,7 @@ class WebApp:
                     **settings,
                     "storage": storage,
                     "version": __package_version__,
-                    "archive_account": self.client.account.status()
-                    if hasattr(self.client, "account")
-                    else {"connected": False, "state": "disconnected", "email": ""},
+                    "archive_account": self.client.account.status(),
                     "updates": self.updates.snapshot(),
                     "distribution": {
                         "service_user": self.distribution.service_user,
@@ -284,7 +282,8 @@ class WebApp:
             )
             if type(body.get("paused", False)) is not bool:
                 raise ValueError("Option de démarrage invalide.")
-            with self.store.lock:
+            with self.client.account.lock, self.store.lock:
+                self.plans.validate(manifest)
                 space = capacity(
                     self.store,
                     self.settings,
@@ -337,7 +336,14 @@ class WebApp:
             job_id, action = parts[2:]
             if method == "GET" and action == "report":
                 with self.store.lock:
-                    job = next((j for j in self.store.jobs() if j["id"] == job_id), None)
+                    job = next(
+                        (
+                            j
+                            for j in self.store.jobs(include_verification=True)
+                            if j["id"] == job_id
+                        ),
+                        None,
+                    )
                     if not job:
                         raise KeyError("Téléchargement introuvable.")
                     incidents = self.store.error_history(job_id)
@@ -380,7 +386,8 @@ class WebApp:
                 paused = body.get("paused", False)
                 if type(paused) is not bool:
                     raise ValueError("Option de démarrage invalide.")
-                with self.store.lock:
+                with self.client.account.lock, self.store.lock:
+                    self.plans.validate(manifest)
                     space = capacity(
                         self.store, self.settings, job["destination"], manifest["total_size"]
                     )

@@ -7,7 +7,7 @@ name = "archive-station"
 dynamic = ["version"]
 description = "A resumable Internet Archive download manager for Synology and other NAS."
 requires-python = ">=3.10"
-dependencies = ["waitress==3.0.2"]
+dependencies = ["waitress==3.0.2", "cryptography==50.0.2"]
 
 [project.scripts]
 archive-station = "archive_station.__main__:main"

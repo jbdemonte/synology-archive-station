@@ -136,6 +136,10 @@ def render_report(job, settings, now, incidents=()):
     row(tr("Size only", "Taille seule contrôlée"), size_only)
     row(tr("No reference check", "Sans contrôle de référence"), unverified)
     row(tr("Check not recorded", "Contrôle non consigné"), unknown)
+    row(
+        tr("Last recorded check", "Dernier contrôle consigné"),
+        stamp(job.get("last_verification_at"), unavailable),
+    )
     lines.append(
         tr(
             "These are recorded results at completion, independent of the current settings. "
@@ -279,7 +283,7 @@ class Reports:
         return not self.thread.is_alive()
 
     def update(self):
-        for job in self.store.jobs():
+        for job in self.store.jobs(include_verification=True):
             signature = (
                 job["status"],
                 job["downloaded"],
@@ -289,6 +293,7 @@ class Reports:
                 job["verified_size_files"],
                 job["unverified_files"],
                 job["verification_unknown_files"],
+                job["last_verification_at"],
                 job["failed_files"],
                 job["file_count"],
                 job["total_size"],

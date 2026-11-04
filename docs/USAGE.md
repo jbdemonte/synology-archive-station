@@ -20,7 +20,7 @@ Passwords are sent only to Internet Archive over HTTPS. Saved passwords use auth
 
 The account is shared by the DSM administrators using this installation. The settings API and download reports never contain the password, encrypted credentials, key or cookies. S3 keys returned by Internet Archive are discarded.
 
-Without a connected account, analysis highlights how many restricted files were excluded. With an account, these files are included in the selection and their authorization is checked when downloaded. An account does not grant access to every locked file. On an authentication failure, Archive Station renews the session once and repeats the same download range; a second denial remains a file error. Concurrent transfers share one renewal, limited to once per minute. Incorrect saved credentials disable automatic attempts until you reconnect the account; temporary login failures use the normal transfer retry policy. No completed file is published before the configured integrity checks pass.
+Without a connected account, analysis highlights how many restricted files were excluded. With an account, these files are included in the selection and their authorization is checked when downloaded. An account does not grant access to every locked file. On an authentication failure, Archive Station renews the session once and repeats the same download range; a second denial remains a file error. Concurrent transfers share one renewal, limited to once per minute. Incorrect saved credentials disable automatic attempts until you reconnect the account; public requests fall back to anonymous access if renewal fails. Restricted downloads wait for the shared login cooldown without consuming file attempts; actual failed renewal requests remain retryable. Local key errors and clock skew do not persist a rejected-password state. No completed file is published before the configured integrity checks pass.
 
 For an existing task that contains only public metadata files:
 
@@ -29,7 +29,7 @@ For an existing task that contains only public metadata files:
 3. Choose **⋯ → Refresh file list**, review the additional files and apply the selection.
 4. Resume the task as needed. Files already downloaded are retained.
 
-Account changes invalidate pending file selections; analyze the URLs again before adding a task. No account password is required to open Archive Station itself: access to the application still uses your DSM session.
+Account changes invalidate pending file selections; routine session renewal preserves them. After changing accounts, analyze the URLs again before adding a task. No account password is required to open Archive Station itself: access to the application still uses your DSM session.
 
 ## Receive DSM desktop notifications
 
@@ -77,7 +77,7 @@ Click the document icon on an archive row, or **Read report** in its **⋯** men
 
 **Source file mode** describes the file-type filter: **Original files only** or **All accessible files**, including derived files. It does not describe access permissions: restricted files can be included when your Internet Archive account is authorized. Filename filters and manual selection can further limit the downloaded files.
 
-**Completed file integrity** counts the checks actually performed: matching SHA-1, matching MD5, size only, no reference check, and checks not recorded by older versions. Results are saved with each completed file and survive restarts and settings changes. An in-progress or failed file is never counted as hash verified. Without a usable checksum or expected size, a completed transfer cannot establish integrity against a reference.
+**Completed file integrity** counts the checks actually performed: matching SHA-1, matching MD5, size only, no reference check, and checks not recorded by older versions. Results are saved with each completed file and survive restarts and settings changes. An in-progress or failed file is never counted as hash verified. The report also shows the last recorded check date. Without a usable checksum or expected size, a completed transfer cannot establish integrity against a reference. A size merely observed on disk never becomes a source reference when running Verify and complete. Older size-only results without recorded size provenance become Check not recorded on upgrade.
 
 Files completed before this tracking was introduced remain **Check not recorded**; the current setting cannot prove which checks ran earlier. **Verify and complete** can check them and record the result. This recheck reads the files from disk and is never started automatically by an upgrade. Recorded results describe the file at completion, not a continuous check for later disk corruption or external changes.
 

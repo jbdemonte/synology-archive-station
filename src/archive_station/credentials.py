@@ -14,7 +14,9 @@ STORAGE_ERROR = (
 
 
 class CredentialError(ValueError):
-    pass
+    def __init__(self, message, *, retryable=False):
+        super().__init__(message)
+        self.retryable = retryable
 
 
 class CredentialVault:
@@ -30,6 +32,29 @@ class CredentialVault:
                 raise ValueError("Missing key")
             return self.memory_key
         if create and not self.path.exists():
+            self._write_key()
+        fd = os.open(self.path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+        with os.fdopen(fd, "rb") as handle:
+            info = os.fstat(handle.fileno())
+            if not stat.S_ISREG(info.st_mode) or info.st_uid != os.geteuid() or info.st_nlink != 1:
+                raise ValueError("Invalid key file")
+            key = handle.read(45)
+            try:
+                if len(key) != 44:
+                    raise ValueError("Invalid key")
+                Fernet(key)
+            except ValueError:
+                if not create:
+                    raise
+                # Only a corrupt regular file owned by this account may be replaced.
+                # Encrypt is used after a fresh login, never during automatic renewal.
+                self._write_key(replace=True)
+                return self._key()
+            os.fchmod(handle.fileno(), 0o600)
+            return key
+
+    def _write_key(self, replace=False):
+        if self.path is not None:
             self.path.parent.mkdir(parents=True, exist_ok=True)
             fd, temporary = tempfile.mkstemp(prefix=".archive-account-key-", dir=self.path.parent)
             try:
@@ -38,29 +63,23 @@ class CredentialVault:
                     handle.write(Fernet.generate_key())
                     handle.flush()
                     os.fsync(handle.fileno())
-                # Never replace an existing key: a second writer must use that key.
-                try:
-                    os.link(temporary, self.path)
-                except FileExistsError:
-                    pass
+                if replace:
+                    os.replace(temporary, self.path)
+                else:
+                    try:
+                        os.link(temporary, self.path)
+                    except FileExistsError:
+                        pass
             finally:
                 Path(temporary).unlink(missing_ok=True)
-        fd = os.open(self.path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
-        with os.fdopen(fd, "rb") as handle:
-            info = os.fstat(handle.fileno())
-            if not stat.S_ISREG(info.st_mode) or info.st_uid != os.geteuid() or info.st_nlink != 1:
-                raise ValueError("Invalid key file")
-            key = handle.read(45)
-            if len(key) != 44:
-                raise ValueError("Invalid key")
-            os.fchmod(handle.fileno(), 0o600)
-            return key
 
     def encrypt(self, email, password):
         try:
             data = json.dumps({"email": email, "password": password}, ensure_ascii=False).encode()
             return Fernet(self._key(create=True)).encrypt(data).decode("ascii")
-        except (OSError, ValueError, TypeError):
+        except OSError:
+            raise CredentialError(STORAGE_ERROR, retryable=True) from None
+        except (ValueError, TypeError):
             raise CredentialError(STORAGE_ERROR) from None
 
     def decrypt(self, token, email):
@@ -74,7 +93,9 @@ class CredentialVault:
             ):
                 raise ValueError("Invalid credentials")
             return value["password"]
-        except (OSError, ValueError, TypeError, KeyError, InvalidToken):
+        except OSError:
+            raise CredentialError(STORAGE_ERROR, retryable=True) from None
+        except (ValueError, TypeError, KeyError, InvalidToken):
             raise CredentialError(STORAGE_ERROR) from None
 
     def forget(self):

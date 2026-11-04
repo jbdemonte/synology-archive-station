@@ -89,14 +89,14 @@ class ArchiveClient:
         self.lock = threading.Lock()
         self.cache = {}
         self.account = account or ArchiveAccount()
-        self.cache_identity = self.account.snapshot()[0]
+        self.cache_identity = (self.account.identity(), bool(self.account.snapshot()[1]))
 
     def clear_cache(self):
         with self.lock:
             self.cache.clear()
-            self.cache_identity = self.account.snapshot()[0]
+            self.cache_identity = (self.account.identity(), bool(self.account.snapshot()[1]))
 
-    def _open(self, url, *, timeout, session=None, offset=0, reject_html=False):
+    def _open(self, url, *, timeout, session=None, offset=0):
         identity, cookie = session or self.account.request_snapshot()
         for attempt in range(2):
             headers = {"User-Agent": USER_AGENT, "Accept-Encoding": "identity"}
@@ -108,13 +108,13 @@ class ArchiveClient:
                 response = build_opener(ArchiveRedirects()).open(
                     Request(url, headers=headers), timeout=timeout
                 )
-                if (
-                    reject_html
-                    and "text/html"
-                    in getattr(response, "headers", {}).get("Content-Type", "").lower()
+                final_url = getattr(response, "url", url)
+                if isinstance(final_url, str) and urlsplit(final_url).path.startswith(
+                    ("/account/", "/services/xauthn")
                 ):
                     response.close()
                     raise HTTPError(url, 403, "Internet Archive authorization required", {}, None)
+                self.account.mark_success(identity)
                 return response, identity, cookie
             except HTTPError as error:
                 if attempt or error.code not in {401, 403}:
@@ -133,12 +133,7 @@ class ArchiveClient:
         url = f"https://archive.org/download/{quote(identifier)}/{quote(name, safe='/')}"
         # Repeat the same Range after renewal; no bytes are published before
         # authentication, length and checksum validation by the transfer engine.
-        response, _, _ = self._open(
-            url,
-            timeout=30,
-            offset=offset,
-            reject_html=not name.lower().endswith((".html", ".htm")),
-        )
+        response, _, _ = self._open(url, timeout=30, offset=offset)
         return response
 
     def manifest(self, identifier, mode="all", pattern="", refresh=False):
@@ -146,11 +141,13 @@ class ArchiveClient:
             raise ValueError("Sélection de fichiers invalide.")
         if not isinstance(pattern, str) or len(pattern) > 200:
             raise ValueError("Filtre trop long.")
+        account_identity = self.account.identity()
         identity, cookie = self.account.request_snapshot()
+        cache_identity = (account_identity, bool(cookie))
         with self.lock:
-            if self.cache_identity != identity:
+            if self.cache_identity != cache_identity:
                 self.cache.clear()
-                self.cache_identity = identity
+                self.cache_identity = cache_identity
             cached = self.cache.get(identifier)
         if cached and not refresh and time.monotonic() - cached[0] < 900:
             payload = cached[1]
@@ -159,7 +156,6 @@ class ArchiveClient:
                 f"https://archive.org/metadata/{identifier}",
                 timeout=45,
                 session=(identity, cookie),
-                reject_html=True,
             )
             with response:
                 raw = response.read(64 * 1024 * 1024 + 1)
@@ -169,25 +165,27 @@ class ArchiveClient:
             if not isinstance(payload, dict) or not payload.get("files"):
                 raise ValueError("Élément introuvable, privé ou sans fichiers téléchargeables.")
             with self.lock:
-                if self.account.snapshot()[0] != identity:
+                if self.account.identity() != account_identity:
                     raise AccountError(CHANGED)
-                if self.cache_identity != identity:
+                cache_identity = (account_identity, bool(cookie))
+                if self.cache_identity != cache_identity:
                     self.cache.clear()
-                    self.cache_identity = identity
+                    self.cache_identity = cache_identity
                 if len(self.cache) >= 4:
                     self.cache.pop(next(iter(self.cache)))
                 self.cache[identifier] = (time.monotonic(), payload)
         files, seen, private, restricted = [], set(), 0, 0
         for item in payload["files"]:
+            name = item.get("name")
+            if mode == "original" and item.get("source") != "original":
+                continue
+            if pattern and (not isinstance(name, str) or not fnmatch.fnmatchcase(name, pattern)):
+                continue
             is_private = item.get("private") in {True, "true", "1"}
             if is_private and not cookie:
                 private += 1
                 continue
-            name = validate_name(item.get("name"))
-            if mode == "original" and item.get("source") != "original":
-                continue
-            if pattern and not fnmatch.fnmatchcase(name, pattern):
-                continue
+            name = validate_name(name)
             if name in seen:
                 continue
             seen.add(name)
@@ -212,10 +210,11 @@ class ArchiveClient:
             if any("/".join(parts[:i]) in seen for i in range(1, len(parts))):
                 raise ValueError("La liste contient un conflit entre fichier et dossier.")
         title = payload.get("metadata", {}).get("title", identifier)
-        if self.account.snapshot()[0] != identity:
+        if self.account.identity() != account_identity:
             raise AccountError(CHANGED)
         return {
             "identifier": identifier,
+            "account_generation": account_identity,
             "title": str(title),
             "files": files,
             "total_size": sum(f["size"] or 0 for f in files),

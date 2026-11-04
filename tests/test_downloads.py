@@ -10,6 +10,7 @@ from unittest.mock import patch
 from urllib.error import HTTPError
 
 from archive_station.archive import ArchiveClient, parse_identifier, safe_path, validate_name
+from archive_station.archive_account import ArchiveAccount
 from archive_station.config import Settings
 from archive_station.engine import Conflict, Engine, Interrupted
 from archive_station.store import Store
@@ -42,6 +43,7 @@ class Response(io.BytesIO):
 
 class Client:
     def __init__(self, data=PAYLOAD, ranges=True):
+        self.account = ArchiveAccount()
         self.data, self.ranges, self.offsets = data, ranges, []
 
     def open(self, identifier, name, offset=0):

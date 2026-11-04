@@ -15,6 +15,62 @@ from archive_station.store import Store
 
 
 class VerificationResultsTests(Base):
+    def test_upgrade_preserves_progress_without_trusting_legacy_size_only_checks(self):
+        data = manifest()
+        data["files"] += [{**data["files"][0], "name": name} for name in ("size.zip", "next.zip")]
+        job = self.store.add(data, "all", "", self.downloads)
+        self.engine.transfer(self.store.claim())
+        self.settings.update({"verify_checksums": False})
+        self.engine.transfer(self.store.claim())
+        before = self.store.jobs()[0]
+        self.store.close()
+        with closing(sqlite3.connect(self.root / "state.sqlite3")) as db, db:
+            db.execute("ALTER TABLE files DROP COLUMN size_source")
+        self.store = Store(self.root / "state.sqlite3")
+        self.engine.store = self.store
+        after = self.store.jobs(include_verification=True)[0]
+        self.assertEqual(after["downloaded"], before["downloaded"])
+        self.assertEqual(after["completed_files"], 2)
+        self.assertEqual(after["verified_sha1_files"], 1)
+        self.assertEqual(after["verified_size_files"], 0)
+        self.assertEqual(after["verification_unknown_files"], 1)
+        self.assertEqual(self.store.claim()["size_source"], "metadata")
+        self.assertEqual(len(self.store.files(job)["files"]), 3)
+
+    def test_repair_cannot_promote_an_observed_size_into_reference_verification(self):
+        data = manifest(size=False)
+        data["files"][0].update(algorithm=None, digest=None)
+        job = self.store.add(data, "all", "", self.downloads)
+        with patch.object(self.client, "open", return_value=Response(PAYLOAD, headers={})):
+            self.engine.transfer(self.store.claim())
+        for _ in range(2):
+            self.store.finish_jobs()
+            self.store.close()
+            self.store = Store(self.root / "state.sqlite3")
+            self.engine.store = self.store
+            self.store.action(job, "repair")
+            with patch.object(self.client, "open") as network:
+                self.engine.transfer(self.store.claim())
+                network.assert_not_called()
+            file = self.store.files(job)["files"][0]
+            self.assertEqual(file["verification_method"], "unverified")
+            self.assertEqual(file["size_source"], "observed")
+            result = self.store.verification_summary(job)
+            self.assertEqual(result["verified_size_files"], 0)
+            self.assertEqual(result["unverified_files"], 1)
+
+    def test_report_aggregates_are_not_computed_by_progress_polling(self):
+        self.add()
+        self.engine.transfer(self.store.claim())
+        with patch.object(
+            self.store, "verification_summary", wraps=self.store.verification_summary
+        ) as summary:
+            self.store.jobs()
+            summary.assert_not_called()
+            Reports(self.store, self.settings).update()
+            summary.assert_called_once()
+        self.assertIsNotNone(self.store.jobs(include_verification=True)[0]["last_verification_at"])
+
     def test_sha1_and_md5_results_survive_restart_and_settings_changes(self):
         data = manifest()
         data["files"].append(
@@ -37,7 +93,7 @@ class VerificationResultsTests(Base):
         for file in self.store.files(job)["files"]:
             self.assertEqual(file["verification_method"], file["algorithm"])
             self.assertGreaterEqual(file["verification_at"], start)
-        summary = self.store.jobs()[0]
+        summary = self.store.jobs(include_verification=True)[0]
         self.assertEqual(summary["verified_sha1_files"], 1)
         self.assertEqual(summary["verified_md5_files"], 1)
         self.assertEqual(summary["verification_unknown_files"], 0)
@@ -53,14 +109,14 @@ class VerificationResultsTests(Base):
         self.engine.transfer(self.store.claim())
         self.store.finish_jobs()
         self.settings.update({"verify_checksums": True})
-        self.assertEqual(self.store.jobs()[0]["verified_sha1_files"], 0)
-        self.assertEqual(self.store.jobs()[0]["verified_size_files"], 1)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["verified_sha1_files"], 0)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["verified_size_files"], 1)
         self.settings.update({"verify_checksums": False})
         self.store.action(job, "repair")
         self.assertIsNone(self.store.files(job)["files"][0]["verification_method"])
-        self.assertEqual(self.store.jobs()[0]["verified_size_files"], 0)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["verified_size_files"], 0)
         self.engine.transfer(self.store.claim())
-        self.assertEqual(self.store.jobs()[0]["verified_sha1_files"], 1)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["verified_sha1_files"], 1)
         self.assertEqual(self.client.offsets, [0])  # Repair reuses the file after hashing it.
 
     def test_setting_change_after_check_cannot_relabel_its_result(self):
@@ -122,13 +178,13 @@ class VerificationResultsTests(Base):
         result = self.store.files(job)["files"][0]
         self.assertIsNone(result["verification_method"])
         self.assertIsNone(result["verification_at"])
-        self.assertEqual(self.store.jobs()[0]["verified_sha1_files"], 0)
-        self.assertEqual(self.store.jobs()[0]["incident_count"], 1)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["verified_sha1_files"], 0)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["incident_count"], 1)
         self.partial(row, PAYLOAD)
         with patch.object(self.engine, "verify_file", side_effect=Interrupted):
             self.engine.run_transfer(row)
         self.assertIsNone(self.store.files(job)["files"][0]["verification_method"])
-        self.assertEqual(self.store.jobs()[0]["completed_files"], 0)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["completed_files"], 0)
         self.assertTrue(list(self.downloads.rglob("*.part")))
 
     def test_publication_failure_does_not_record_a_completed_check(self):
@@ -137,9 +193,9 @@ class VerificationResultsTests(Base):
         with patch("archive_station.engine.os.link", side_effect=OSError("Publish failed")):
             self.engine.run_transfer(row)
         self.assertIsNone(self.store.files(job)["files"][0]["verification_method"])
-        self.assertEqual(self.store.jobs()[0]["verified_sha1_files"], 0)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["verified_sha1_files"], 0)
         self.engine.transfer(row)
-        self.assertEqual(self.store.jobs()[0]["verified_sha1_files"], 1)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["verified_sha1_files"], 1)
         self.assertEqual(self.client.offsets, [0])
 
     def test_refresh_invalidates_old_check_until_changed_file_is_verified(self):
@@ -148,7 +204,7 @@ class VerificationResultsTests(Base):
         self.store.finish_jobs()
         remote = manifest(data=b"new contents")
         self.store.apply_refresh(job, difference(self.store, job, remote), paused=True)
-        self.assertEqual(self.store.jobs()[0]["verified_sha1_files"], 0)
+        self.assertEqual(self.store.jobs(include_verification=True)[0]["verified_sha1_files"], 0)
         result = self.store.files(job)["files"][0]
         self.assertIsNone(result["verification_method"])
         self.assertIsNone(result["verification_at"])
@@ -174,7 +230,7 @@ class VerificationResultsTests(Base):
         for _ in range(2):
             migrated = Store(path)
             try:
-                job = migrated.jobs()[0]
+                job = migrated.jobs(include_verification=True)[0]
                 self.assertEqual(job["completed_files"], 1)
                 self.assertEqual(job["downloaded"], len(PAYLOAD))
                 self.assertEqual(job["verified_sha1_files"], 0)

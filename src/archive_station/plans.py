@@ -8,8 +8,9 @@ from collections import OrderedDict
 
 
 class Plans:
-    def __init__(self, clock=time.monotonic):
+    def __init__(self, clock=time.monotonic, identity=lambda: 0):
         self.clock = clock
+        self.identity = identity
         self.lock = threading.RLock()
         self.items = OrderedDict()
 
@@ -17,10 +18,15 @@ class Plans:
         with self.lock:
             self.items.clear()
 
+    def validate(self, manifest):
+        if manifest.get("account_generation", self.identity()) != self.identity():
+            raise ValueError("L’analyse a expiré. Analyser les URL à nouveau.")
+
     def create(self, manifest, mode, pattern, job_id=None):
         if len(manifest["files"]) > 500_000:
             raise ValueError("Archive trop volumineuse. Affiner le filtre.")
         with self.lock:
+            self.validate(manifest)
             while self.items and (
                 len(self.items) >= 20
                 or sum(len(p["manifest"]["files"]) for p in self.items.values())
@@ -30,7 +36,7 @@ class Plans:
                 self.items.popitem(last=False)
             token = secrets.token_urlsafe(24)
             self.items[token] = {
-                "manifest": manifest,
+                "manifest": {"account_generation": self.identity(), **manifest},
                 "selected": set(range(len(manifest["files"]))),
                 "touched": self.clock(),
                 "job_id": job_id,
@@ -44,6 +50,7 @@ class Plans:
         if plan is None or self.clock() - plan["touched"] > 3600:
             self.items.pop(token, None)
             raise ValueError("L’analyse a expiré. Analyser les URL à nouveau.")
+        self.validate(plan["manifest"])
         plan["touched"] = self.clock()
         self.items.move_to_end(token)
         return plan

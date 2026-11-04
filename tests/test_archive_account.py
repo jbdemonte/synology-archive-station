@@ -264,13 +264,17 @@ class AuthenticatedDownloadTests(AccountBase):
         connect(self.account)
         client = ArchiveClient(self.account)
         with patch("archive_station.archive.build_opener") as opener:
-            response = Mock(headers={"Content-Type": "application/zip"})
+            response = Mock(
+                headers={"Content-Type": "application/zip"},
+                url="https://archive.org/download/test-item/restricted.zip",
+            )
             opener.return_value.open.return_value = response
             self.assertIs(client.open("test-item", "restricted.zip", 1024), response)
             request = opener.return_value.open.call_args.args[0]
             self.assertEqual(request.get_header("Range"), "bytes=1024-")
             self.assertIn(SIGNATURE, request.get_header("Cookie"))
             response.headers = {"Content-Type": "text/html; charset=utf-8"}
+            response.url = "https://archive.org/account/login"
             with self.assertRaises(HTTPError) as error:
                 client.open("test-item", "restricted.zip")
             self.assertEqual(error.exception.code, 403)
@@ -518,3 +522,32 @@ class AccountApiTests(AccountBase):
             )
         ]
         self.assertEqual(preserved, original)
+
+    def test_logout_between_manifest_and_plan_creation_cannot_keep_old_plan(self):
+        original = self.app.plans.create
+
+        def create(*args, **kwargs):
+            self.account.disconnect()
+            self.app.plans.clear()
+            return original(*args, **kwargs)
+
+        with (
+            patch("archive_station.archive.build_opener") as metadata,
+            patch.object(self.app.plans, "create", side_effect=create),
+        ):
+            metadata.return_value.open.return_value = io.BytesIO(b'{"files":[{"name":"file"}]}')
+            status, _ = self.request("/api/inspect", {"url": "test"})
+        self.assertEqual(status, 400)
+        self.assertFalse(self.app.plans.items)
+
+    def test_old_plan_is_rejected_even_if_clearing_it_races(self):
+        token = self.app.plans.create(
+            {"identifier": "test-item", "files": [{"name": "file", "size": 1}]}, "all", ""
+        )
+        self.account.disconnect()  # Deliberately bypass plans.clear().
+        self.assertEqual(self.request("/api/plans/" + token)[0], 400)
+        status, _ = self.request(
+            "/api/jobs", {"url": "test-item", "plan_id": token, "paused": True}
+        )
+        self.assertEqual(status, 400)
+        self.assertEqual(self.store.jobs(), [])

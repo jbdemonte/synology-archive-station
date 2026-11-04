@@ -115,11 +115,9 @@ class RememberAccountTests(AccountBase):
         restarted = ArchiveAccount(self.root, clock=lambda: 5000)
         with patch("archive_station.archive_account.build_opener") as opener:
             opener.return_value.open.return_value = login_response(success=False)
-            with self.assertRaisesRegex(AccountError, "refusée"):
-                restarted.request_snapshot()
+            self.assertEqual(restarted.request_snapshot()[1], "")
             again = ArchiveAccount(self.root, clock=lambda: 9000)
-            with self.assertRaisesRegex(AccountError, "refusée"):
-                again.request_snapshot()
+            self.assertEqual(again.request_snapshot()[1], "")
             self.assertEqual(opener.return_value.open.call_count, 1)
         self.assertEqual(again.status()["reconnect_error"], DENIED)
         remember(again)
@@ -132,7 +130,7 @@ class RememberAccountTests(AccountBase):
             opener.return_value.open.side_effect = URLError(PASSWORD)
             for _ in range(4):
                 with self.assertRaises(AccountError) as error:
-                    restarted.request_snapshot()
+                    restarted.refresh(restarted.snapshot()[0], expired=True)
                 self.assertTrue(error.exception.retryable)
                 self.assertNotIn(PASSWORD, str(error.exception))
             self.assertEqual(opener.return_value.open.call_count, 1)
@@ -214,7 +212,7 @@ class RememberAccountTests(AccountBase):
         self.account.credentials = "tampered" + original
         with patch("archive_station.archive_account.build_opener") as opener:
             with self.assertRaises(AccountError) as error:
-                self.account.request_snapshot()
+                self.account.refresh(self.account.snapshot()[0], expired=True)
             self.assertNotIn(original, str(error.exception))
             opener.assert_not_called()
         self.account.last_attempt = float("-inf")
@@ -223,7 +221,7 @@ class RememberAccountTests(AccountBase):
         self.account.vault.path.unlink()
         with patch("archive_station.archive_account.build_opener") as opener:
             with self.assertRaises(AccountError):
-                self.account.request_snapshot()
+                self.account.refresh(self.account.snapshot()[0], expired=True)
             opener.assert_not_called()
         self.assertFalse(self.account.vault.path.exists())
 
@@ -314,7 +312,7 @@ class RenewedTransferTests(AccountBase):
                 self.assertEqual(client.manifest("test-item")["restricted_files"], 1)
                 self.assertEqual(client.manifest("test-item")["restricted_files"], 1)
                 self.assertEqual(download.return_value.open.call_count, 2)
-                self.assertEqual(client.cache_identity, self.account.snapshot()[0])
+                self.assertEqual(client.cache_identity, (self.account.identity(), True))
 
     def test_partial_file_resumes_after_renewal_and_final_checksum_matches(self):
         remember(self.account)

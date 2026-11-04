@@ -85,6 +85,18 @@ class Store:
             }.items():
                 if name not in file_columns:
                     self.db.execute(f"ALTER TABLE files ADD COLUMN {name} {definition}")
+            if "size_source" not in file_columns:
+                self.db.execute("ALTER TABLE files ADD COLUMN size_source TEXT")
+                self.db.execute(
+                    "UPDATE files SET size_source=CASE WHEN size IS NULL THEN NULL "
+                    "WHEN status<>'completed' AND repair=0 THEN 'metadata' ELSE 'legacy' END"
+                )
+                # Prior size-only results did not record the source of the size;
+                # some could have compared a file with its own observed length.
+                self.db.execute(
+                    "UPDATE files SET verification_method=NULL,verification_at=NULL "
+                    "WHERE size_source='legacy' AND verification_method='size'"
+                )
             self.db.execute(
                 "CREATE INDEX IF NOT EXISTS file_priority ON files(job_id,status,priority DESC,id)"
             )
@@ -121,9 +133,17 @@ class Store:
                     (job_id,),
                 )
                 self.db.executemany(
-                    "INSERT INTO files(job_id,name,size,algorithm,digest) VALUES (?,?,?,?,?)",
+                    "INSERT INTO files(job_id,name,size,algorithm,digest,size_source) "
+                    "VALUES (?,?,?,?,?,?)",
                     [
-                        (job_id, f["name"], f["size"], f["algorithm"], f["digest"])
+                        (
+                            job_id,
+                            f["name"],
+                            f["size"],
+                            f["algorithm"],
+                            f["digest"],
+                            "metadata" if f["size"] is not None else None,
+                        )
                         for f in manifest["files"]
                     ],
                 )
@@ -140,7 +160,7 @@ class Store:
                 raise ValueError("Cet élément est déjà dans la liste des téléchargements.") from exc
         return job_id
 
-    def jobs(self):
+    def jobs(self, include_verification=False):
         with self.lock:
             jobs = [
                 dict(row)
@@ -153,17 +173,6 @@ class Store:
                     COALESCE(SUM(CASE WHEN j.status IN ('running','queued')
                         THEN f.speed ELSE 0 END),0) AS speed,
                     SUM(f.status='completed') AS completed_files,
-                    SUM(CASE WHEN f.status='completed' AND f.verification_method='sha1'
-                        THEN 1 ELSE 0 END) AS verified_sha1_files,
-                    SUM(CASE WHEN f.status='completed' AND f.verification_method='md5'
-                        THEN 1 ELSE 0 END) AS verified_md5_files,
-                    SUM(CASE WHEN f.status='completed' AND f.verification_method='size'
-                        THEN 1 ELSE 0 END) AS verified_size_files,
-                    SUM(CASE WHEN f.status='completed' AND f.verification_method='unverified'
-                        THEN 1 ELSE 0 END) AS unverified_files,
-                    SUM(CASE WHEN f.status='completed' AND (f.verification_method IS NULL OR
-                        f.verification_method NOT IN ('sha1','md5','size','unverified'))
-                        THEN 1 ELSE 0 END) AS verification_unknown_files,
                     SUM(f.status='downloading') AS active_files,
                     COALESCE(SUM(CASE WHEN f.status='completed' THEN f.downloaded ELSE 0 END),0)
                         AS completed_bytes,
@@ -178,8 +187,35 @@ class Store:
             """)
             ]
             for job in jobs:
+                if include_verification:
+                    job.update(self.verification_summary(job["id"]))
                 job.update(self.estimates.snapshot(job))
             return jobs
+
+    def verification_summary(self, job_id):
+        """Reports request these aggregates; frequent progress polls do not need them."""
+        fields = {
+            "sha1": "verified_sha1_files",
+            "md5": "verified_md5_files",
+            "size": "verified_size_files",
+            "unverified": "unverified_files",
+        }
+        result = dict.fromkeys((*fields.values(), "verification_unknown_files"), 0)
+        result["last_verification_at"] = None
+        with self.lock:
+            for row in self.db.execute(
+                "SELECT verification_method,COUNT(*) AS count,MAX(verification_at) AS latest "
+                "FROM files WHERE job_id=? AND status='completed' GROUP BY verification_method",
+                (job_id,),
+            ):
+                result[fields.get(row["verification_method"], "verification_unknown_files")] += row[
+                    "count"
+                ]
+                if row["verification_method"] in {"sha1", "md5", "size"} and row["latest"]:
+                    result["last_verification_at"] = max(
+                        result["last_verification_at"] or 0, row["latest"]
+                    )
+        return result
 
     def error_history(self, job_id):
         with self.lock:
@@ -347,16 +383,32 @@ class Store:
             for file in manifest["files"]:
                 if file["change"] == "new":
                     self.db.execute(
-                        "INSERT INTO files(job_id,name,size,algorithm,digest) VALUES (?,?,?,?,?)",
-                        (job_id, file["name"], file["size"], file["algorithm"], file["digest"]),
+                        "INSERT INTO files(job_id,name,size,algorithm,digest,size_source) "
+                        "VALUES (?,?,?,?,?,?)",
+                        (
+                            job_id,
+                            file["name"],
+                            file["size"],
+                            file["algorithm"],
+                            file["digest"],
+                            "metadata" if file["size"] is not None else None,
+                        ),
                     )
                 else:
                     self.db.execute(
                         "UPDATE files SET size=?,algorithm=?,digest=?, status='queued', "
                         "downloaded=0,speed=0,attempts=0,available_at=0,error=NULL, "
-                        "repair=1,reset_partial=1,verification_method=NULL,verification_at=NULL "
+                        "repair=1,reset_partial=1,verification_method=NULL,verification_at=NULL, "
+                        "size_source=? "
                         "WHERE job_id=? AND name=?",
-                        (file["size"], file["algorithm"], file["digest"], job_id, file["name"]),
+                        (
+                            file["size"],
+                            file["algorithm"],
+                            file["digest"],
+                            "metadata" if file["size"] is not None else None,
+                            job_id,
+                            file["name"],
+                        ),
                     )
                 self.db.execute(
                     "INSERT OR IGNORE INTO known_files VALUES (?,?)", (job_id, file["name"])
@@ -527,6 +579,7 @@ class Store:
             "reset_partial",
             "verification_method",
             "verification_at",
+            "size_source",
         }
         if not values.keys() <= allowed:
             raise ValueError("Unknown file field")

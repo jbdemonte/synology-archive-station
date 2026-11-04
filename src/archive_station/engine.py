@@ -113,6 +113,16 @@ class Engine:
             self.store.estimates.reset(row["job_id"])
             self.store.update(row["id"], status="queued", speed=0)
         except Exception as exc:
+            if isinstance(exc, AccountError) and exc.retry_after is not None:
+                # Waiting for another login attempt is not a failed file transfer.
+                self.store.update(
+                    row["id"],
+                    status="queued",
+                    speed=0,
+                    available_at=time.time() + max(1, exc.retry_after),
+                    error=str(exc),
+                )
+                return
             if isinstance(exc, OSError) and exc.errno in {errno.ENOSPC, errno.EDQUOT}:
                 self.store.pause_for_space(row["job_id"])
                 self.store.update(row["id"], status="queued", speed=0)
@@ -165,7 +175,9 @@ class Engine:
                     self.check(row["job_id"])
                     digest.update(chunk)
             return row["algorithm"] if digest.hexdigest() == row["digest"] else None
-        return "size" if row["size"] is not None else None
+        if row["size"] is None:
+            return None
+        return "size" if row["size_source"] in {"metadata", "http"} else "unverified"
 
     def complete(self, row, path, verification):
         size = path.stat().st_size
@@ -179,6 +191,7 @@ class Engine:
             repair=0,
             verification_method=verification,
             verification_at=time.time(),
+            size_source=row["size_source"],
         )
 
     def transfer(self, row):
@@ -254,11 +267,13 @@ class Engine:
                 ):
                     raise OSError("La taille distante a changé pendant la reprise.")
                 expected = total
+                size_source = "http"
             else:
                 # Some servers ignore Range. Truncate rather than append the full response.
                 offset = 0
                 length = response.headers.get("Content-Length")
                 expected = int(length) if length is not None else row["size"]
+                size_source = "http" if length is not None else row["size_source"]
             if row["size"] is not None and expected is not None and expected != row["size"]:
                 raise OSError("La taille distante ne correspond plus aux métadonnées.")
             self.store.update(row["id"], downloaded=offset, speed=0)
@@ -298,16 +313,17 @@ class Engine:
                 raise OSError("Transfert interrompu avant la fin du fichier.")
         self.check(row["job_id"])
         # Unknown-size files can be checked against the response length or checksum.
-        verification_row = {**row, "size": expected if expected is not None else received}
+        verification_row = {
+            **row,
+            "size": expected if expected is not None else received,
+            "size_source": size_source if expected is not None else "observed",
+        }
         verification = self.verify_file(partial, verification_row)
         if not verification:
             partial.unlink()
             self.store.update(row["id"], downloaded=0)
             raise OSError("Somme de contrôle incorrecte. Le fichier sera téléchargé à nouveau.")
-        if verification == "size" and expected is None:
-            # Matching our own byte counter is not an independent size reference.
-            verification = "unverified"
-        self.publish(partial, target, row, verification)
+        self.publish(partial, target, verification_row, verification)
 
     def publish(self, partial, target, row, verification):
         self.check(row["job_id"])
