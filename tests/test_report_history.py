@@ -11,6 +11,34 @@ from archive_station.web import WebApp
 
 
 class ReportHistoryTests(Base):
+    def test_completed_archive_moved_before_restart_is_not_recreated(self):
+        job = self.add()
+        self.engine.transfer(self.store.claim())
+        self.store.finish_jobs()
+        Reports(self.store, self.settings).update()
+        original = self.downloads / "test-item"
+        moved = self.downloads / "moved-item"
+        original.rename(moved)
+        self.store.close()
+        self.store = Store(self.root / "state.sqlite3")
+        Reports(self.store, self.settings).update()
+        self.assertFalse(original.exists())
+        self.assertTrue((moved / f"ArchiveStation-report-{job}.txt").is_file())
+        self.assertTrue((moved / "folder/game.zip").is_file())
+
+    def test_reports_still_create_active_folders_and_update_existing_completed_ones(self):
+        job = self.add()
+        reports = Reports(self.store, self.settings)
+        reports.update()
+        path = self.downloads / "test-item" / f"ArchiveStation-report-{job}.txt"
+        self.assertTrue(path.is_file())
+        self.engine.transfer(self.store.claim())
+        self.store.finish_jobs()
+        reports.update()
+        self.settings.update({"language": "fr"})
+        reports.update()
+        self.assertIn("Terminé", path.read_text())
+
     def test_errors_survive_retry_completion_restart_and_repair(self):
         job = self.add()
         row = self.store.claim()

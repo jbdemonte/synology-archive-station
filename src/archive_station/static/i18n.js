@@ -44,7 +44,7 @@ const ArchiveI18n = (() => {
     sve: "sv",
     nor: "nb",
     fin: "fi",
-    pol: "pl",
+    plk: "pl",
     csy: "cs",
     hun: "hu",
     trk: "tr",
@@ -96,6 +96,13 @@ const ArchiveI18n = (() => {
     if (http) {
       message = "Réponse HTTP inattendue : {status}";
       values = { status: http[1] };
+    }
+    const path = /^Chemin de fichier non autorisé : (.+)$/s.exec(
+      String(message),
+    );
+    if (path && message !== "Chemin de fichier non autorisé : {path}") {
+      message = "Chemin de fichier non autorisé : {path}";
+      values = { path: path[1] };
     }
     let text = dictionary[message] ?? english[message] ?? String(message ?? "");
     if (typeof text === "object") {

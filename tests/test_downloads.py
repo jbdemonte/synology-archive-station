@@ -5,9 +5,10 @@ import os
 import tempfile
 import time
 import unittest
+from http.client import BadStatusLine, IncompleteRead, RemoteDisconnected
 from pathlib import Path
 from unittest.mock import patch
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 
 from archive_station.archive import ArchiveClient, parse_identifier, safe_path, validate_name
 from archive_station.archive_account import ArchiveAccount
@@ -407,6 +408,25 @@ class StateTests(Base):
 
 
 class ValidationTests(Base):
+    def test_metadata_titles_are_readable_with_an_identifier_fallback(self):
+        client = ArchiveClient()
+        for title, expected in [
+            ("Single title", "Single title"),
+            ("  Padded title  ", "Padded title"),
+            ("   ", "test"),
+            (["First title", "Second title"], "First title / Second title"),
+            ([" First title ", " Second title "], "First title / Second title"),
+            ([None, "", " ", "A title"], "A title"),
+            ([], "test"),
+            (None, "test"),
+        ]:
+            with self.subTest(title=title):
+                client.cache["test"] = (
+                    time.monotonic(),
+                    {"metadata": {"title": title}, "files": [{"name": "a.zip", "size": "2"}]},
+                )
+                self.assertEqual(client.manifest("test")["title"], expected)
+
     def test_archive_urls(self):
         for value in [
             "test-item",
@@ -487,6 +507,26 @@ class ApiTests(Base):
 
         result["body"] = json.loads(b"".join(self.app(env, start)))
         return result
+
+    def test_archive_network_failures_return_a_translatable_gateway_error(self):
+        self.app.no_auth = True
+        for error in [
+            URLError("offline"),
+            TimeoutError("timed out"),
+            ConnectionError("connection failed"),
+            ConnectionResetError("connection reset"),
+            RemoteDisconnected("remote closed the connection"),
+            BadStatusLine("invalid status"),
+            IncompleteRead(b"partial"),
+        ]:
+            with (
+                self.subTest(error=type(error).__name__),
+                patch.object(self.client, "manifest", create=True, side_effect=error),
+            ):
+                result = self.request("/api/inspect", {"url": "test-item"})
+                self.assertEqual(result["status"], 502)
+                self.assertEqual(result["body"]["error"], "Archive.org est indisponible : {error}")
+                self.assertEqual(result["body"]["error_values"], {"error": str(error)})
 
     def test_selected_manifest_creates_only_chosen_files(self):
         self.app.no_auth = True

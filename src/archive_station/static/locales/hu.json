@@ -343,5 +343,12 @@
   "Reconnexion automatique désactivée.": "Automatikus újracsatlakozás kikapcsolva.",
   "Oublier le mot de passe": "Jelszó elfelejtése",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "A mentett bejelentkezési adatok nem olvashatók vagy nem menthetők. Csatlakoztassa újra a fiókot.",
-  "La session sera renouvelée au prochain téléchargement.": "A munkamenet a következő letöltéskor megújul."
+  "La session sera renouvelée au prochain téléchargement.": "A munkamenet a következő letöltéskor megújul.",
+  "Archive.org est indisponible : {error}": "Az Archive.org nem érhető el: {error}",
+  "Select at least one schedule day": "Válasszon legalább egy napot az ütemezéshez.",
+  "Chemin de fichier non autorisé : {path}": "Nem engedélyezett fájlútvonal: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "A célútvonal szimbolikus hivatkozást tartalmaz.",
+  "Le chemin sort du dossier de destination.": "Az útvonal a célmappán kívülre mutat.",
+  "Filtre trop long.": "A szűrő túl hosszú.",
+  "La liste contient un conflit entre fichier et dossier.": "A lista fájl és mappa közötti ütközést tartalmaz."
 }

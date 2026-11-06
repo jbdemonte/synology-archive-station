@@ -6,6 +6,7 @@ from html import unescape
 from pathlib import Path
 
 from archive_station.config import LANGUAGES
+from archive_station.schedule import validate
 
 STATIC = Path(__file__).resolve().parents[1] / "src/archive_station/static"
 
@@ -66,3 +67,21 @@ class LocaleTests(unittest.TestCase):
                 and isinstance(node.exc.args[0], ast.Constant)
             ):
                 self.assertIn(node.exc.args[0].value, catalog)
+
+    def test_archive_and_schedule_diagnostics_have_catalog_entries(self):
+        catalog = json.loads((STATIC / "locales/fr.json").read_text())
+        for node in ast.walk(ast.parse((STATIC.parent / "archive.py").read_text())):
+            if (
+                isinstance(node, ast.Raise)
+                and isinstance(node.exc, ast.Call)
+                and isinstance(node.exc.func, ast.Name)
+                and node.exc.func.id == "ValueError"
+                and node.exc.args
+                and isinstance(node.exc.args[0], ast.Constant)
+            ):
+                self.assertIn(node.exc.args[0].value, catalog)
+        self.assertIn("Chemin de fichier non autorisé : {path}", catalog)
+        self.assertIn("Archive.org est indisponible : {error}", catalog)
+        with self.assertRaises(ValueError) as error:
+            validate({"schedule_enabled": True, "schedule_days": []})
+        self.assertIn(str(error.exception), catalog)

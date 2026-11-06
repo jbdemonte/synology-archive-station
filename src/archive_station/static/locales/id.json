@@ -343,5 +343,12 @@
   "Reconnexion automatique désactivée.": "Penyambungan ulang otomatis dinonaktifkan.",
   "Oublier le mot de passe": "Lupakan kata sandi",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Tidak dapat membaca atau menyimpan kredensial yang diingat. Hubungkan kembali akun.",
-  "La session sera renouvelée au prochain téléchargement.": "Sesi akan diperbarui pada unduhan berikutnya."
+  "La session sera renouvelée au prochain téléchargement.": "Sesi akan diperbarui pada unduhan berikutnya.",
+  "Archive.org est indisponible : {error}": "Archive.org tidak tersedia: {error}",
+  "Select at least one schedule day": "Pilih setidaknya satu hari untuk jadwal.",
+  "Chemin de fichier non autorisé : {path}": "Jalur berkas tidak diizinkan: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Jalur tujuan berisi tautan simbolis.",
+  "Le chemin sort du dossier de destination.": "Jalur berada di luar folder tujuan.",
+  "Filtre trop long.": "Filter terlalu panjang.",
+  "La liste contient un conflit entre fichier et dossier.": "Daftar berisi konflik antara berkas dan folder."
 }

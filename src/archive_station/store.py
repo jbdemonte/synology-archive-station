@@ -102,6 +102,11 @@ class Store:
             )
             self.db.execute("UPDATE files SET status='queued', speed=0 WHERE status='downloading'")
             self.db.execute("UPDATE jobs SET status='queued' WHERE status='running'")
+            # Repair disk holds left behind by cancellations in older versions.
+            self.db.execute(
+                "UPDATE jobs SET hold_reason=NULL "
+                "WHERE status='cancelled' AND hold_reason IS NOT NULL"
+            )
 
     def close(self):
         with self.lock:
@@ -346,7 +351,8 @@ class Store:
                 self.estimates.start(job_id)
             elif action == "cancel":
                 self.db.execute(
-                    "UPDATE jobs SET status='cancelled', finished_at=? WHERE id=?",
+                    "UPDATE jobs SET status='cancelled', finished_at=?, hold_reason=NULL "
+                    "WHERE id=?",
                     (time.time(), job_id),
                 )
             elif action == "remove":

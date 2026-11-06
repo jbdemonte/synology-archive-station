@@ -550,35 +550,29 @@ function render() {
   $("empty").hidden = state.jobs.length > 0;
   $("no-results").hidden = !state.jobs.length || !!visible.length;
   $("list-count").textContent = t("{count} tâches", { count: visible.length });
-  const focusedView = document.activeElement?.dataset.fileView;
-  const focusedJob = document.activeElement?.dataset.viewJob;
-  const focusedReport = document.activeElement?.dataset.reportJob;
-  const focusedSource = document.activeElement?.dataset.sourceJob;
-  const focusedMenu = document.activeElement?.dataset.menuJob;
+  const focused = document.activeElement;
+  const focusKeys = $("download-rows").contains(focused)
+    ? [
+        ["job"],
+        ["selectJob"],
+        ["expand", "prefix"],
+        ["fileView", "viewJob"],
+        ["reportJob"],
+        ["sourceJob"],
+        ["menuJob"],
+        ["priorityFile", "priorityJob"],
+      ].find((keys) => keys.every((key) => focused.dataset[key] !== undefined))
+    : null;
   $("download-rows").innerHTML = visible
     .map((job) => {
       const open = state.expanded.has(key(job.id, ""));
       return `<tr class="job-row ${state.selected === job.id ? "selected" : ""}" data-job="${esc(job.id)}" tabindex="0" aria-selected="${state.selected === job.id}"><td><div class="tree-name"><input type="checkbox" class="job-check" data-select-job="${esc(job.id)}" ${state.checked.has(job.id) ? "checked" : ""} aria-label="${esc(t("Sélectionner {name}", { name: job.identifier }))}"/><button class="toggle" data-expand="${esc(job.id)}" data-prefix="" aria-label="${esc(t(open ? "Replier" : "Déplier"))} ${esc(job.identifier)}" aria-expanded="${open}">${open ? "⌄" : "›"}</button>${reportButton(job)}<div class="name-text"><strong title="${esc(job.identifier)}">${esc(job.identifier)}</strong><small title="${esc(job.title)}">${esc(fileCount(job.file_count, job.completed_files))} · ${esc(job.title)}</small></div>${sourceLink(job)}${menuButton(job)}</div></td><td>${bytes(job.total_size)}${job.unknown_sizes ? " +" : ""}</td><td>${progress(job, job.total_size)}${etaMarkup(job)}</td><td class="speed">${job.speed ? bytes(job.speed) + "/s" : "—"}</td><td>${badge(job.status)}${statusNote(job)}</td></tr>${treeRows(job, "", 1)}`;
     })
     .join("");
-  if (focusedReport)
-    [...$("download-rows").querySelectorAll("[data-report-job]")]
-      .find((button) => button.dataset.reportJob === focusedReport)
-      ?.focus({ preventScroll: true });
-  if (focusedSource)
-    [...$("download-rows").querySelectorAll("[data-source-job]")]
-      .find((link) => link.dataset.sourceJob === focusedSource)
-      ?.focus({ preventScroll: true });
-  if (focusedMenu)
-    [...$("download-rows").querySelectorAll("[data-menu-job]")]
-      .find((button) => button.dataset.menuJob === focusedMenu)
-      ?.focus({ preventScroll: true });
-  if (focusedView) {
-    [...$("download-rows").querySelectorAll("[data-file-view]")]
-      .find(
-        (button) =>
-          button.dataset.fileView === focusedView &&
-          button.dataset.viewJob === focusedJob,
+  if (focusKeys) {
+    [...$("download-rows").querySelectorAll("[tabindex], input, button, a")]
+      .find((element) =>
+        focusKeys.every((key) => element.dataset[key] === focused.dataset[key]),
       )
       ?.focus({ preventScroll: true });
   }
@@ -1376,6 +1370,23 @@ $("download-rows").onclick = async (event) => {
       Number(page.dataset.offset),
     );
   render();
+  if (page) {
+    const branch = state.expanded.get(
+      key(page.dataset.page, page.dataset.prefix),
+    );
+    const firstPath = branch?.data?.children?.[0]?.path;
+    const firstRow = [
+      ...$("download-rows").querySelectorAll("[data-file-path]"),
+    ].find(
+      (row) =>
+        row.dataset.job === page.dataset.page &&
+        row.dataset.filePath === firstPath,
+    );
+    if (firstRow && !branch.error)
+      tableScroll.scrollTop +=
+        firstRow.getBoundingClientRect().top -
+        tableScroll.querySelector("th").getBoundingClientRect().bottom;
+  }
 };
 $("download-rows").onkeydown = (event) => {
   if (
@@ -1640,9 +1651,6 @@ $("add-form").onsubmit = async (event) => {
     }
     $("add-error").textContent = failures.join("\n");
     $("create-button").hidden = !state.plans.length;
-    $("create-button").textContent = t("Ajouter {count} tâches", {
-      count: state.plans.length,
-    });
     $("inspect-button").hidden = !!state.plans.length;
   } finally {
     finishInspection(inspection);
@@ -1696,6 +1704,9 @@ function restrictedNotice(plan) {
 }
 function renderPreviews() {
   updateCapacity();
+  $("create-button").textContent = t("Ajouter {count} tâches", {
+    count: state.plans.length,
+  });
   $("preview-list").innerHTML = state.plans
     .map(
       (plan) =>
@@ -1762,6 +1773,8 @@ async function loadSelection(change) {
       .join("");
     for (const input of $("selection-rows").querySelectorAll("input"))
       input.indeterminate = input.dataset.partial === "true";
+    if (!change)
+      $("selection-dialog").querySelector(".selection-body").scrollTop = 0;
     renderPreviews();
   } catch (error) {
     $("selection-error").textContent = error.message;

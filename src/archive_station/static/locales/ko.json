@@ -343,5 +343,12 @@
   "Reconnexion automatique désactivée.": "자동 재연결이 비활성화되었습니다.",
   "Oublier le mot de passe": "저장된 비밀번호 삭제",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "저장된 로그인 정보를 읽거나 저장할 수 없습니다. 계정을 다시 연결하세요.",
-  "La session sera renouvelée au prochain téléchargement.": "다음 다운로드 시 세션이 갱신됩니다."
+  "La session sera renouvelée au prochain téléchargement.": "다음 다운로드 시 세션이 갱신됩니다.",
+  "Archive.org est indisponible : {error}": "Archive.org를 사용할 수 없습니다: {error}",
+  "Select at least one schedule day": "예약할 요일을 하나 이상 선택하세요.",
+  "Chemin de fichier non autorisé : {path}": "허용되지 않는 파일 경로: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "대상 경로에 심볼릭 링크가 포함되어 있습니다.",
+  "Le chemin sort du dossier de destination.": "경로가 대상 폴더 밖을 가리킵니다.",
+  "Filtre trop long.": "필터가 너무 깁니다.",
+  "La liste contient un conflit entre fichier et dossier.": "목록에 파일과 폴더 간의 충돌이 있습니다."
 }

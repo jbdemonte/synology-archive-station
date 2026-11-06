@@ -343,5 +343,12 @@
   "Reconnexion automatique désactivée.": "Otomatik yeniden bağlantı devre dışı.",
   "Oublier le mot de passe": "Parolayı unut",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Hatırlanan giriş bilgileri okunamıyor veya kaydedilemiyor. Hesabı yeniden bağlayın.",
-  "La session sera renouvelée au prochain téléchargement.": "Oturum bir sonraki indirmede yenilenecektir."
+  "La session sera renouvelée au prochain téléchargement.": "Oturum bir sonraki indirmede yenilenecektir.",
+  "Archive.org est indisponible : {error}": "Archive.org kullanılamıyor: {error}",
+  "Select at least one schedule day": "Zamanlama için en az bir gün seçin.",
+  "Chemin de fichier non autorisé : {path}": "Dosya yoluna izin verilmiyor: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Hedef yolu bir sembolik bağlantı içeriyor.",
+  "Le chemin sort du dossier de destination.": "Yol, hedef klasörün dışında.",
+  "Filtre trop long.": "Filtre çok uzun.",
+  "La liste contient un conflit entre fichier et dossier.": "Liste, dosya ve klasör arasında bir çakışma içeriyor."
 }

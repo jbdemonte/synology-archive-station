@@ -105,6 +105,36 @@ try {
     "Ajouter 2 tâches",
   );
 
+  const created = [];
+  await page.route("**/api/jobs", (route) => {
+    if (route.request().method() !== "POST") return route.continue();
+    const url = route.request().postDataJSON().url;
+    created.push(url);
+    return url.endsWith("demo-two") && created.length === 2
+      ? route.fulfill({ status: 400, json: { error: "Filtre trop long." } })
+      : route.fulfill({ status: 201, json: { id: "created" } });
+  });
+  await page.locator("#create-button").click();
+  await page
+    .locator("#add-error")
+    .filter({ hasText: "Filtre trop long." })
+    .waitFor();
+  assert.equal(
+    await page.locator("#create-button").textContent(),
+    "Ajouter 1 tâche",
+  );
+  assert.equal(await page.locator(".preview-item").count(), 1);
+  await page.locator("#create-button").click();
+  await page.locator("#add-dialog").waitFor({ state: "hidden" });
+  assert.equal(created.length, 3);
+  assert.equal(
+    created[1],
+    created[2],
+    "Retry must only submit the failed item",
+  );
+  await page.unroute("**/api/jobs");
+  await page.locator("#add-open").click();
+
   // Real validation error: restore every field and allow correcting the URL.
   await page.unroute("**/api/inspect");
   await page

@@ -343,5 +343,12 @@
   "Reconnexion automatique désactivée.": "自動再接続は無効です。",
   "Oublier le mot de passe": "保存したパスワードを削除",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "保存した認証情報を読み取りまたは保存できません。アカウントを再接続してください。",
-  "La session sera renouvelée au prochain téléchargement.": "次のダウンロード時にセッションが更新されます。"
+  "La session sera renouvelée au prochain téléchargement.": "次のダウンロード時にセッションが更新されます。",
+  "Archive.org est indisponible : {error}": "Archive.org を利用できません：{error}",
+  "Select at least one schedule day": "スケジュールの曜日を少なくとも1つ選択してください。",
+  "Chemin de fichier non autorisé : {path}": "許可されていないファイルパス：{path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "保存先のパスにシンボリックリンクが含まれています。",
+  "Le chemin sort du dossier de destination.": "パスが保存先フォルダーの外部を指しています。",
+  "Filtre trop long.": "フィルターが長すぎます。",
+  "La liste contient un conflit entre fichier et dossier.": "一覧にファイルとフォルダーの競合があります。"
 }

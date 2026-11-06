@@ -37,12 +37,21 @@ try {
     .locator("#selection-total")
     .filter({ hasText: "149 / 151" })
     .waitFor();
+  const selectionBody = page.locator("#selection-dialog .selection-body");
+  await selectionBody.evaluate((el) => {
+    el.scrollTop = el.scrollHeight;
+  });
   await page.locator("#selection-next").click();
   await page
     .locator("#selection-rows")
     .getByText("game-100.zip", { exact: true })
     .waitFor();
   assert.equal(await page.locator("#selection-rows input").count(), 50);
+  assert.equal(
+    await selectionBody.evaluate((el) => el.scrollTop),
+    0,
+    "Changing selection pages must show the first row",
+  );
   // Click() scrolls elements into view automatically, which can hide a broken
   // scroll container. Exercise the mouse wheel as a user does in DSM.
   for (const viewport of [
@@ -112,16 +121,40 @@ try {
     assert.deepEqual(await footer.boundingBox(), footerBefore);
     assert.ok(footerBefore.y + footerBefore.height <= viewport.height);
   }
+  const selectionScroll = await selectionBody.evaluate((el) => el.scrollTop);
   await page.locator("#selection-rows input").last().uncheck();
   await page
     .locator("#selection-total")
     .filter({ hasText: "148 / 151" })
     .waitFor();
+  assert.equal(
+    await selectionBody.evaluate((el) => el.scrollTop),
+    selectionScroll,
+    "Checking a file must preserve the scroll position",
+  );
   await page.locator("#selection-rows input").last().check();
   await page
     .locator("#selection-total")
     .filter({ hasText: "149 / 151" })
     .waitFor();
+  await page.locator("#selection-prev").click();
+  await page
+    .locator("#selection-rows")
+    .getByText("game-000.zip", { exact: true })
+    .waitFor();
+  assert.equal(await selectionBody.evaluate((el) => el.scrollTop), 0);
+  await selectionBody.evaluate((el) => {
+    el.scrollTop = el.scrollHeight;
+  });
+  await page.locator("#selection-up").click();
+  await page.locator("[data-selection-folder]").waitFor();
+  assert.equal(await selectionBody.evaluate((el) => el.scrollTop), 0);
+  await page.locator("[data-selection-folder]").click();
+  await page
+    .locator("#selection-rows")
+    .getByText("game-000.zip", { exact: true })
+    .waitFor();
+  assert.equal(await selectionBody.evaluate((el) => el.scrollTop), 0);
   assert.ok(
     await page
       .locator("#selection-close")

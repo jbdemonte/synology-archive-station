@@ -358,5 +358,12 @@
   "Reconnexion automatique désactivée.": "Η αυτόματη επανασύνδεση είναι ανενεργή.",
   "Oublier le mot de passe": "Διαγραφή αποθηκευμένου κωδικού",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Δεν είναι δυνατή η ανάγνωση ή η αποθήκευση των στοιχείων σύνδεσης. Συνδέστε ξανά τον λογαριασμό.",
-  "La session sera renouvelée au prochain téléchargement.": "Η συνεδρία θα ανανεωθεί στην επόμενη λήψη."
+  "La session sera renouvelée au prochain téléchargement.": "Η συνεδρία θα ανανεωθεί στην επόμενη λήψη.",
+  "Archive.org est indisponible : {error}": "Το Archive.org δεν είναι διαθέσιμο: {error}",
+  "Select at least one schedule day": "Επιλέξτε τουλάχιστον μία ημέρα για τον προγραμματισμό.",
+  "Chemin de fichier non autorisé : {path}": "Μη επιτρεπόμενη διαδρομή αρχείου: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Η διαδρομή προορισμού περιέχει συμβολικό σύνδεσμο.",
+  "Le chemin sort du dossier de destination.": "Η διαδρομή βρίσκεται εκτός του φακέλου προορισμού.",
+  "Filtre trop long.": "Το φίλτρο είναι πολύ μεγάλο.",
+  "La liste contient un conflit entre fichier et dossier.": "Η λίστα περιέχει διένεξη μεταξύ αρχείου και φακέλου."
 }

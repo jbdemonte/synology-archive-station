@@ -319,7 +319,12 @@ class Reports:
         # Per-job UUID keeps reports separate from archived files and earlier tasks.
         name = f"ArchiveStation-report-{job['id']}.txt"
         path = safe_path(root, f"{job['identifier']}/{name}")
-        path.parent.mkdir(parents=True, exist_ok=True)
+        if job["status"] == "completed":
+            # A finished archive may have been moved or removed by its owner.
+            if not path.parent.is_dir():
+                return
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
         if path.exists():
             with path.open(encoding="utf-8") as existing:
                 prefix = existing.read(len(report_header(job["id"])))

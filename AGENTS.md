@@ -2,32 +2,33 @@
 
 ## Project Structure & Module Organization
 
-This directory (`syno-archive-org-dl`) is currently an empty project scaffold. No source code, tests, assets, dependency manifests, or Git metadata are present. Update this guide as the implementation takes shape.
+Archive Station is an Internet Archive download manager for Synology DSM 7 and local development. The Python application lives in `src/archive_station/`: `__main__.py` starts Waitress and the background workers, `web.py` exposes the WSGI API, `store.py` persists tasks and files in SQLite, and `engine.py` handles resumable transfers. The browser interface is plain JavaScript, HTML and CSS in `src/archive_station/static/`, with 27 offline JSON language catalogs in `static/locales/`; there is no frontend build step.
 
-When adding the initial implementation, keep responsibilities separate: application code in `src/`, automated tests in `tests/`, developer utilities in `scripts/`, and supporting documentation in `docs/`. Create these directories only when needed. Document the entry point and architecture in `README.md`.
+Backend tests live in `tests/`; Playwright scenarios and build utilities live in `scripts/`. Synology package resources and the DSM CGI gateway are in `packaging/`. Read `README.md` for setup and usage, `docs/ARCHITECTURE.md` for the design, and `docs/TRANSLATIONS.md` before changing user-facing messages.
 
 ## Build, Test, and Development Commands
 
-No build, test, or local run commands are configured yet. Do not assume commands such as `npm test` or `make build` are available.
+- `make dev-deps`: create `.venv`, install pinned Python development dependencies and npm packages, and install Playwright Chromium.
+- `make run`: install runtime dependencies and start locally on `127.0.0.1:8274`.
+- `make check`: run Python unittest discovery, Ruff lint/format checks, Prettier checks and JavaScript syntax checks.
+- `make test-ui`: run all browser scenarios against an isolated fixture server on `127.0.0.1:8275`.
+- `make format`: apply Ruff and Prettier formatting.
+- `make build`: build the standalone x86_64 DSM package in `dist/` (Python 3.12+ and network access required for the initial runtime download).
 
-When selecting the toolchain, document exact installation, execution, testing, and formatting commands in `README.md`. Prefer reproducible dependency installation and commit the appropriate lockfile when the ecosystem supports it.
+Use `make test` for backend tests alone. For a focused browser scenario, run `.venv/bin/python scripts/test_ui.py --script scripts/selection_smoke.mjs`. After a Playwright upgrade, `npx playwright install chromium` installs its matching browser revision. Keep `requirements*.txt` and `package-lock.json` consistent with dependency changes.
 
 ## Coding Style & Naming Conventions
 
-Use the chosen language's standard formatter and linter, and commit their configuration with the initial code. Follow their indentation and naming rules consistently. Use descriptive module and function names that reflect one responsibility. Avoid introducing competing formatting conventions.
+Python supports 3.10+ and follows the Ruff configuration in `pyproject.toml` (100-character lines). JavaScript, HTML and CSS use Prettier through the scripts in `package.json`. Keep responsibilities in their existing modules and use descriptive names. Translate interface strings through `ArchiveI18n.t()` and keep all 27 catalogs and interpolation tokens in sync.
 
 ## Testing Guidelines
 
-No testing framework or coverage threshold is established. Add a suitable framework alongside the first implementation. Keep test names descriptive of expected behavior and place fixtures under `tests/fixtures/` if needed.
-
-If download functionality is introduced, cover failure responses, interrupted transfers, and existing destination files. Use temporary directories and mocked network responses so routine tests remain deterministic and do not require external services.
+Use `unittest`, temporary directories and mocked network responses for deterministic backend tests. Cover failure responses, interrupted transfers and existing destination files when modifying downloads. UI scenarios use Playwright and `tests/serve_ui.py`; they must not download real archives or depend on external services. Some distribution tests require a separately built community package and are skipped when it is absent. Automated checks do not replace testing on a real NAS.
 
 ## Commit & Pull Request Guidelines
 
-No Git history is available to establish an existing commit convention. Use concise, imperative subjects, such as `Add download configuration validation`, and keep commits focused.
-
-Pull requests should describe the change, its purpose, and validation performed. Link relevant issues and call out configuration changes. Include screenshots only for visual changes.
+Use concise, imperative commit subjects and keep commits focused. Review the diff and include only files belonging to the task. Pull requests should describe the change, its purpose and validation performed; link relevant issues, call out configuration changes, and include screenshots for visual changes.
 
 ## Security & Configuration
 
-Keep credentials, local configuration, downloaded content, and generated output out of version control. Provide sanitized configuration examples and document required settings before adding integrations.
+Keep credentials, local configuration, downloaded content and generated output out of version control. Use sanitized configuration examples. Preserve strict Archive.org URL validation, destination path and symlink checks, non-overwriting publication of downloads, and DSM gateway authentication. Document changes to these trust boundaries in `docs/ARCHITECTURE.md` and the README.

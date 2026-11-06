@@ -11,6 +11,39 @@ from archive_station.web import WebApp
 
 
 class StorageTests(Base):
+    def test_restart_clears_legacy_cancelled_holds_but_preserves_paused_holds(self):
+        cancelled = self.add()
+        paused = self.add(identifier="waiting-item")
+        for job in [cancelled, paused]:
+            self.store.pause_for_space(job)
+        # Simulate cancellation by an older version, which retained the hold.
+        with self.store.db:
+            self.store.db.execute(
+                "UPDATE jobs SET status='cancelled', finished_at=123 WHERE id=?", (cancelled,)
+            )
+        for _ in range(2):
+            self.store.close()
+            self.store = Store(self.root / "state.sqlite3")
+            self.engine.store = self.store
+            jobs = {job["id"]: job for job in self.store.jobs()}
+            self.assertEqual(jobs[cancelled]["status"], "cancelled")
+            self.assertEqual(jobs[cancelled]["finished_at"], 123)
+            self.assertIsNone(jobs[cancelled]["hold_reason"])
+            self.assertEqual(jobs[paused]["status"], "paused")
+            self.assertEqual(jobs[paused]["hold_reason"], "disk")
+            self.assertEqual(len(self.store.error_history(cancelled)), 1)
+
+    def test_cancelling_a_disk_hold_clears_the_hold_and_preserves_partials(self):
+        job = self.add()
+        row = self.store.claim()
+        partial = self.partial(row, PAYLOAD[:100])
+        self.store.pause_for_space(job)
+        self.store.action(job, "cancel")
+        saved = self.store.jobs()[0]
+        self.assertEqual(saved["status"], "cancelled")
+        self.assertIsNone(saved["hold_reason"])
+        self.assertEqual(partial.read_bytes(), PAYLOAD[:100])
+
     def test_capacity_accounts_for_active_queue_on_same_volume(self):
         self.downloads.mkdir()
         self.add()

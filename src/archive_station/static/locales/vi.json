@@ -343,5 +343,12 @@
   "Reconnexion automatique désactivée.": "Đã tắt tự động kết nối lại.",
   "Oublier le mot de passe": "Quên mật khẩu",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Không thể đọc hoặc lưu thông tin đăng nhập đã ghi nhớ. Hãy kết nối lại tài khoản.",
-  "La session sera renouvelée au prochain téléchargement.": "Phiên đăng nhập sẽ được gia hạn khi tải xuống tiếp theo."
+  "La session sera renouvelée au prochain téléchargement.": "Phiên đăng nhập sẽ được gia hạn khi tải xuống tiếp theo.",
+  "Archive.org est indisponible : {error}": "Archive.org không khả dụng: {error}",
+  "Select at least one schedule day": "Chọn ít nhất một ngày cho lịch tải.",
+  "Chemin de fichier non autorisé : {path}": "Đường dẫn tệp không được phép: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Đường dẫn đích chứa một liên kết tượng trưng.",
+  "Le chemin sort du dossier de destination.": "Đường dẫn nằm ngoài thư mục đích.",
+  "Filtre trop long.": "Bộ lọc quá dài.",
+  "La liste contient un conflit entre fichier et dossier.": "Danh sách có xung đột giữa tệp và thư mục."
 }

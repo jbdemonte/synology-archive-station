@@ -358,5 +358,12 @@
   "Reconnexion automatique désactivée.": "Automatisk återanslutning inaktiverad.",
   "Oublier le mot de passe": "Glöm lösenordet",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Det går inte att läsa eller spara inloggningsuppgifterna. Anslut kontot igen.",
-  "La session sera renouvelée au prochain téléchargement.": "Sessionen förnyas vid nästa nedladdning."
+  "La session sera renouvelée au prochain téléchargement.": "Sessionen förnyas vid nästa nedladdning.",
+  "Archive.org est indisponible : {error}": "Archive.org är inte tillgängligt: {error}",
+  "Select at least one schedule day": "Välj minst en dag för schemat.",
+  "Chemin de fichier non autorisé : {path}": "Otillåten filsökväg: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Målsökvägen innehåller en symbolisk länk.",
+  "Le chemin sort du dossier de destination.": "Sökvägen ligger utanför målmappen.",
+  "Filtre trop long.": "Filtret är för långt.",
+  "La liste contient un conflit entre fichier et dossier.": "Listan innehåller en konflikt mellan en fil och en mapp."
 }

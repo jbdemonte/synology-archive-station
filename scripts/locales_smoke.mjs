@@ -15,7 +15,9 @@ const errors = [];
 page.on("pageerror", (error) => errors.push(error.message));
 try {
   await page.goto(base);
+  assert.equal(await page.evaluate(() => ArchiveI18n.match("plk")), "pl");
   await page.locator("#settings-open").click();
+  await page.locator("#settings-dialog").waitFor({ state: "visible" });
   const languages = await page
     .locator("#setting-language option")
     .evaluateAll((options) =>
@@ -190,6 +192,38 @@ try {
         "Unexpected HTTP response: 503",
       );
       assert.equal(await page.evaluate(() => bytes(0.5)), "1 B");
+    }
+    for (const [message, key, values] of [
+      [
+        "Chemin de fichier non autorisé : '../bad.zip'",
+        "Chemin de fichier non autorisé : {path}",
+        { path: "'../bad.zip'" },
+      ],
+      [
+        "Archive.org est indisponible : {error}",
+        "Archive.org est indisponible : {error}",
+        { error: "connection reset" },
+      ],
+      [
+        "Select at least one schedule day",
+        "Select at least one schedule day",
+        {},
+      ],
+      ...[
+        "Un lien symbolique se trouve dans le chemin de destination.",
+        "Le chemin sort du dossier de destination.",
+        "Filtre trop long.",
+        "La liste contient un conflit entre fichier et dossier.",
+      ].map((key) => [key, key, {}]),
+    ]) {
+      assert.equal(
+        await page.evaluate(
+          ([message, values]) => ArchiveI18n.t(message, values),
+          [message, values],
+        ),
+        catalog[key].replace(/\{(\w+)\}/g, (_, name) => values[name]),
+        `${code}: ${message}`,
+      );
     }
     await page.setViewportSize({ width: 1000, height: 720 });
   }

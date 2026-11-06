@@ -343,5 +343,12 @@
   "Reconnexion automatique désactivée.": "ปิดการเชื่อมต่อใหม่อัตโนมัติแล้ว",
   "Oublier le mot de passe": "ลืมรหัสผ่านที่บันทึกไว้",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "ไม่สามารถอ่านหรือบันทึกข้อมูลเข้าสู่ระบบที่จดจำไว้ได้ โปรดเชื่อมต่อบัญชีใหม่",
-  "La session sera renouvelée au prochain téléchargement.": "เซสชันจะได้รับการต่ออายุเมื่อดาวน์โหลดครั้งถัดไป"
+  "La session sera renouvelée au prochain téléchargement.": "เซสชันจะได้รับการต่ออายุเมื่อดาวน์โหลดครั้งถัดไป",
+  "Archive.org est indisponible : {error}": "Archive.org ไม่พร้อมใช้งาน: {error}",
+  "Select at least one schedule day": "เลือกอย่างน้อยหนึ่งวันสำหรับกำหนดเวลา",
+  "Chemin de fichier non autorisé : {path}": "ไม่อนุญาตให้ใช้พาธไฟล์: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "พาธปลายทางมีลิงก์สัญลักษณ์",
+  "Le chemin sort du dossier de destination.": "พาธอยู่นอกโฟลเดอร์ปลายทาง",
+  "Filtre trop long.": "ตัวกรองยาวเกินไป",
+  "La liste contient un conflit entre fichier et dossier.": "รายการมีข้อขัดแย้งระหว่างไฟล์กับโฟลเดอร์"
 }

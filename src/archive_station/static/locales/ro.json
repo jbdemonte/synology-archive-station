@@ -363,5 +363,12 @@
   "Reconnexion automatique désactivée.": "Reconectare automată dezactivată.",
   "Oublier le mot de passe": "Uită parola",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Datele de autentificare memorate nu pot fi citite sau salvate. Reconectează contul.",
-  "La session sera renouvelée au prochain téléchargement.": "Sesiunea va fi reînnoită la următoarea descărcare."
+  "La session sera renouvelée au prochain téléchargement.": "Sesiunea va fi reînnoită la următoarea descărcare.",
+  "Archive.org est indisponible : {error}": "Archive.org nu este disponibil: {error}",
+  "Select at least one schedule day": "Selectați cel puțin o zi pentru programare.",
+  "Chemin de fichier non autorisé : {path}": "Cale de fișier nepermisă: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Calea de destinație conține o legătură simbolică.",
+  "Le chemin sort du dossier de destination.": "Calea se află în afara dosarului de destinație.",
+  "Filtre trop long.": "Filtrul este prea lung.",
+  "La liste contient un conflit entre fichier et dossier.": "Lista conține un conflict între un fișier și un dosar."
 }

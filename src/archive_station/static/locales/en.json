@@ -358,5 +358,12 @@
   "Reconnexion automatique désactivée.": "Automatic reconnection disabled.",
   "Oublier le mot de passe": "Forget password",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Unable to read or save remembered credentials. Reconnect the account.",
-  "La session sera renouvelée au prochain téléchargement.": "The session will be renewed on the next download."
+  "La session sera renouvelée au prochain téléchargement.": "The session will be renewed on the next download.",
+  "Archive.org est indisponible : {error}": "Archive.org is unavailable: {error}",
+  "Select at least one schedule day": "Select at least one schedule day",
+  "Chemin de fichier non autorisé : {path}": "File path not allowed: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "The destination path contains a symbolic link.",
+  "Le chemin sort du dossier de destination.": "The path is outside the destination folder.",
+  "Filtre trop long.": "Filter too long.",
+  "La liste contient un conflit entre fichier et dossier.": "The list contains a file/folder conflict."
 }

@@ -210,6 +210,13 @@ class ArchiveClient:
             if any("/".join(parts[:i]) in seen for i in range(1, len(parts))):
                 raise ValueError("La liste contient un conflit entre fichier et dossier.")
         title = payload.get("metadata", {}).get("title", identifier)
+        if isinstance(title, list):
+            title = " / ".join(
+                value.strip() for value in title if isinstance(value, str) and value.strip()
+            )
+        if isinstance(title, str):
+            title = title.strip()
+        title = title or identifier
         if self.account.identity() != account_identity:
             raise AccountError(CHANGED)
         return {

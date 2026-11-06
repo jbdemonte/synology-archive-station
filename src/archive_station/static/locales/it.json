@@ -352,5 +352,12 @@
   "Reconnexion automatique désactivée.": "Riconnessione automatica disattivata.",
   "Oublier le mot de passe": "Dimenticare la password",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Impossibile leggere o salvare le credenziali memorizzate. Riconnettere l’account.",
-  "La session sera renouvelée au prochain téléchargement.": "La sessione verrà rinnovata al prossimo download."
+  "La session sera renouvelée au prochain téléchargement.": "La sessione verrà rinnovata al prossimo download.",
+  "Archive.org est indisponible : {error}": "Archive.org non è disponibile: {error}",
+  "Select at least one schedule day": "Seleziona almeno un giorno per la pianificazione.",
+  "Chemin de fichier non autorisé : {path}": "Percorso del file non consentito: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Il percorso di destinazione contiene un collegamento simbolico.",
+  "Le chemin sort du dossier de destination.": "Il percorso è esterno alla cartella di destinazione.",
+  "Filtre trop long.": "Filtro troppo lungo.",
+  "La liste contient un conflit entre fichier et dossier.": "L’elenco contiene un conflitto tra file e cartella."
 }

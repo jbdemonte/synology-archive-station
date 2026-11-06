@@ -363,5 +363,12 @@
   "Reconnexion automatique désactivée.": "Automatické opětovné připojení vypnuto.",
   "Oublier le mot de passe": "Zapomenout heslo",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Uložené přihlašovací údaje nelze přečíst nebo uložit. Připojte účet znovu.",
-  "La session sera renouvelée au prochain téléchargement.": "Relace bude obnovena při příštím stahování."
+  "La session sera renouvelée au prochain téléchargement.": "Relace bude obnovena při příštím stahování.",
+  "Archive.org est indisponible : {error}": "Archive.org není dostupný: {error}",
+  "Select at least one schedule day": "Vyberte alespoň jeden den rozvrhu.",
+  "Chemin de fichier non autorisé : {path}": "Nepovolená cesta k souboru: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Cílová cesta obsahuje symbolický odkaz.",
+  "Le chemin sort du dossier de destination.": "Cesta je mimo cílovou složku.",
+  "Filtre trop long.": "Filtr je příliš dlouhý.",
+  "La liste contient un conflit entre fichier et dossier.": "Seznam obsahuje konflikt mezi souborem a složkou."
 }

@@ -363,5 +363,12 @@
   "Reconnexion automatique désactivée.": "Automatyczne ponowne łączenie wyłączone.",
   "Oublier le mot de passe": "Zapomnij hasło",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Nie można odczytać lub zapisać zapamiętanych danych logowania. Połącz konto ponownie.",
-  "La session sera renouvelée au prochain téléchargement.": "Sesja zostanie odnowiona przy następnym pobieraniu."
+  "La session sera renouvelée au prochain téléchargement.": "Sesja zostanie odnowiona przy następnym pobieraniu.",
+  "Archive.org est indisponible : {error}": "Archive.org jest niedostępne: {error}",
+  "Select at least one schedule day": "Wybierz co najmniej jeden dzień harmonogramu.",
+  "Chemin de fichier non autorisé : {path}": "Niedozwolona ścieżka pliku: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Ścieżka docelowa zawiera dowiązanie symboliczne.",
+  "Le chemin sort du dossier de destination.": "Ścieżka wykracza poza folder docelowy.",
+  "Filtre trop long.": "Filtr jest zbyt długi.",
+  "La liste contient un conflit entre fichier et dossier.": "Lista zawiera konflikt między plikiem a folderem."
 }

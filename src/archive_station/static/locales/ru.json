@@ -363,5 +363,12 @@
   "Reconnexion automatique désactivée.": "Автоматическое переподключение отключено.",
   "Oublier le mot de passe": "Забыть пароль",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Не удалось прочитать или сохранить учётные данные. Подключите учётную запись заново.",
-  "La session sera renouvelée au prochain téléchargement.": "Сеанс будет обновлён при следующей загрузке."
+  "La session sera renouvelée au prochain téléchargement.": "Сеанс будет обновлён при следующей загрузке.",
+  "Archive.org est indisponible : {error}": "Archive.org недоступен: {error}",
+  "Select at least one schedule day": "Выберите хотя бы один день для расписания.",
+  "Chemin de fichier non autorisé : {path}": "Недопустимый путь к файлу: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Путь назначения содержит символическую ссылку.",
+  "Le chemin sort du dossier de destination.": "Путь находится за пределами папки назначения.",
+  "Filtre trop long.": "Фильтр слишком длинный.",
+  "La liste contient un conflit entre fichier et dossier.": "Список содержит конфликт между файлом и папкой."
 }

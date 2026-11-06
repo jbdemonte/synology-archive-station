@@ -358,5 +358,12 @@
   "Reconnexion automatique désactivée.": "Automaattinen uudelleenyhdistäminen pois käytöstä.",
   "Oublier le mot de passe": "Unohda salasana",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Tallennettuja kirjautumistietoja ei voi lukea tai tallentaa. Yhdistä tili uudelleen.",
-  "La session sera renouvelée au prochain téléchargement.": "Istunto uusitaan seuraavan latauksen yhteydessä."
+  "La session sera renouvelée au prochain téléchargement.": "Istunto uusitaan seuraavan latauksen yhteydessä.",
+  "Archive.org est indisponible : {error}": "Archive.org ei ole käytettävissä: {error}",
+  "Select at least one schedule day": "Valitse vähintään yksi päivä aikatauluun.",
+  "Chemin de fichier non autorisé : {path}": "Tiedostopolku ei ole sallittu: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Kohdepolku sisältää symbolisen linkin.",
+  "Le chemin sort du dossier de destination.": "Polku on kohdekansion ulkopuolella.",
+  "Filtre trop long.": "Suodatin on liian pitkä.",
+  "La liste contient un conflit entre fichier et dossier.": "Luettelossa on tiedoston ja kansion välinen ristiriita."
 }

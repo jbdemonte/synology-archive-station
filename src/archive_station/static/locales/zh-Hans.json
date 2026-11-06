@@ -343,5 +343,12 @@
   "Reconnexion automatique désactivée.": "已禁用自动重新连接。",
   "Oublier le mot de passe": "忘记密码",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "无法读取或保存已记住的登录信息。请重新连接账户。",
-  "La session sera renouvelée au prochain téléchargement.": "会话将在下次下载时续期。"
+  "La session sera renouvelée au prochain téléchargement.": "会话将在下次下载时续期。",
+  "Archive.org est indisponible : {error}": "Archive.org 不可用：{error}",
+  "Select at least one schedule day": "请至少选择一个计划执行日。",
+  "Chemin de fichier non autorisé : {path}": "不允许的文件路径：{path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "目标路径中包含符号链接。",
+  "Le chemin sort du dossier de destination.": "路径超出目标文件夹范围。",
+  "Filtre trop long.": "筛选条件过长。",
+  "La liste contient un conflit entre fichier et dossier.": "列表中存在文件与文件夹冲突。"
 }

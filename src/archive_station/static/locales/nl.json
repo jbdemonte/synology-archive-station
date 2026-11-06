@@ -358,5 +358,12 @@
   "Reconnexion automatique désactivée.": "Automatisch opnieuw verbinden uitgeschakeld.",
   "Oublier le mot de passe": "Wachtwoord vergeten",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Opgeslagen aanmeldgegevens kunnen niet worden gelezen of opgeslagen. Verbind het account opnieuw.",
-  "La session sera renouvelée au prochain téléchargement.": "De sessie wordt bij de volgende download vernieuwd."
+  "La session sera renouvelée au prochain téléchargement.": "De sessie wordt bij de volgende download vernieuwd.",
+  "Archive.org est indisponible : {error}": "Archive.org is niet beschikbaar: {error}",
+  "Select at least one schedule day": "Selecteer minstens één dag voor het schema.",
+  "Chemin de fichier non autorisé : {path}": "Bestandspad niet toegestaan: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Het doelpad bevat een symbolische koppeling.",
+  "Le chemin sort du dossier de destination.": "Het pad ligt buiten de doelmap.",
+  "Filtre trop long.": "Filter te lang.",
+  "La liste contient un conflit entre fichier et dossier.": "De lijst bevat een conflict tussen een bestand en een map."
 }

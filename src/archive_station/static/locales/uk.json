@@ -363,5 +363,12 @@
   "Reconnexion automatique désactivée.": "Автоматичне повторне підключення вимкнено.",
   "Oublier le mot de passe": "Забути пароль",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Не вдалося прочитати або зберегти облікові дані. Підключіть обліковий запис знову.",
-  "La session sera renouvelée au prochain téléchargement.": "Сеанс буде оновлено під час наступного завантаження."
+  "La session sera renouvelée au prochain téléchargement.": "Сеанс буде оновлено під час наступного завантаження.",
+  "Archive.org est indisponible : {error}": "Archive.org недоступний: {error}",
+  "Select at least one schedule day": "Виберіть хоча б один день для розкладу.",
+  "Chemin de fichier non autorisé : {path}": "Недозволений шлях до файлу: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Шлях призначення містить символічне посилання.",
+  "Le chemin sort du dossier de destination.": "Шлях виходить за межі папки призначення.",
+  "Filtre trop long.": "Фільтр задовгий.",
+  "La liste contient un conflit entre fichier et dossier.": "Список містить конфлікт між файлом і папкою."
 }

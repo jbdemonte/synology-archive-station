@@ -358,5 +358,12 @@
   "Reconnexion automatique désactivée.": "Automatisk genforbindelse deaktiveret.",
   "Oublier le mot de passe": "Glem adgangskoden",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "De gemte loginoplysninger kan ikke læses eller gemmes. Tilslut kontoen igen.",
-  "La session sera renouvelée au prochain téléchargement.": "Sessionen fornyes ved næste download."
+  "La session sera renouvelée au prochain téléchargement.": "Sessionen fornyes ved næste download.",
+  "Archive.org est indisponible : {error}": "Archive.org er ikke tilgængelig: {error}",
+  "Select at least one schedule day": "Vælg mindst én dag til tidsplanen.",
+  "Chemin de fichier non autorisé : {path}": "Filsti ikke tilladt: {path}",
+  "Un lien symbolique se trouve dans le chemin de destination.": "Destinationsstien indeholder et symbolsk link.",
+  "Le chemin sort du dossier de destination.": "Stien er uden for destinationsmappen.",
+  "Filtre trop long.": "Filteret er for langt.",
+  "La liste contient un conflit entre fichier et dossier.": "Listen indeholder en konflikt mellem en fil og en mappe."
 }

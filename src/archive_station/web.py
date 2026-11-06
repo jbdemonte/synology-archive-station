@@ -6,6 +6,7 @@ import mimetypes
 import shutil
 import time
 from http import HTTPStatus
+from http.client import HTTPException
 from http.cookies import SimpleCookie
 from pathlib import Path
 from urllib.error import URLError
@@ -67,10 +68,13 @@ class WebApp:
                 },
                 "application/json",
             )
-        except (URLError, TimeoutError) as exc:
+        except (URLError, TimeoutError, ConnectionError, HTTPException) as exc:
             status, value, content_type = (
                 502,
-                {"error": f"Archive.org est indisponible : {exc}"},
+                {
+                    "error": "Archive.org est indisponible : {error}",
+                    "error_values": {"error": str(exc)},
+                },
                 "application/json",
             )
         except Exception:
