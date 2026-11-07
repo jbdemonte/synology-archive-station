@@ -28,14 +28,21 @@ async function retainsFocus(selector, key) {
   const target = page.locator(selector);
   await target.focus();
   if (key) await target.press(key);
+  // Read and check the focused node atomically: polling can replace the row.
   assert.ok(
-    await target.evaluate((el) => el === document.activeElement),
+    await page.evaluate(
+      (selector) => document.activeElement.matches(selector),
+      selector,
+    ),
     `${selector}: focus survives keyboard activation`,
   );
   const previous = await target.elementHandle();
   await page.waitForFunction((el) => !el.isConnected, previous);
   assert.ok(
-    await target.evaluate((el) => el === document.activeElement),
+    await page.evaluate(
+      (selector) => document.activeElement.matches(selector),
+      selector,
+    ),
     `${selector}: focus survives polling`,
   );
 }
