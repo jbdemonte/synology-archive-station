@@ -209,7 +209,7 @@
   "Retirer la tâche de la liste": "Hapus tugas dari daftar",
   "Retirer les terminés": "Hapus yang selesai",
   "Réessayer": "Coba lagi",
-  "Réessayer les fichiers en erreur": "Coba lagi file yang error",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Coba lagi berkas yang gagal. Berkas parsial tetap disimpan.",
   "Réponse HTTP inattendue : ": "Respon HTTP tak terduga:",
   "Réponse de reprise invalide (Content-Range).": "Respon resume tidak valid (Rentang Konten).",
   "Réserve d’espace libre": "Cadangan ruang kosong",

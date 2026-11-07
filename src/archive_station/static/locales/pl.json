@@ -214,7 +214,7 @@
   "Retirer la tâche de la liste": "Usuń zadanie z listy",
   "Retirer les terminés": "Usuń ukończone",
   "Réessayer": "Ponów próbę",
-  "Réessayer les fichiers en erreur": "Ponów próbę z błędnymi plikami",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Ponów pobieranie plików z błędami. Częściowo pobrane pliki zostaną zachowane.",
   "Réponse HTTP inattendue : ": "Nieoczekiwana odpowiedź HTTP:",
   "Réponse de reprise invalide (Content-Range).": "Nieprawidłowa odpowiedź na wznowienie (zakres treści).",
   "Réserve d’espace libre": "Rezerwa wolnego miejsca",

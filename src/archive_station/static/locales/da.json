@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Fjern opgave fra listen",
   "Retirer les terminés": "Fjern fuldførte",
   "Réessayer": "Prøv igen",
-  "Réessayer les fichiers en erreur": "Prøv fejlbehæftede filer igen",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Prøv filer med fejl igen. Delvist hentede filer bevares.",
   "Réponse HTTP inattendue : ": "Uventet HTTP-svar:",
   "Réponse de reprise invalide (Content-Range).": "Ugyldigt CV-svar (Content-Range).",
   "Réserve d’espace libre": "Reserve af ledig plads",

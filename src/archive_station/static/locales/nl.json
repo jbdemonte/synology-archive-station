@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Taak uit lijst verwijderen",
   "Retirer les terminés": "Voltooide verwijderen",
   "Réessayer": "Opnieuw proberen",
-  "Réessayer les fichiers en erreur": "Probeer de foutieve bestanden opnieuw",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Probeer bestanden met fouten opnieuw. Gedeeltelijke bestanden blijven behouden.",
   "Réponse HTTP inattendue : ": "Onverwachte HTTP-reactie:",
   "Réponse de reprise invalide (Content-Range).": "Ongeldige CV-reactie (inhoudsbereik).",
   "Réserve d’espace libre": "Reserve vrije ruimte",

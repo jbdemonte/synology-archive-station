@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Κατάργηση εργασίας από τη λίστα",
   "Retirer les terminés": "Αφαίρεση ολοκληρωμένων",
   "Réessayer": "Επανάληψη",
-  "Réessayer les fichiers en erreur": "Δοκιμάστε ξανά τα αρχεία με σφάλματα",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Επανάληψη λήψης αρχείων με σφάλματα. Τα μερικώς ληφθέντα αρχεία διατηρούνται.",
   "Réponse HTTP inattendue : ": "Απροσδόκητη απόκριση HTTP:",
   "Réponse de reprise invalide (Content-Range).": "Μη έγκυρη απάντηση βιογραφικού (Content-Range).",
   "Réserve d’espace libre": "Απόθεμα ελεύθερου χώρου",

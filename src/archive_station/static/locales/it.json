@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Rimuovi attività dall'elenco",
   "Retirer les terminés": "Rimuovere completati",
   "Réessayer": "Riprova",
-  "Réessayer les fichiers en erreur": "Riprovare con i file con errori",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Riprova i file con errori. I file parziali vengono conservati.",
   "Réponse HTTP inattendue : ": "Risposta HTTP imprevista:",
   "Réponse de reprise invalide (Content-Range).": "Risposta di ripresa non valida (intervallo di contenuti).",
   "Réserve d’espace libre": "Riserva di spazio libero",

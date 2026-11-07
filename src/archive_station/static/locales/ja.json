@@ -209,7 +209,7 @@
   "Retirer la tâche de la liste": "リストからタスクを削除",
   "Retirer les terminés": "完了したタスクを削除",
   "Réessayer": "再試行",
-  "Réessayer les fichiers en erreur": "エラーが発生したファイルを再試行します",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "エラーが発生したファイルを再試行します。ダウンロード途中のファイルは保持されます。",
   "Réponse HTTP inattendue : ": "予期しない HTTP 応答:",
   "Réponse de reprise invalide (Content-Range).": "無効な再開応答 (Content-Range)。",
   "Réserve d’espace libre": "空き容量の予約",

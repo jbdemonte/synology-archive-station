@@ -213,7 +213,7 @@
   "Retirer la tâche de la liste": "Elimină sarcina din listă",
   "Retirer les terminés": "Elimină finalizate",
   "Réessayer": "Reîncercați",
-  "Réessayer les fichiers en erreur": "Reîncercați fișierele cu erori",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Reîncercați fișierele cu erori. Fișierele parțiale sunt păstrate.",
   "Réponse HTTP inattendue : ": "Răspuns HTTP neașteptat:",
   "Réponse de reprise invalide (Content-Range).": "Răspuns nevalid la reluare (Interval de conținut).",
   "Réserve d’espace libre": "Rezervă de spațiu liber",

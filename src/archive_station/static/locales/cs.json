@@ -214,7 +214,7 @@
   "Retirer la tâche de la liste": "Odebrat úkol ze seznamu",
   "Retirer les terminés": "Odebrat dokončené",
   "Réessayer": "Zkusit znovu",
-  "Réessayer les fichiers en erreur": "Zkuste znovu chybné soubory",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Zkusit znovu soubory s chybou. Částečně stažené soubory budou zachovány.",
   "Réponse HTTP inattendue : ": "Neočekávaná odpověď HTTP:",
   "Réponse de reprise invalide (Content-Range).": "Neplatná odpověď na pokračování (Content-Range).",
   "Réserve d’espace libre": "Rezerva volného místa",

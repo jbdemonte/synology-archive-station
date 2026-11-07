@@ -209,7 +209,7 @@
   "Retirer la tâche de la liste": "목록에서 작업 제거",
   "Retirer les terminés": "완료된 항목 제거",
   "Réessayer": "재시도",
-  "Réessayer les fichiers en erreur": "오류가 발생한 파일을 다시 시도하세요",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "오류가 발생한 파일을 다시 시도합니다. 부분적으로 다운로드된 파일은 보존됩니다.",
   "Réponse HTTP inattendue : ": "예기치 않은 HTTP 응답:",
   "Réponse de reprise invalide (Content-Range).": "잘못된 이력서 응답(Content-Range).",
   "Réserve d’espace libre": "여유 공간 예약",

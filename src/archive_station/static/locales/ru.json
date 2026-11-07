@@ -214,7 +214,7 @@
   "Retirer la tâche de la liste": "Удалить задачу из списка",
   "Retirer les terminés": "Убрать завершённые",
   "Réessayer": "Повторить попытку",
-  "Réessayer les fichiers en erreur": "Повторить файлы с ошибками",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Повторить загрузку файлов с ошибками. Частично загруженные файлы сохраняются.",
   "Réponse HTTP inattendue : ": "Неожиданный HTTP-ответ:",
   "Réponse de reprise invalide (Content-Range).": "Неверный ответ на резюме (Content-Range).",
   "Réserve d’espace libre": "Резерв свободного места",

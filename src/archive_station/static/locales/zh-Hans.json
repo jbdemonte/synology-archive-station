@@ -209,7 +209,7 @@
   "Retirer la tâche de la liste": "从列表中删除任务",
   "Retirer les terminés": "移除已完成任务",
   "Réessayer": "重试",
-  "Réessayer les fichiers en erreur": "重试错误的文件",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "重试出错的文件。下载未完成的文件会保留。",
   "Réponse HTTP inattendue : ": "意外的 HTTP 响应：",
   "Réponse de reprise invalide (Content-Range).": "无效的恢复响应（内容范围）。",
   "Réserve d’espace libre": "预留可用空间",

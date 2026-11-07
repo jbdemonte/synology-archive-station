@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Retirer la tâche de la liste",
   "Retirer les terminés": "Retirer les terminés",
   "Réessayer": "Réessayer",
-  "Réessayer les fichiers en erreur": "Réessayer les fichiers en erreur",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.",
   "Réponse HTTP inattendue : ": "Réponse HTTP inattendue : ",
   "Réponse de reprise invalide (Content-Range).": "Réponse de reprise invalide (Content-Range).",
   "Réserve d’espace libre": "Réserve d’espace libre",

@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Ta bort uppgift från listan",
   "Retirer les terminés": "Ta bort slutförda",
   "Réessayer": "Försök igen",
-  "Réessayer les fichiers en erreur": "Försök felfiler igen",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Försök igen med filer som misslyckats. Delvis hämtade filer bevaras.",
   "Réponse HTTP inattendue : ": "Oväntat HTTP-svar:",
   "Réponse de reprise invalide (Content-Range).": "Ogiltigt återuppta svar (Content-Range).",
   "Réserve d’espace libre": "Reserv för ledigt utrymme",

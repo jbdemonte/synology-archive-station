@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Remove task from list",
   "Retirer les terminés": "Remove completed",
   "Réessayer": "Retry",
-  "Réessayer les fichiers en erreur": "Retry errored files",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Retry failed files. Partial files are preserved.",
   "Réponse HTTP inattendue : ": "Unexpected HTTP response:",
   "Réponse de reprise invalide (Content-Range).": "Invalid resume response (Content-Range).",
   "Réserve d’espace libre": "Free space reserve",

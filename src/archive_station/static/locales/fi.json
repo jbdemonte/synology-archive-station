@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Poista tehtävä luettelosta",
   "Retirer les terminés": "Poista valmistuneet",
   "Réessayer": "Yritä uudelleen",
-  "Réessayer les fichiers en erreur": "Yritä virheellisiä tiedostoja uudelleen",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Yritä epäonnistuneita tiedostoja uudelleen. Osittain ladatut tiedostot säilytetään.",
   "Réponse HTTP inattendue : ": "Odottamaton HTTP-vastaus:",
   "Réponse de reprise invalide (Content-Range).": "Virheellinen jatkamisvastaus (Content-Range).",
   "Réserve d’espace libre": "Vapaan tilan varaus",

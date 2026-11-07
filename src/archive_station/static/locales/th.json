@@ -209,7 +209,7 @@
   "Retirer la tâche de la liste": "ลบงานออกจากรายการ",
   "Retirer les terminés": "นำรายการที่เสร็จแล้วออก",
   "Réessayer": "ลองอีกครั้ง",
-  "Réessayer les fichiers en erreur": "ลองไฟล์ที่มีข้อผิดพลาดอีกครั้ง",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "ลองดาวน์โหลดไฟล์ที่มีข้อผิดพลาดอีกครั้ง ไฟล์ที่ดาวน์โหลดไว้บางส่วนจะถูกเก็บไว้",
   "Réponse HTTP inattendue : ": "การตอบสนอง HTTP ที่ไม่คาดคิด:",
   "Réponse de reprise invalide (Content-Range).": "การตอบกลับประวัติไม่ถูกต้อง (ช่วงเนื้อหา)",
   "Réserve d’espace libre": "พื้นที่ว่างสำรอง",

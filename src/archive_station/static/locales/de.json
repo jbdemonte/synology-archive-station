@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Aufgabe aus Liste entfernen",
   "Retirer les terminés": "Abgeschlossene entfernen",
   "Réessayer": "Wiederholen",
-  "Réessayer les fichiers en erreur": "Fehlerhafte Dateien erneut versuchen",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Fehlgeschlagene Dateien erneut versuchen. Teildateien bleiben erhalten.",
   "Réponse HTTP inattendue : ": "Unerwartete HTTP-Antwort:",
   "Réponse de reprise invalide (Content-Range).": "Ungültige Lebenslaufantwort (Content-Range).",
   "Réserve d’espace libre": "Speicherplatzreserve",

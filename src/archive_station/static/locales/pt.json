@@ -212,7 +212,7 @@
   "Retirer la tâche de la liste": "Remover tarefa da lista",
   "Retirer les terminés": "Remover concluídos",
   "Réessayer": "Tentar novamente",
-  "Réessayer les fichiers en erreur": "Tentar novamente arquivos com erro",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Tentar novamente os ficheiros com erro. Os ficheiros parciais são mantidos.",
   "Réponse HTTP inattendue : ": "Resposta HTTP inesperada:",
   "Réponse de reprise invalide (Content-Range).": "Resposta de currículo inválida (Content-Range).",
   "Réserve d’espace libre": "Reserva de espaço livre",

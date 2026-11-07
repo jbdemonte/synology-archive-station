@@ -209,7 +209,7 @@
   "Retirer la tâche de la liste": "Feladat eltávolítása a listáról",
   "Retirer les terminés": "Befejezettek eltávolítása",
   "Réessayer": "Próbáld újra",
-  "Réessayer les fichiers en erreur": "Próbálja újra a hibás fájlokat",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Hibás fájlok újrapróbálása. A részlegesen letöltött fájlok megmaradnak.",
   "Réponse HTTP inattendue : ": "Váratlan HTTP-válasz:",
   "Réponse de reprise invalide (Content-Range).": "Érvénytelen önéletrajzi válasz (Content-Range).",
   "Réserve d’espace libre": "Szabad hely tartaléka",

@@ -621,7 +621,7 @@ function renderActions() {
     ["queued", "running"].includes(j.status),
   );
   $("resume").disabled = !selected.some((j) =>
-    ["paused", "cancelled", "error"].includes(j.status),
+    ["paused", "cancelled"].includes(j.status),
   );
   $("retry").disabled = !selected.some((j) => j.failed_files);
   $("cancel").disabled = !selected.some(
@@ -1408,7 +1408,7 @@ for (const action of ["pause", "resume", "retry"])
           action === "pause"
             ? ["queued", "running"].includes(job.status)
             : action === "resume"
-              ? ["paused", "cancelled", "error"].includes(job.status)
+              ? ["paused", "cancelled"].includes(job.status)
               : job.failed_files,
         )
         .map((job) => job.id);

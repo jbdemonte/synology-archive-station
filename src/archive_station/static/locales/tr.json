@@ -209,7 +209,7 @@
   "Retirer la tâche de la liste": "Görevi listeden kaldır",
   "Retirer les terminés": "Tamamlananları kaldır",
   "Réessayer": "Yeniden dene",
-  "Réessayer les fichiers en erreur": "Hatalı dosyaları yeniden dene",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Hatalı dosyaları yeniden deneyin. Kısmi dosyalar korunur.",
   "Réponse HTTP inattendue : ": "Beklenmeyen HTTP yanıtı:",
   "Réponse de reprise invalide (Content-Range).": "Geçersiz özgeçmiş yanıtı (İçerik Aralığı).",
   "Réserve d’espace libre": "Boş alan rezervi",

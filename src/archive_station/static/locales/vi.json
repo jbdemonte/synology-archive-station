@@ -209,7 +209,7 @@
   "Retirer la tâche de la liste": "Xóa nhiệm vụ khỏi danh sách",
   "Retirer les terminés": "Xóa tác vụ hoàn tất",
   "Réessayer": "Thử lại",
-  "Réessayer les fichiers en erreur": "Thử lại các tập tin bị lỗi",
+  "Réessayer les fichiers en erreur. Les fichiers partiels sont conservés.": "Thử lại các tệp bị lỗi. Các tệp đã tải xuống một phần được giữ lại.",
   "Réponse HTTP inattendue : ": "Phản hồi HTTP không mong đợi:",
   "Réponse de reprise invalide (Content-Range).": "Phản hồi sơ yếu lý lịch không hợp lệ (Phạm vi nội dung).",
   "Réserve d’espace libre": "Dung lượng trống dự trữ",
