@@ -12,6 +12,16 @@ STATIC = Path(__file__).resolve().parents[1] / "src/archive_station/static"
 
 
 class LocaleTests(unittest.TestCase):
+    def test_removed_credential_feature_keeps_stored_incident_diagnostics_translatable(self):
+        # Old file errors and incidents can still carry this server message.
+        message = (
+            "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte."
+        )
+        for language in LANGUAGES - {"auto"}:
+            with self.subTest(language=language):
+                catalog = json.loads((STATIC / "locales" / f"{language}.json").read_text())
+                self.assertIn(message, catalog)
+
     def test_all_catalogs_cover_messages_and_keep_interpolation_tokens(self):
         source = json.loads((STATIC / "locales/fr.json").read_text())
         self.assertEqual(

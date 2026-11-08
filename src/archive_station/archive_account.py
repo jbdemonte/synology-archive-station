@@ -1,4 +1,4 @@
-"""Internet Archive sessions and opt-in encrypted credentials for automatic renewal."""
+"""Internet Archive sessions, persisted without account passwords."""
 
 import json
 import math
@@ -17,7 +17,6 @@ from urllib.parse import urlencode
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from . import __version__
-from .credentials import CredentialError, CredentialVault
 
 LOGIN_URL = "https://archive.org/services/xauthn/?op=login"
 COOKIE_NAMES = ("logged-in-user", "logged-in-sig")
@@ -53,16 +52,10 @@ class ArchiveAccount:
         self.generation = 0
         self.account_generation = 0
         self.last_attempt = float("-inf")
-        self.last_refresh = float("-inf")
-        self.refresh_error = None
-        self.refresh_error_visible = True
-        self.credentials = ""
-        self.remember_choice = True
-        self.blocked = False
-        self.vault = CredentialVault(data_dir)
         self.email, self.cookies, self.expires = "", {}, None
         if self.path is not None:
             self._load()
+            self._remove_legacy_key()
 
     def _load(self):
         try:
@@ -77,7 +70,7 @@ class ArchiveAccount:
                 cookies = value["cookies"]
                 expires = value.get("expires")
                 if (
-                    value.get("version") not in {1, 2, 3}
+                    value.get("version") not in {1, 2, 3, 4}
                     or not isinstance(value.get("email"), str)
                     or len(value["email"]) > 254
                     or not isinstance(cookies, dict)
@@ -93,32 +86,34 @@ class ArchiveAccount:
                     )
                 ):
                     return
-                credentials = value.get("credentials", "")
-                remember_choice = value.get("remember_choice", True)
-                blocked = value.get("blocked", False)
-                if (
-                    not isinstance(credentials, str)
-                    or len(credentials) > 32768
-                    or type(remember_choice) is not bool
-                    or type(blocked) is not bool
-                    or (credentials and not remember_choice)
-                ):
-                    return
-                os.fchmod(handle.fileno(), 0o600)
-                # Version 2 also blocked on local key errors and clock skew.
-                # Only explicit authentication refusals may survive a restart.
-                blocked = blocked and value.get("blocked_reason") == "credentials"
                 self.email, self.cookies, self.expires = value["email"], cookies, expires
-                self.credentials, self.remember_choice, self.blocked = (
-                    credentials,
-                    remember_choice,
-                    blocked,
+                repair_permissions = False
+                try:
+                    os.fchmod(handle.fileno(), 0o600)
+                except OSError:
+                    repair_permissions = True
+            if (
+                repair_permissions
+                or value["version"] != 4
+                or any(
+                    name in value
+                    for name in ("credentials", "remember_choice", "blocked", "blocked_reason")
                 )
-                if blocked:
-                    self.refresh_error = (DENIED, False)
+            ):
+                # Discard old ciphertext without decrypting it. A read-only state
+                # directory must not prevent using the validated session in memory.
+                self._save(self.email, self.cookies, self.expires)
         except (OSError, ValueError, TypeError, KeyError):
             # A corrupt/removed session never prevents the download service starting.
             pass
+
+    def _remove_legacy_key(self):
+        if self.path is not None:
+            try:
+                # unlink removes a symlink itself, never its target.
+                self.path.with_name("archive-account.key").unlink(missing_ok=True)
+            except OSError:
+                pass
 
     @staticmethod
     def _valid_cookie(value):
@@ -137,17 +132,9 @@ class ArchiveAccount:
             return (self.generation, active), cookie
 
     def identity(self):
-        """Account identity for selections; routine cookie renewal does not change it."""
+        """Account identity for selections; changes on manual login and logout."""
         with self.lock:
             return self.account_generation
-
-    def mark_success(self, identity):
-        with self.lock:
-            current, cookie = self.snapshot()
-            if current == identity and cookie and not self.blocked:
-                # Hide a stale warning, but retain the retry deadline if another
-                # restricted request still needs the unavailable login service.
-                self.refresh_error_visible = False
 
     def status(self):
         with self.lock:
@@ -156,16 +143,9 @@ class ArchiveAccount:
                 "connected": bool(cookie),
                 "state": "connected" if cookie else "expired" if self.cookies else "disconnected",
                 "email": self.email,
-                "remember_credentials": bool(self.credentials),
-                "remember_choice": self.remember_choice,
-                "reconnect_error": self.refresh_error[0]
-                if self.refresh_error and (self.refresh_error_visible or self.blocked)
-                else None,
             }
 
-    def _save(
-        self, email, cookies, expires, *, credentials=None, remember_choice=None, blocked=None
-    ):
+    def _save(self, email, cookies, expires):
         if self.path is None:
             return
         temporary = None
@@ -176,18 +156,10 @@ class ArchiveAccount:
                 os.fchmod(handle.fileno(), 0o600)
                 json.dump(
                     {
-                        "version": 3,
+                        "version": 4,
                         "email": email,
                         "cookies": cookies,
                         "expires": expires,
-                        "credentials": self.credentials if credentials is None else credentials,
-                        "remember_choice": self.remember_choice
-                        if remember_choice is None
-                        else remember_choice,
-                        "blocked": self.blocked if blocked is None else blocked,
-                        "blocked_reason": "credentials"
-                        if (self.blocked if blocked is None else blocked)
-                        else None,
                     },
                     handle,
                 )
@@ -200,7 +172,10 @@ class ArchiveAccount:
             ) from None
         finally:
             if temporary is not None:
-                Path(temporary).unlink(missing_ok=True)
+                try:
+                    Path(temporary).unlink(missing_ok=True)
+                except OSError:
+                    pass
 
     def _login(self, email, password):
         request = Request(
@@ -268,14 +243,13 @@ class ArchiveAccount:
             raise AccountError(UNAVAILABLE, retryable=True) from None
         return cookies, expires
 
-    def connect(self, email, password, remember=False):
+    def connect(self, email, password):
         if (
             not isinstance(email, str)
             or not re.fullmatch(r"[^\s@]{1,128}@[^\s@]{1,125}", email.strip())
             or len(email.strip()) > 254
             or not isinstance(password, str)
             or not 1 <= len(password) <= 4096
-            or type(remember) is not bool
         ):
             raise AccountError("Saisir l’e-mail et le mot de passe Internet Archive.")
         if not self.login_lock.acquire(blocking=False):
@@ -294,124 +268,24 @@ class ArchiveAccount:
             with self.lock:
                 if self.generation != generation:
                     raise AccountError(CHANGED)
-                try:
-                    credentials = self.vault.encrypt(email.strip(), password) if remember else ""
-                except CredentialError as error:
-                    raise AccountError(str(error), retryable=error.retryable) from None
-                self._save(
-                    email.strip(),
-                    cookies,
-                    expires,
-                    credentials=credentials,
-                    remember_choice=remember,
-                    blocked=False,
-                )
+                self._save(email.strip(), cookies, expires)
                 self.email, self.cookies, self.expires = email.strip(), cookies, expires
-                self.credentials, self.remember_choice = credentials, remember
-                self.blocked, self.refresh_error = False, None
-                self.last_refresh = float("-inf")
                 self.generation += 1
                 self.account_generation = self.generation
-                if not remember:
-                    self.vault.forget()
+                self._remove_legacy_key()
             return self.status()
         finally:
             self.login_lock.release()
 
     def request_snapshot(self):
-        """Renew an expired saved session only when a request actually needs it."""
-        identity, cookie = self.snapshot()
-        if not cookie:
-            try:
-                self.refresh(identity, expired=True)
-            except AccountError:
-                # Public URLs must still be requested anonymously. Surface the
-                # account failure only if the actual resource denies access.
-                pass
+        """Expired sessions use public access until the user logs in again."""
         return self.snapshot()
 
-    def refresh(self, identity, *, expired=False):
-        """Single-flight renewal, at most once per minute and never after logout.
-
-        HTTP 403 can also mean a genuine lack of permission: callers retry their
-        original request only once, and a second denial remains a file error.
-        """
+    def refresh(self, identity):
+        """Retry a denied request only after a newer manual login; never log in here."""
         with self.lock:
             current, cookie = self.snapshot()
-            if current != identity and cookie:
-                return True  # Includes a manual login without remembered credentials.
-            if not self.credentials or identity[0] < self.account_generation:
-                return False
-        if not self.login_lock.acquire(timeout=20):
-            raise AccountError(UNAVAILABLE, retryable=True, retry_after=5)
-        try:
-            with self.lock:
-                current, cookie = self.snapshot()
-                if current != identity and cookie:
-                    return True  # Another worker has already renewed this session.
-                if not self.credentials or identity[0] < self.account_generation:
-                    return False
-                if self.blocked:
-                    raise AccountError(DENIED)
-                remaining = 60 - (time.monotonic() - self.last_refresh)
-                if remaining > 0:
-                    if self.refresh_error:
-                        message, retryable = self.refresh_error
-                        raise AccountError(
-                            message,
-                            retryable=retryable,
-                            retry_after=remaining if retryable else None,
-                        )
-                    if expired:
-                        raise AccountError(UNAVAILABLE, retryable=True, retry_after=remaining)
-                    return False
-                self.last_refresh = time.monotonic()
-                generation, email, token = self.generation, self.email, self.credentials
-            try:
-                password = self.vault.decrypt(token, email)
-                try:
-                    cookies, expires = self._login(email, password)
-                finally:
-                    password = None
-                with self.lock:
-                    if self.generation != generation:
-                        return False
-                    self._save(email, cookies, expires, blocked=False)
-                    self.cookies, self.expires = cookies, expires
-                    self.blocked, self.refresh_error = False, None
-                    self.generation += 1
-            except (AccountError, CredentialError) as error:
-                safe = (str(error), error.retryable)
-                with self.lock:
-                    if self.generation != generation:
-                        return False
-                    self.refresh_error = safe
-                    self.refresh_error_visible = True
-                    self.blocked = safe == (DENIED, False)
-                    # Persist invalid-credential rejection so a restart cannot
-                    # repeatedly submit an incorrect password and lock the account.
-                    if self.blocked:
-                        self._save(self.email, self.cookies, self.expires)
-                raise AccountError(safe[0], retryable=safe[1]) from None
-            return True
-        finally:
-            self.login_lock.release()
-
-    def forget_credentials(self):
-        with self.lock:
-            self._save(
-                self.email,
-                self.cookies,
-                self.expires,
-                credentials="",
-                remember_choice=False,
-                blocked=False,
-            )
-            self.credentials, self.remember_choice = "", False
-            self.blocked, self.refresh_error = False, None
-            self.vault.forget()
-            self.generation += 1
-            return self.status()
+            return bool(cookie) and current[0] > identity[0]
 
     def disconnect(self):
         with self.lock:
@@ -423,9 +297,7 @@ class ArchiveAccount:
                         "Impossible d’enregistrer la session Internet Archive."
                     ) from None
             self.email, self.cookies, self.expires = "", {}, None
-            self.credentials, self.remember_choice = "", True
-            self.blocked, self.refresh_error = False, None
-            self.vault.forget()
+            self._remove_legacy_key()
             self.generation += 1
             self.account_generation = self.generation
             return self.status()

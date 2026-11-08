@@ -356,19 +356,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Contul Internet Archive s-a schimbat. Încercați din nou.",
   "Impossible d’enregistrer la session Internet Archive.": "Sesiunea Internet Archive nu poate fi salvată.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive a refuzat accesul. Verificați contul din setări și permisiunile sale.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Memorează datele de autentificare pentru reconectare automată.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Parola este criptată pe acest NAS. Debifează pentru a păstra doar sesiunea.",
   "Session partagée par les administrateurs du NAS.": "Sesiune partajată de administratorii NAS-ului.",
-  "Reconnexion automatique activée.": "Reconectare automată activată.",
-  "Reconnexion automatique désactivée.": "Reconectare automată dezactivată.",
-  "Oublier le mot de passe": "Uită parola",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Datele de autentificare memorate nu pot fi citite sau salvate. Reconectează contul.",
-  "La session sera renouvelée au prochain téléchargement.": "Sesiunea va fi reînnoită la următoarea descărcare.",
   "Archive.org est indisponible : {error}": "Archive.org nu este disponibil: {error}",
   "Select at least one schedule day": "Selectați cel puțin o zi pentru programare.",
   "Chemin de fichier non autorisé : {path}": "Cale de fișier nepermisă: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Calea de destinație conține o legătură simbolică.",
   "Le chemin sort du dossier de destination.": "Calea se află în afara dosarului de destinație.",
   "Filtre trop long.": "Filtrul este prea lung.",
-  "La liste contient un conflit entre fichier et dossier.": "Lista conține un conflict între un fișier și un dosar."
+  "La liste contient un conflit entre fichier et dossier.": "Lista conține un conflict între un fișier și un dosar.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Parola nu este salvată. Se păstrează doar sesiunea; reconectați contul când aceasta expiră."
 }

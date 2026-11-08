@@ -17,7 +17,7 @@ Archive Station downloads Internet Archive item files directly to your NAS. Past
 ## What you can do
 
 - **One folder per URL** — add multiple `/details/` or `/download/` links and select files, folders or filename patterns before starting.
-- **Connect Internet Archive** — optionally sign in from Settings to include restricted files. Downloads use your account's permissions. Remember credentials (enabled by default) to renew expired sessions automatically, or keep only the session.
+- **Connect Internet Archive** — optionally sign in from Settings to include restricted files. Downloads use your account's permissions. Only the session is saved; reconnect the account when it expires. Your password is never stored.
 - **Follow large archives** — live transfers and upcoming files appear first; completed files and the folder tree have separate views.
 - **Control the queue** — pause, resume, cancel or retry from the toolbar; use each archive's **⋯** menu for priority, maintenance and reports.
 - **Plan transfers** — choose weekly time slots, alternate speed limits, live concurrency and a free-space reserve.
@@ -43,7 +43,7 @@ See the [usage guide](docs/USAGE.md) for scheduling, priorities, disk reserves, 
 
 ARM packages are not available yet. Other DSM versions and models need community testing. Archive Station does not recursively crawl collections or extract ZIP archives. Signing in does not grant access to every locked file: Internet Archive checks the account's authorization for each download.
 
-To connect an account, open **Settings → Internet Archive account → Log in** and enter your Internet Archive email and password. For an archive already added, use **⋯ → Refresh file list** to review the newly included files. See [account setup and session storage](docs/USAGE.md#connect-an-internet-archive-account).
+To connect an account, open **Settings → Internet Archive account → Log in** and enter your Internet Archive email and password. Archive Station saves only the session, never the password, and asks you to reconnect when the session expires. For an archive already added, use **⋯ → Refresh file list** to review the newly included files. See [account setup and session storage](docs/USAGE.md#connect-an-internet-archive-account).
 
 The published **1.0.0-1** package was freshly installed and tested on a DS918+ running DSM 7.1.1 on October 9, 2026. Checks covered a real Archive.org download with a matching SHA-1, pause/resume, automatic recovery after stopping the package mid-transfer, live transfer settings and a plain-text report. The installed 0.2.0-9 version also successfully detected this public release before replacement.
 

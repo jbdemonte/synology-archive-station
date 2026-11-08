@@ -12,7 +12,6 @@ import uuid
 from urllib.error import HTTPError
 
 from .archive import safe_path
-from .archive_account import AccountError
 from .schedule import policy
 
 LOG = logging.getLogger(__name__)
@@ -113,16 +112,6 @@ class Engine:
             self.store.estimates.reset(row["job_id"])
             self.store.update(row["id"], status="queued", speed=0)
         except Exception as exc:
-            if isinstance(exc, AccountError) and exc.retry_after is not None:
-                # Waiting for another login attempt is not a failed file transfer.
-                self.store.update(
-                    row["id"],
-                    status="queued",
-                    speed=0,
-                    available_at=time.time() + max(1, exc.retry_after),
-                    error=str(exc),
-                )
-                return
             if isinstance(exc, OSError) and exc.errno in {errno.ENOSPC, errno.EDQUOT}:
                 self.store.pause_for_space(row["job_id"])
                 self.store.update(row["id"], status="queued", speed=0)
@@ -132,8 +121,6 @@ class Engine:
             permanent = isinstance(exc, (Conflict, ValueError, PermissionError)) or (
                 isinstance(exc, HTTPError) and exc.code in {401, 403, 404}
             )
-            if isinstance(exc, AccountError) and exc.retryable:
-                permanent = False
             retry = not permanent and attempts <= self.settings.get()["retries"]
             message = str(exc)
             if isinstance(exc, HTTPError) and exc.code in {401, 403}:

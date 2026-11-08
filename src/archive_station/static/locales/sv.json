@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive-kontot har ändrats. Försök igen.",
   "Impossible d’enregistrer la session Internet Archive.": "Det går inte att spara Internet Archive-sessionen.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive nekade åtkomst. Kontrollera kontot i inställningarna och dess behörigheter.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Kom ihåg inloggningsuppgifterna för automatisk återanslutning.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Lösenordet krypteras på denna NAS. Avmarkera för att endast spara sessionen.",
   "Session partagée par les administrateurs du NAS.": "Sessionen delas av NAS-enhetens administratörer.",
-  "Reconnexion automatique activée.": "Automatisk återanslutning aktiverad.",
-  "Reconnexion automatique désactivée.": "Automatisk återanslutning inaktiverad.",
-  "Oublier le mot de passe": "Glöm lösenordet",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Det går inte att läsa eller spara inloggningsuppgifterna. Anslut kontot igen.",
-  "La session sera renouvelée au prochain téléchargement.": "Sessionen förnyas vid nästa nedladdning.",
   "Archive.org est indisponible : {error}": "Archive.org är inte tillgängligt: {error}",
   "Select at least one schedule day": "Välj minst en dag för schemat.",
   "Chemin de fichier non autorisé : {path}": "Otillåten filsökväg: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Målsökvägen innehåller en symbolisk länk.",
   "Le chemin sort du dossier de destination.": "Sökvägen ligger utanför målmappen.",
   "Filtre trop long.": "Filtret är för långt.",
-  "La liste contient un conflit entre fichier et dossier.": "Listan innehåller en konflikt mellan en fil och en mapp."
+  "La liste contient un conflit entre fichier et dossier.": "Listan innehåller en konflikt mellan en fil och en mapp.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Lösenordet sparas inte. Endast sessionen sparas; anslut kontot igen när den löper ut."
 }

@@ -336,19 +336,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Az Internet Archive-fiók megváltozott. Próbálja újra.",
   "Impossible d’enregistrer la session Internet Archive.": "Az Internet Archive-munkamenet nem menthető.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Az Internet Archive megtagadta a hozzáférést. Ellenőrizze a fiókot a beállításokban és a jogosultságait.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Bejelentkezési adatok megjegyzése az automatikus újracsatlakozáshoz.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "A jelszó titkosítva tárolódik ezen a NAS-on. A jelölés törlésével csak a munkamenet marad meg.",
   "Session partagée par les administrateurs du NAS.": "A munkamenetet a NAS rendszergazdái közösen használják.",
-  "Reconnexion automatique activée.": "Automatikus újracsatlakozás bekapcsolva.",
-  "Reconnexion automatique désactivée.": "Automatikus újracsatlakozás kikapcsolva.",
-  "Oublier le mot de passe": "Jelszó elfelejtése",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "A mentett bejelentkezési adatok nem olvashatók vagy nem menthetők. Csatlakoztassa újra a fiókot.",
-  "La session sera renouvelée au prochain téléchargement.": "A munkamenet a következő letöltéskor megújul.",
   "Archive.org est indisponible : {error}": "Az Archive.org nem érhető el: {error}",
   "Select at least one schedule day": "Válasszon legalább egy napot az ütemezéshez.",
   "Chemin de fichier non autorisé : {path}": "Nem engedélyezett fájlútvonal: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "A célútvonal szimbolikus hivatkozást tartalmaz.",
   "Le chemin sort du dossier de destination.": "Az útvonal a célmappán kívülre mutat.",
   "Filtre trop long.": "A szűrő túl hosszú.",
-  "La liste contient un conflit entre fichier et dossier.": "A lista fájl és mappa közötti ütközést tartalmaz."
+  "La liste contient un conflit entre fichier et dossier.": "A lista fájl és mappa közötti ütközést tartalmaz.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "A jelszó nem kerül mentésre. Csak a munkamenet marad meg; lejáratakor csatlakoztassa újra a fiókot."
 }

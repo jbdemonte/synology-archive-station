@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "The Internet Archive account changed. Try again.",
   "Impossible d’enregistrer la session Internet Archive.": "Unable to save the Internet Archive session.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Access denied by Internet Archive. Check the account in Settings and its permissions.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Remember credentials to reconnect automatically.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "The password is encrypted on this NAS. Uncheck to keep only the session.",
   "Session partagée par les administrateurs du NAS.": "Session shared by this NAS’s administrators.",
-  "Reconnexion automatique activée.": "Automatic reconnection enabled.",
-  "Reconnexion automatique désactivée.": "Automatic reconnection disabled.",
-  "Oublier le mot de passe": "Forget password",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Unable to read or save remembered credentials. Reconnect the account.",
-  "La session sera renouvelée au prochain téléchargement.": "The session will be renewed on the next download.",
   "Archive.org est indisponible : {error}": "Archive.org is unavailable: {error}",
   "Select at least one schedule day": "Select at least one schedule day",
   "Chemin de fichier non autorisé : {path}": "File path not allowed: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "The destination path contains a symbolic link.",
   "Le chemin sort du dossier de destination.": "The path is outside the destination folder.",
   "Filtre trop long.": "Filter too long.",
-  "La liste contient un conflit entre fichier et dossier.": "The list contains a file/folder conflict."
+  "La liste contient un conflit entre fichier et dossier.": "The list contains a file/folder conflict.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "The password is not saved. Only the session is retained; reconnect the account when it expires."
 }

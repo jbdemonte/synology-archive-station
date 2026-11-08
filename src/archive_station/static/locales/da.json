@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive-kontoen er ændret. Prøv igen.",
   "Impossible d’enregistrer la session Internet Archive.": "Internet Archive-sessionen kunne ikke gemmes.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive nægtede adgang. Kontrollér kontoen i indstillingerne og dens tilladelser.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Husk loginoplysninger for automatisk at oprette forbindelse igen.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Adgangskoden krypteres på denne NAS. Fjern markeringen for kun at gemme sessionen.",
   "Session partagée par les administrateurs du NAS.": "Sessionen deles af NAS-administratorerne.",
-  "Reconnexion automatique activée.": "Automatisk genforbindelse aktiveret.",
-  "Reconnexion automatique désactivée.": "Automatisk genforbindelse deaktiveret.",
-  "Oublier le mot de passe": "Glem adgangskoden",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "De gemte loginoplysninger kan ikke læses eller gemmes. Tilslut kontoen igen.",
-  "La session sera renouvelée au prochain téléchargement.": "Sessionen fornyes ved næste download.",
   "Archive.org est indisponible : {error}": "Archive.org er ikke tilgængelig: {error}",
   "Select at least one schedule day": "Vælg mindst én dag til tidsplanen.",
   "Chemin de fichier non autorisé : {path}": "Filsti ikke tilladt: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Destinationsstien indeholder et symbolsk link.",
   "Le chemin sort du dossier de destination.": "Stien er uden for destinationsmappen.",
   "Filtre trop long.": "Filteret er for langt.",
-  "La liste contient un conflit entre fichier et dossier.": "Listen indeholder en konflikt mellem en fil og en mappe."
+  "La liste contient un conflit entre fichier et dossier.": "Listen indeholder en konflikt mellem en fil og en mappe.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Adgangskoden gemmes ikke. Kun sessionen gemmes; tilslut kontoen igen, når den udløber."
 }

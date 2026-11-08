@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Das Internet-Archive-Konto wurde geändert. Erneut versuchen.",
   "Impossible d’enregistrer la session Internet Archive.": "Die Internet-Archive-Sitzung konnte nicht gespeichert werden.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive verweigert den Zugriff. Konto in den Einstellungen und dessen Berechtigungen prüfen.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Zugangsdaten für die automatische Wiederanmeldung speichern.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Das Passwort wird auf diesem NAS verschlüsselt. Deaktivieren, um nur die Sitzung zu speichern.",
   "Session partagée par les administrateurs du NAS.": "Die Sitzung wird von den Administratoren dieses NAS gemeinsam genutzt.",
-  "Reconnexion automatique activée.": "Automatische Wiederanmeldung aktiviert.",
-  "Reconnexion automatique désactivée.": "Automatische Wiederanmeldung deaktiviert.",
-  "Oublier le mot de passe": "Passwort vergessen",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Gespeicherte Zugangsdaten können nicht gelesen oder gespeichert werden. Das Konto erneut verbinden.",
-  "La session sera renouvelée au prochain téléchargement.": "Die Sitzung wird beim nächsten Download erneuert.",
   "Archive.org est indisponible : {error}": "Archive.org ist nicht verfügbar: {error}",
   "Select at least one schedule day": "Wählen Sie mindestens einen Tag für den Zeitplan aus.",
   "Chemin de fichier non autorisé : {path}": "Dateipfad nicht erlaubt: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Der Zielpfad enthält einen symbolischen Link.",
   "Le chemin sort du dossier de destination.": "Der Pfad liegt außerhalb des Zielordners.",
   "Filtre trop long.": "Filter zu lang.",
-  "La liste contient un conflit entre fichier et dossier.": "Die Liste enthält einen Konflikt zwischen Datei und Ordner."
+  "La liste contient un conflit entre fichier et dossier.": "Die Liste enthält einen Konflikt zwischen Datei und Ordner.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Das Passwort wird nicht gespeichert. Nur die Sitzung wird gespeichert; verbinden Sie das Konto erneut, wenn sie abläuft."
 }

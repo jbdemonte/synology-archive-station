@@ -1050,23 +1050,10 @@ function renderArchiveAccount(account = state.settings?.archive_account) {
   const status = account?.connected
     ? t("Compte connecté : {account}", { account: account.email })
     : account?.state === "expired"
-      ? account?.remember_credentials && !account.reconnect_error
-        ? t("La session sera renouvelée au prochain téléchargement.")
-        : t("Session expirée. Reconnecter le compte.")
+      ? t("Session expirée. Reconnecter le compte.")
       : t("Accès public uniquement.");
   $("archive-account-status").textContent = status;
   $("archive-account-status").dataset.state = account?.state || "disconnected";
-  $("archive-account-reconnect-status").textContent = t(
-    account?.remember_credentials
-      ? "Reconnexion automatique activée."
-      : "Reconnexion automatique désactivée.",
-  );
-  $("archive-account-reconnect-error").hidden = !account?.reconnect_error;
-  $("archive-account-reconnect-error").textContent = account?.reconnect_error
-    ? t(account.reconnect_error)
-    : "";
-  $("archive-account-forget").hidden = !account?.remember_credentials;
-  $("archive-account-forget").disabled = archiveAccountBusy;
   $("archive-account-disconnect").hidden = !account?.email;
   $("archive-account-disconnect").disabled = archiveAccountBusy;
   $("archive-account-open").disabled = archiveAccountBusy;
@@ -1086,8 +1073,6 @@ $("archive-account-open").onclick = () => {
   $("archive-account-email").value =
     state.settings?.archive_account?.email || "";
   $("archive-account-password").value = "";
-  $("archive-account-remember").checked =
-    state.settings?.archive_account?.remember_choice ?? true;
   $("archive-account-error").textContent = "";
   $("archive-account-settings-error").textContent = "";
   $("archive-account-dialog").showModal();
@@ -1108,7 +1093,6 @@ $("archive-account-form").onsubmit = async (event) => {
     const account = await api("/api/archive-account/login", {
       email: $("archive-account-email").value,
       password: $("archive-account-password").value,
-      remember: $("archive-account-remember").checked,
     });
     state.settings.archive_account = account;
     resetPlans();
@@ -1122,21 +1106,6 @@ $("archive-account-form").onsubmit = async (event) => {
     $("archive-account-error").textContent = error.message;
   } finally {
     $("archive-account-password").value = "";
-    setArchiveAccountBusy(false);
-  }
-};
-$("archive-account-forget").onclick = async () => {
-  if (archiveAccountBusy) return;
-  $("archive-account-settings-error").textContent = "";
-  setArchiveAccountBusy(true);
-  try {
-    state.settings.archive_account = await api(
-      "/api/archive-account/forget",
-      {},
-    );
-  } catch (error) {
-    $("archive-account-settings-error").textContent = error.message;
-  } finally {
     setArchiveAccountBusy(false);
   }
 };

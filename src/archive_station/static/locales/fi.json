@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive -tili muuttui. Yritä uudelleen.",
   "Impossible d’enregistrer la session Internet Archive.": "Internet Archive -istuntoa ei voitu tallentaa.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive esti käytön. Tarkista tili asetuksissa ja sen oikeudet.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Muista kirjautumistiedot automaattista uudelleenyhdistämistä varten.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Salasana salataan tällä NAS-laitteella. Poista valinta, jos haluat säilyttää vain istunnon.",
   "Session partagée par les administrateurs du NAS.": "Istunto on yhteinen NAS-laitteen ylläpitäjille.",
-  "Reconnexion automatique activée.": "Automaattinen uudelleenyhdistäminen käytössä.",
-  "Reconnexion automatique désactivée.": "Automaattinen uudelleenyhdistäminen pois käytöstä.",
-  "Oublier le mot de passe": "Unohda salasana",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Tallennettuja kirjautumistietoja ei voi lukea tai tallentaa. Yhdistä tili uudelleen.",
-  "La session sera renouvelée au prochain téléchargement.": "Istunto uusitaan seuraavan latauksen yhteydessä.",
   "Archive.org est indisponible : {error}": "Archive.org ei ole käytettävissä: {error}",
   "Select at least one schedule day": "Valitse vähintään yksi päivä aikatauluun.",
   "Chemin de fichier non autorisé : {path}": "Tiedostopolku ei ole sallittu: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Kohdepolku sisältää symbolisen linkin.",
   "Le chemin sort du dossier de destination.": "Polku on kohdekansion ulkopuolella.",
   "Filtre trop long.": "Suodatin on liian pitkä.",
-  "La liste contient un conflit entre fichier et dossier.": "Luettelossa on tiedoston ja kansion välinen ristiriita."
+  "La liste contient un conflit entre fichier et dossier.": "Luettelossa on tiedoston ja kansion välinen ristiriita.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Salasanaa ei tallenneta. Vain istunto säilytetään; yhdistä tili uudelleen, kun istunto vanhenee."
 }

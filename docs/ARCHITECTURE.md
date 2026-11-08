@@ -27,6 +27,8 @@ En développement autonome uniquement, l’application conserve un mot de passe 
 
 Sur DSM, le serveur écoute seulement `127.0.0.1:8274`. Une passerelle CGI de taille limitée relaie ses seules routes `/api/`, sous l’adresse DSM. La passerelle valide la session auprès du programme officiel `authenticate.cgi` et exige le groupe `administrators`. Le serveur en mode `--dsm-auth` accepte uniquement les requêtes locales portant le marqueur de la passerelle. Les cookies et jetons DSM ne sont jamais transmis au backend. Aucun mot de passe supplémentaire n’est demandé. Les permissions de partage sont accordées à l’utilisateur système du paquet, sans exécution du service en root.
 
+Le compte Internet Archive est indépendant de la session DSM. Seuls l’e-mail, les cookies de session et leur expiration sont enregistrés, en clair, dans `archive-account.json`, avec les droits `0600` et par remplacement atomique. Le mot de passe n’est jamais mémorisé et la session n’est jamais renouvelée automatiquement : l’utilisateur se reconnecte à son expiration. Les sauvegardes de ce fichier doivent être protégées comme un identifiant de connexion. Au démarrage, les anciens champs de mot de passe chiffré sont retirés et `archive-account.key` est supprimé sans suivre les liens ; un échec du nettoyage laisse la session validée utilisable en mémoire. Une réponse 401 ou 403 ne déclenche une seconde requête que si une connexion manuelle a créé entre-temps une session plus récente.
+
 Les racines de destination doivent être des dossiers de confiance : la vérification des liens symboliques n’est pas destinée à isoler un processus local malveillant capable de modifier simultanément leur arborescence.
 
 ## Références

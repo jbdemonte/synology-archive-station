@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive-kontoen er endret. Prøv igjen.",
   "Impossible d’enregistrer la session Internet Archive.": "Kan ikke lagre Internet Archive-økten.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive nektet tilgang. Kontroller kontoen i innstillingene og tillatelsene dens.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Husk påloggingsopplysningene for å koble til igjen automatisk.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Passordet krypteres på denne NAS-en. Fjern avmerkingen for å bare lagre økten.",
   "Session partagée par les administrateurs du NAS.": "Økten deles av NAS-administratorene.",
-  "Reconnexion automatique activée.": "Automatisk tilkobling aktivert.",
-  "Reconnexion automatique désactivée.": "Automatisk tilkobling deaktivert.",
-  "Oublier le mot de passe": "Glem passordet",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Kan ikke lese eller lagre påloggingsopplysningene. Koble til kontoen på nytt.",
-  "La session sera renouvelée au prochain téléchargement.": "Økten fornyes ved neste nedlasting.",
   "Archive.org est indisponible : {error}": "Archive.org er utilgjengelig: {error}",
   "Select at least one schedule day": "Velg minst én dag for tidsplanen.",
   "Chemin de fichier non autorisé : {path}": "Filbane ikke tillatt: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Målbanen inneholder en symbolsk lenke.",
   "Le chemin sort du dossier de destination.": "Banen er utenfor målmappen.",
   "Filtre trop long.": "Filteret er for langt.",
-  "La liste contient un conflit entre fichier et dossier.": "Listen inneholder en konflikt mellom en fil og en mappe."
+  "La liste contient un conflit entre fichier et dossier.": "Listen inneholder en konflikt mellom en fil og en mappe.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Passordet lagres ikke. Bare økten beholdes; koble til kontoen på nytt når den utløper."
 }

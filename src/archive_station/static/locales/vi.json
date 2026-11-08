@@ -336,19 +336,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Tài khoản Internet Archive đã thay đổi. Vui lòng thử lại.",
   "Impossible d’enregistrer la session Internet Archive.": "Không thể lưu phiên Internet Archive.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive từ chối truy cập. Kiểm tra tài khoản trong cài đặt và các quyền của tài khoản.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Ghi nhớ thông tin đăng nhập để tự động kết nối lại.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Mật khẩu được mã hóa trên NAS này. Bỏ chọn để chỉ lưu phiên đăng nhập.",
   "Session partagée par les administrateurs du NAS.": "Phiên đăng nhập được chia sẻ giữa các quản trị viên NAS.",
-  "Reconnexion automatique activée.": "Đã bật tự động kết nối lại.",
-  "Reconnexion automatique désactivée.": "Đã tắt tự động kết nối lại.",
-  "Oublier le mot de passe": "Quên mật khẩu",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Không thể đọc hoặc lưu thông tin đăng nhập đã ghi nhớ. Hãy kết nối lại tài khoản.",
-  "La session sera renouvelée au prochain téléchargement.": "Phiên đăng nhập sẽ được gia hạn khi tải xuống tiếp theo.",
   "Archive.org est indisponible : {error}": "Archive.org không khả dụng: {error}",
   "Select at least one schedule day": "Chọn ít nhất một ngày cho lịch tải.",
   "Chemin de fichier non autorisé : {path}": "Đường dẫn tệp không được phép: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Đường dẫn đích chứa một liên kết tượng trưng.",
   "Le chemin sort du dossier de destination.": "Đường dẫn nằm ngoài thư mục đích.",
   "Filtre trop long.": "Bộ lọc quá dài.",
-  "La liste contient un conflit entre fichier et dossier.": "Danh sách có xung đột giữa tệp và thư mục."
+  "La liste contient un conflit entre fichier et dossier.": "Danh sách có xung đột giữa tệp và thư mục.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Mật khẩu không được lưu. Chỉ phiên đăng nhập được giữ lại; hãy kết nối lại tài khoản khi phiên hết hạn."
 }

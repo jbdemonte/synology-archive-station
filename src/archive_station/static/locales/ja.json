@@ -336,19 +336,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive アカウントが変更されました。再試行してください。",
   "Impossible d’enregistrer la session Internet Archive.": "Internet Archive セッションを保存できません。",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive がアクセスを拒否しました。設定のアカウントとその権限を確認してください。",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "認証情報を保存して自動的に再接続する。",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "パスワードはこのNAS上で暗号化されます。セッションのみを保存する場合はチェックを外してください。",
   "Session partagée par les administrateurs du NAS.": "セッションはこのNASの管理者間で共有されます。",
-  "Reconnexion automatique activée.": "自動再接続は有効です。",
-  "Reconnexion automatique désactivée.": "自動再接続は無効です。",
-  "Oublier le mot de passe": "保存したパスワードを削除",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "保存した認証情報を読み取りまたは保存できません。アカウントを再接続してください。",
-  "La session sera renouvelée au prochain téléchargement.": "次のダウンロード時にセッションが更新されます。",
   "Archive.org est indisponible : {error}": "Archive.org を利用できません：{error}",
   "Select at least one schedule day": "スケジュールの曜日を少なくとも1つ選択してください。",
   "Chemin de fichier non autorisé : {path}": "許可されていないファイルパス：{path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "保存先のパスにシンボリックリンクが含まれています。",
   "Le chemin sort du dossier de destination.": "パスが保存先フォルダーの外部を指しています。",
   "Filtre trop long.": "フィルターが長すぎます。",
-  "La liste contient un conflit entre fichier et dossier.": "一覧にファイルとフォルダーの競合があります。"
+  "La liste contient un conflit entre fichier et dossier.": "一覧にファイルとフォルダーの競合があります。",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "パスワードは保存されません。セッションのみが保持されます。有効期限が切れたらアカウントに再接続してください。"
 }

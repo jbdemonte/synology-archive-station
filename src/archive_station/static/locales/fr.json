@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Le compte Internet Archive a changé. Réessayer.",
   "Impossible d’enregistrer la session Internet Archive.": "Impossible d’enregistrer la session Internet Archive.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Mémoriser les identifiants pour se reconnecter automatiquement.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.",
   "Session partagée par les administrateurs du NAS.": "Session partagée par les administrateurs du NAS.",
-  "Reconnexion automatique activée.": "Reconnexion automatique activée.",
-  "Reconnexion automatique désactivée.": "Reconnexion automatique désactivée.",
-  "Oublier le mot de passe": "Oublier le mot de passe",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.",
-  "La session sera renouvelée au prochain téléchargement.": "La session sera renouvelée au prochain téléchargement.",
   "Archive.org est indisponible : {error}": "Archive.org est indisponible : {error}",
   "Select at least one schedule day": "Sélectionnez au moins un jour pour la planification.",
   "Chemin de fichier non autorisé : {path}": "Chemin de fichier non autorisé : {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Un lien symbolique se trouve dans le chemin de destination.",
   "Le chemin sort du dossier de destination.": "Le chemin sort du dossier de destination.",
   "Filtre trop long.": "Filtre trop long.",
-  "La liste contient un conflit entre fichier et dossier.": "La liste contient un conflit entre fichier et dossier."
+  "La liste contient un conflit entre fichier et dossier.": "La liste contient un conflit entre fichier et dossier.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire."
 }

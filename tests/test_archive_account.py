@@ -83,14 +83,15 @@ class AccountTests(AccountBase):
                 "connected": True,
                 "state": "connected",
                 "email": EMAIL,
-                "remember_credentials": False,
-                "remember_choice": False,
-                "reconnect_error": None,
             },
         )
         saved = self.account.path.read_text()
         for secret in (PASSWORD, "unused-access", "unused-secret"):
             self.assertNotIn(secret, saved)
+        self.assertEqual(set(json.loads(saved)), {"version", "email", "cookies", "expires"})
+        self.assertEqual(json.loads(saved)["version"], 4)
+        self.assertNotIn(PASSWORD, repr(vars(self.account)))
+        self.assertFalse((self.root / "archive-account.key").exists())
         self.assertEqual(self.account.path.stat().st_mode & 0o777, 0o600)
         restarted = ArchiveAccount(self.root, clock=lambda: 1001)
         self.assertEqual(restarted.status(), status)
@@ -230,6 +231,111 @@ class AccountTests(AccountBase):
 
 
 class AuthenticatedDownloadTests(AccountBase):
+    def test_denial_without_a_new_manual_session_is_not_retried_or_renewed(self):
+        connect(self.account)
+        for expired in (False, True):
+            self.account.clock = lambda expired=expired: 5000 if expired else 1000
+            for code in (401, 403):
+                with (
+                    self.subTest(expired=expired, code=code),
+                    patch("archive_station.archive_account.build_opener") as login,
+                    patch("archive_station.archive.build_opener") as download,
+                ):
+                    denied = HTTPError("https://archive.org/test", code, "denied", {}, None)
+                    download.return_value.open.side_effect = denied
+                    with self.assertRaises(HTTPError) as error:
+                        ArchiveClient(self.account).open("test", "restricted.bin", offset=128)
+                    self.assertIs(error.exception, denied)
+                    error.exception.close()
+                    self.assertEqual(download.return_value.open.call_count, 1)
+                    self.assertEqual(
+                        bool(download.return_value.open.call_args.args[0].get_header("Cookie")),
+                        not expired,
+                    )
+                    login.assert_not_called()
+
+    def test_denial_retries_once_with_a_new_manual_session_and_the_same_range(self):
+        for code in (401, 403):
+            for denied_twice in (False, True):
+                with self.subTest(code=code, denied_twice=denied_twice):
+                    account = ArchiveAccount(clock=lambda: 1000)
+                    client = ArchiveClient(account)
+                    calls = []
+
+                    def request(
+                        req,
+                        *,
+                        calls=calls,
+                        account=account,
+                        code=code,
+                        denied_twice=denied_twice,
+                        **kwargs,
+                    ):
+                        calls.append(req)
+                        if len(calls) == 1:
+                            account.connect(EMAIL, PASSWORD)
+                        if len(calls) == 1 or denied_twice:
+                            raise HTTPError(req.full_url, code, "denied", {}, None)
+                        return Response(b"content")
+
+                    with (
+                        patch("archive_station.archive_account.build_opener") as login,
+                        patch("archive_station.archive.build_opener") as download,
+                    ):
+                        login.return_value.open.return_value = login_response()
+                        download.return_value.open.side_effect = request
+                        if denied_twice:
+                            with self.assertRaises(HTTPError) as error:
+                                client.open("test", "restricted.bin", offset=128)
+                            error.exception.close()
+                        else:
+                            with client.open("test", "restricted.bin", offset=128) as response:
+                                self.assertEqual(response.read(), b"content")
+                        self.assertEqual(login.return_value.open.call_count, 1)
+                    self.assertEqual(len(calls), 2)
+                    self.assertIsNone(calls[0].get_header("Cookie"))
+                    self.assertIn(SIGNATURE, calls[1].get_header("Cookie"))
+                    self.assertEqual([r.get_header("Range") for r in calls], ["bytes=128-"] * 2)
+
+    def test_expired_restricted_transfer_preserves_partials_and_reports_access_denied(self):
+        connect(self.account)
+        self.account.clock = lambda: 5000
+        store = Store(self.root / "restricted.sqlite3")
+        self.addCleanup(store.close)
+        settings = Settings(self.root / "data", self.root / "downloads", [self.root])
+        settings.update({"disk_reserve_mib": 0})
+        job = store.add(
+            {
+                "identifier": "test",
+                "title": "Test",
+                "files": [
+                    {"name": "restricted.bin", "size": 1000, "algorithm": None, "digest": None},
+                ],
+            },
+            "all",
+            "",
+            self.root / "downloads",
+        )
+        row = store.claim()
+        partial = self.root / f"downloads/.archive-station-parts/{job}/{row['id']}.part"
+        partial.parent.mkdir(parents=True)
+        partial.write_bytes(b"prefix")
+        engine = Engine(store, ArchiveClient(self.account), settings)
+        self.addCleanup(engine.shutdown)
+        with (
+            patch("archive_station.archive_account.build_opener") as login,
+            patch("archive_station.archive.build_opener") as download,
+        ):
+            download.return_value.open.side_effect = HTTPError(
+                "https://archive.org/test", 403, "denied", {}, None
+            )
+            engine.run_transfer(row)
+            login.assert_not_called()
+        saved = store.files(job)["files"][0]
+        self.assertEqual(saved["status"], "error")
+        self.assertIn("Accès refusé par Internet Archive", saved["error"])
+        self.assertEqual(partial.read_bytes(), b"prefix")
+
     def test_private_files_require_account_and_metadata_cache_is_invalidated(self):
         client = ArchiveClient(self.account)
         payload = {
@@ -392,7 +498,7 @@ class AccountApiTests(AccountBase):
         return int(result[0].split()[0]), json.loads(data)
 
     def test_account_endpoints_require_dsm_and_same_origin(self):
-        for endpoint in ("login", "logout", "forget"):
+        for endpoint in ("login", "logout"):
             with patch.object(self.account, "connect") as login:
                 self.assertEqual(
                     self.request("/api/archive-account/" + endpoint, {}, auth=False)[0], 401
@@ -435,46 +541,37 @@ class AccountApiTests(AccountBase):
         self.assertEqual(code, 400)
         self.assertEqual(data["error"], DENIED)
 
-    def test_remember_is_explicit_and_forget_keeps_the_session_and_pending_plans(self):
-        with patch("archive_station.archive_account.build_opener") as opener:
-            opener.return_value.open.return_value = login_response()
-            code, status = self.request(
-                "/api/archive-account/login",
-                {
-                    "email": EMAIL,
-                    "password": PASSWORD,
-                    "remember": True,
-                },
-            )
-        self.assertEqual(code, 200)
-        self.assertTrue(status["remember_credentials"])
+    def test_removed_forget_route_is_unknown_and_keeps_the_session_and_plans(self):
+        connect(self.account)
         token = self.app.plans.create(
             {"identifier": "item", "files": [{"name": "file", "size": 1}]}, "all", ""
         )
         cookies = self.account.snapshot()[1]
-        code, settings = self.request("/api/settings")
-        for secret in (PASSWORD, SIGNATURE, self.account.credentials):
-            self.assertNotIn(secret, json.dumps(settings))
-        code, status = self.request("/api/archive-account/forget", {})
-        self.assertEqual(code, 200)
-        self.assertTrue(status["connected"])
-        self.assertFalse(status["remember_credentials"])
+        result = self.request("/api/archive-account/forget", {})
+        self.assertEqual(result, self.request("/api/archive-account/unknown", {}))
+        self.assertEqual(result[0], 404)
         self.assertEqual(cookies, self.account.snapshot()[1])
         self.app.plans.selection(token, "item")
 
-    def test_non_boolean_remember_option_is_rejected_before_login(self):
-        for value in ("false", "true", 0, 1, [], None):
-            with patch("archive_station.archive_account.build_opener") as opener:
-                code, _ = self.request(
-                    "/api/archive-account/login",
-                    {
-                        "email": EMAIL,
-                        "password": PASSWORD,
-                        "remember": value,
-                    },
-                )
-                self.assertEqual(code, 400)
-                opener.assert_not_called()
+    def test_legacy_remember_option_is_ignored_regardless_of_its_value(self):
+        for extra in [{}, *({"remember": value} for value in (True, False, "oui", 1, 0, [], None))]:
+            with self.subTest(extra=extra):
+                self.account.last_attempt = float("-inf")
+                with patch("archive_station.archive_account.build_opener") as opener:
+                    opener.return_value.open.return_value = login_response()
+                    code, status = self.request(
+                        "/api/archive-account/login",
+                        {"email": EMAIL, "password": PASSWORD, **extra},
+                    )
+                self.assertEqual(code, 200)
+                self.assertEqual(status, {"connected": True, "state": "connected", "email": EMAIL})
+                saved = json.loads(self.account.path.read_text())
+                self.assertEqual(set(saved), {"version", "email", "cookies", "expires"})
+                self.assertEqual(saved["version"], 4)
+                self.assertFalse((self.root / "archive-account.key").exists())
+                self.assertNotIn(PASSWORD, json.dumps(saved))
+                self.assertNotIn(PASSWORD, json.dumps(status))
+                self.assertNotIn(PASSWORD, json.dumps(self.request("/api/settings")[1]))
 
     def test_existing_public_task_can_add_restricted_files_after_login(self):
         payload = {

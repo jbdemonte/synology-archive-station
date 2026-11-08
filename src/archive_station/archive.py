@@ -114,24 +114,23 @@ class ArchiveClient:
                 ):
                     response.close()
                     raise HTTPError(url, 403, "Internet Archive authorization required", {}, None)
-                self.account.mark_success(identity)
                 return response, identity, cookie
             except HTTPError as error:
                 if attempt or error.code not in {401, 403}:
                     raise
                 try:
-                    renewed = self.account.refresh(identity)
+                    session_changed = self.account.refresh(identity)
                 except Exception:
                     error.close()
                     raise
-                if not renewed:
+                if not session_changed:
                     raise
                 error.close()
                 identity, cookie = self.account.snapshot()
 
     def open(self, identifier, name, offset=0):
         url = f"https://archive.org/download/{quote(identifier)}/{quote(name, safe='/')}"
-        # Repeat the same Range after renewal; no bytes are published before
+        # Repeat the same Range after a new manual login; no bytes are published before
         # authentication, length and checksum validation by the transfer engine.
         response, _, _ = self._open(url, timeout=30, offset=offset)
         return response

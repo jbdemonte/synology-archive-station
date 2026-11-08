@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "A conta Internet Archive mudou. Tente novamente.",
   "Impossible d’enregistrer la session Internet Archive.": "Não foi possível guardar a sessão Internet Archive.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Acesso recusado pelo Internet Archive. Verifique a conta nas definições e as suas permissões.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Memorizar as credenciais para voltar a ligar automaticamente.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "A palavra-passe é cifrada neste NAS. Desmarque para guardar apenas a sessão.",
   "Session partagée par les administrateurs du NAS.": "Sessão partilhada pelos administradores do NAS.",
-  "Reconnexion automatique activée.": "Reconexão automática ativada.",
-  "Reconnexion automatique désactivée.": "Reconexão automática desativada.",
-  "Oublier le mot de passe": "Esquecer a palavra-passe",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Não foi possível ler ou guardar as credenciais memorizadas. Volte a ligar a conta.",
-  "La session sera renouvelée au prochain téléchargement.": "A sessão será renovada na próxima transferência.",
   "Archive.org est indisponible : {error}": "Archive.org está indisponível: {error}",
   "Select at least one schedule day": "Selecione pelo menos um dia para o agendamento.",
   "Chemin de fichier non autorisé : {path}": "Caminho de ficheiro não permitido: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "O caminho de destino contém uma ligação simbólica.",
   "Le chemin sort du dossier de destination.": "O caminho está fora da pasta de destino.",
   "Filtre trop long.": "Filtro demasiado longo.",
-  "La liste contient un conflit entre fichier et dossier.": "A lista contém um conflito entre ficheiro e pasta."
+  "La liste contient un conflit entre fichier et dossier.": "A lista contém um conflito entre ficheiro e pasta.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "A palavra-passe não é guardada. Apenas a sessão é mantida; volte a ligar a conta quando esta expirar."
 }

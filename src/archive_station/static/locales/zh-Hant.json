@@ -336,19 +336,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Internet Archive 帳戶已變更。請重試。",
   "Impossible d’enregistrer la session Internet Archive.": "無法儲存 Internet Archive 工作階段。",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive 拒絕存取。請檢查設定中的帳戶及其權限。",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "記住登入資訊以自動重新連線。",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "密碼將在此 NAS 上加密儲存。取消勾選則僅保留工作階段。",
   "Session partagée par les administrateurs du NAS.": "此工作階段由 NAS 管理員共用。",
-  "Reconnexion automatique activée.": "已啟用自動重新連線。",
-  "Reconnexion automatique désactivée.": "已停用自動重新連線。",
-  "Oublier le mot de passe": "忘記密碼",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "無法讀取或儲存已記住的登入資訊。請重新連線帳戶。",
-  "La session sera renouvelée au prochain téléchargement.": "工作階段將在下次下載時更新。",
   "Archive.org est indisponible : {error}": "Archive.org 無法使用：{error}",
   "Select at least one schedule day": "請至少選擇一個排程執行日。",
   "Chemin de fichier non autorisé : {path}": "不允許的檔案路徑：{path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "目標路徑中包含符號連結。",
   "Le chemin sort du dossier de destination.": "路徑超出目標資料夾範圍。",
   "Filtre trop long.": "篩選條件過長。",
-  "La liste contient un conflit entre fichier et dossier.": "清單中存在檔案與資料夾衝突。"
+  "La liste contient un conflit entre fichier et dossier.": "清單中存在檔案與資料夾衝突。",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "不會儲存密碼，僅保留工作階段。工作階段過期後，請重新連線帳號。"
 }

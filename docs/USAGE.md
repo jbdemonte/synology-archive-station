@@ -12,15 +12,13 @@ Open **Settings → Internet Archive account → Log in**, then enter your Inter
 
 ![Internet Archive account connection dialog](images/archive-account.png)
 
-**Remember credentials to reconnect automatically** is checked by default. When enabled, Archive Station encrypts the password and renews an expired or rejected session as needed, without asking you to sign in again. An existing session from an earlier version is preserved, but you must enter your password once to enable automatic reconnection: the old version did not save it.
+The password is sent only to Internet Archive over HTTPS for the manual login and is never saved by Archive Station. Only the account email, session cookies and expiration are retained. The password field is cleared after every attempt. S3 keys returned by Internet Archive are discarded.
 
-Uncheck the option when signing in to retain only the session. In Settings, **Forget password** removes the saved credentials while keeping the current session and transfers active. **Disconnect** removes both the saved session and credentials; transfers already open may finish, while later requests use public access.
+The session survives restarts and upgrades. When it expires, Settings shows **Session expired. Reconnect the account.** Open **Log in** and enter your credentials again. There is no automatic login or renewal. **Disconnect** deletes the saved session and any leftover key from older versions; transfers already open may finish, while later requests use public access.
 
-Passwords are sent only to Internet Archive over HTTPS. Saved passwords use authenticated [Fernet encryption](https://cryptography.io/en/stable/fernet/). The ciphertext, account email and session cookies live in `archive-account.json`; the randomly generated local key lives in `archive-account.key`. Both files are in the package data directory with owner-only permissions (`0600`) and survive restarts and upgrades. Email and session cookies are not encrypted. The key must remain available to the service, so encryption does not protect against an administrator or attacker who can read both files. Protect backups of these files as account credentials; forgetting a password does not erase older backups.
+`archive-account.json`, in the package data directory, contains the email and session cookies in plain text, with owner-only permissions (`0600`). Protect it and its backups as account credentials. The account is shared by the DSM administrators using this installation. The settings API and download reports never contain the password or session cookies. Upgrading removes the old saved-password fields and `archive-account.key` at startup; a filesystem error during this cleanup does not prevent use of a valid session. Older backups are not changed.
 
-The account is shared by the DSM administrators using this installation. The settings API and download reports never contain the password, encrypted credentials, key or cookies. S3 keys returned by Internet Archive are discarded.
-
-Without a connected account, analysis highlights how many restricted files were excluded. With an account, these files are included in the selection and their authorization is checked when downloaded. An account does not grant access to every locked file. On an authentication failure, Archive Station renews the session once and repeats the same download range; a second denial remains a file error. Concurrent transfers share one renewal, limited to once per minute. Incorrect saved credentials disable automatic attempts until you reconnect the account; public requests fall back to anonymous access if renewal fails. Restricted downloads wait for the shared login cooldown without consuming file attempts; actual failed renewal requests remain retryable. Local key errors and clock skew do not persist a rejected-password state. No completed file is published before the configured integrity checks pass.
+Without a connected account, analysis highlights how many restricted files were excluded. With an account, these files are included in the selection and their authorization is checked when downloaded. An account does not grant access to every locked file. Expired sessions use anonymous access for public requests; restricted files report an access error. A denied request is retried once only if a newer manual login has already supplied a new session, preserving the download range. No completed file is published before the configured integrity checks pass.
 
 For an existing task that contains only public metadata files:
 
@@ -29,7 +27,7 @@ For an existing task that contains only public metadata files:
 3. Choose **⋯ → Refresh file list**, review the additional files and apply the selection.
 4. Resume the task as needed. Files already downloaded are retained.
 
-Account changes invalidate pending file selections; routine session renewal preserves them. After changing accounts, analyze the URLs again before adding a task. No account password is required to open Archive Station itself: access to the application still uses your DSM session.
+Manual login and logout invalidate pending file selections. After changing accounts, analyze the URLs again before adding a task. No account password is required to open Archive Station itself: access to the application still uses your DSM session.
 
 ## Receive DSM desktop notifications
 

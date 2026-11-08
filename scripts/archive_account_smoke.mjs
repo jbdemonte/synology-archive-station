@@ -17,7 +17,6 @@ let account = { connected: false, state: "disconnected", email: "" };
 let loginRelease;
 let loginRequests = 0;
 let rejectLogin = true;
-let expectedRemember = true;
 const password = "fixture-never-persist-this-password";
 try {
   await page.route(`${base}/api/settings`, async (route) => {
@@ -48,7 +47,6 @@ try {
     assert.deepEqual(route.request().postDataJSON(), {
       email: "reader@example.test",
       password,
-      remember: expectedRemember,
     });
     assert.equal(route.request().url().includes(password), false);
     await new Promise((resolve) => {
@@ -66,18 +64,6 @@ try {
       connected: true,
       state: "connected",
       email: "reader@example.test",
-      remember_credentials: expectedRemember,
-      remember_choice: expectedRemember,
-      reconnect_error: null,
-    };
-    return route.fulfill({ json: account });
-  });
-  await page.route(`${base}/api/archive-account/forget`, (route) => {
-    assert.deepEqual(route.request().postDataJSON(), {});
-    account = {
-      ...account,
-      remember_credentials: false,
-      remember_choice: false,
     };
     return route.fulfill({ json: account });
   });
@@ -105,10 +91,19 @@ try {
     "Public access only.",
   );
   await page.locator("#archive-account-open").click();
-  assert.equal(
-    await page.locator("#archive-account-remember").isChecked(),
-    true,
-  );
+  for (const id of [
+    "archive-account-remember",
+    "archive-account-forget",
+    "archive-account-reconnect-status",
+    "archive-account-reconnect-error",
+  ])
+    assert.equal(await page.locator(`#${id}`).count(), 0);
+  await page
+    .getByText(
+      "The password is not saved. Only the session is retained; reconnect the account when it expires.",
+      { exact: true },
+    )
+    .waitFor();
   await page.locator("#archive-account-email").fill("reader@example.test");
   await page.locator("#archive-account-password").fill(password);
   await page.locator("#archive-account-submit").click();
@@ -123,10 +118,6 @@ try {
     true,
   );
   assert.equal(await page.locator("#archive-account-email").isDisabled(), true);
-  assert.equal(
-    await page.locator("#archive-account-remember").isDisabled(),
-    true,
-  );
   assert.equal(
     await page.locator("#archive-account-progress").isVisible(),
     true,
@@ -179,34 +170,6 @@ try {
     .last()
     .click();
   await page.setViewportSize({ width: 1080, height: 760 });
-  assert.equal(await page.locator("#archive-account-forget").isVisible(), true);
-  await page.locator("#archive-account-forget").click();
-  await page.locator("#archive-account-forget").waitFor({ state: "hidden" });
-  assert.match(
-    await page.locator("#archive-account-status").innerText(),
-    /reader@example.test/,
-  );
-  assert.equal(
-    await page.locator("#archive-account-reconnect-status").innerText(),
-    "Automatic reconnection disabled.",
-  );
-  await page.locator("#archive-account-open").click();
-  assert.equal(
-    await page.locator("#archive-account-remember").isChecked(),
-    false,
-  );
-  expectedRemember = false;
-  loginRelease = null;
-  await page.locator("#archive-account-password").fill(password);
-  await page.locator("#archive-account-submit").click();
-  while (!loginRelease) await new Promise((resolve) => setTimeout(resolve, 10));
-  loginRelease();
-  await page.locator("#archive-account-dialog").waitFor({ state: "hidden" });
-  assert.equal(
-    await page.locator("#archive-account-forget").isVisible(),
-    false,
-  );
-  assert.equal(loginRequests, 3);
   await page
     .locator('#settings-dialog [data-close="settings-dialog"]')
     .last()
@@ -219,7 +182,12 @@ try {
     /included: 56.*checked/,
   );
   await page.locator('#add-dialog [data-close="add-dialog"]').last().click();
+  account = { ...account, connected: false, state: "expired" };
   await page.locator("#settings-open").click();
+  await page
+    .locator("#archive-account-status")
+    .getByText("Session expired. Reconnect the account.", { exact: true })
+    .waitFor();
   await page.locator("#archive-account-disconnect").click();
   await page
     .locator("#archive-account-status")

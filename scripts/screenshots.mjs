@@ -369,6 +369,14 @@ try {
     .locator("#settings-dialog")
     .screenshot({ path: new URL("settings.png", out).pathname });
 
+  await page.locator("#archive-account-open").click();
+  await page.locator("#archive-account-email").fill("reader@example.test");
+  await page.locator("#archive-account-dialog").screenshot({
+    path: new URL("archive-account.png", out).pathname,
+    animations: "disabled",
+  });
+  await page.locator("#archive-account-dialog [data-close]").first().click();
+
   await page.locator("#update-settings summary").click();
   await page.locator("#update-check").scrollIntoViewIfNeeded();
   await page

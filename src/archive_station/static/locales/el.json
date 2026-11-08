@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Ο λογαριασμός Internet Archive άλλαξε. Δοκιμάστε ξανά.",
   "Impossible d’enregistrer la session Internet Archive.": "Δεν είναι δυνατή η αποθήκευση της συνεδρίας Internet Archive.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Το Internet Archive αρνήθηκε την πρόσβαση. Ελέγξτε τον λογαριασμό στις ρυθμίσεις και τα δικαιώματά του.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Αποθήκευση στοιχείων σύνδεσης για αυτόματη επανασύνδεση.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Ο κωδικός πρόσβασης κρυπτογραφείται σε αυτό το NAS. Αποεπιλέξτε για να διατηρηθεί μόνο η συνεδρία.",
   "Session partagée par les administrateurs du NAS.": "Η συνεδρία είναι κοινή για τους διαχειριστές του NAS.",
-  "Reconnexion automatique activée.": "Η αυτόματη επανασύνδεση είναι ενεργή.",
-  "Reconnexion automatique désactivée.": "Η αυτόματη επανασύνδεση είναι ανενεργή.",
-  "Oublier le mot de passe": "Διαγραφή αποθηκευμένου κωδικού",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Δεν είναι δυνατή η ανάγνωση ή η αποθήκευση των στοιχείων σύνδεσης. Συνδέστε ξανά τον λογαριασμό.",
-  "La session sera renouvelée au prochain téléchargement.": "Η συνεδρία θα ανανεωθεί στην επόμενη λήψη.",
   "Archive.org est indisponible : {error}": "Το Archive.org δεν είναι διαθέσιμο: {error}",
   "Select at least one schedule day": "Επιλέξτε τουλάχιστον μία ημέρα για τον προγραμματισμό.",
   "Chemin de fichier non autorisé : {path}": "Μη επιτρεπόμενη διαδρομή αρχείου: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Η διαδρομή προορισμού περιέχει συμβολικό σύνδεσμο.",
   "Le chemin sort du dossier de destination.": "Η διαδρομή βρίσκεται εκτός του φακέλου προορισμού.",
   "Filtre trop long.": "Το φίλτρο είναι πολύ μεγάλο.",
-  "La liste contient un conflit entre fichier et dossier.": "Η λίστα περιέχει διένεξη μεταξύ αρχείου και φακέλου."
+  "La liste contient un conflit entre fichier et dossier.": "Η λίστα περιέχει διένεξη μεταξύ αρχείου και φακέλου.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Ο κωδικός πρόσβασης δεν αποθηκεύεται. Διατηρείται μόνο η συνεδρία· επανασυνδέστε τον λογαριασμό όταν λήξει."
 }

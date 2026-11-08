@@ -351,19 +351,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Het Internet Archive-account is gewijzigd. Probeer het opnieuw.",
   "Impossible d’enregistrer la session Internet Archive.": "De Internet Archive-sessie kan niet worden opgeslagen.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive weigert toegang. Controleer het account in de instellingen en de rechten ervan.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Aanmeldgegevens onthouden om automatisch opnieuw te verbinden.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Het wachtwoord wordt op deze NAS versleuteld. Vink dit uit om alleen de sessie te bewaren.",
   "Session partagée par les administrateurs du NAS.": "Sessie gedeeld door de beheerders van deze NAS.",
-  "Reconnexion automatique activée.": "Automatisch opnieuw verbinden ingeschakeld.",
-  "Reconnexion automatique désactivée.": "Automatisch opnieuw verbinden uitgeschakeld.",
-  "Oublier le mot de passe": "Wachtwoord vergeten",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Opgeslagen aanmeldgegevens kunnen niet worden gelezen of opgeslagen. Verbind het account opnieuw.",
-  "La session sera renouvelée au prochain téléchargement.": "De sessie wordt bij de volgende download vernieuwd.",
   "Archive.org est indisponible : {error}": "Archive.org is niet beschikbaar: {error}",
   "Select at least one schedule day": "Selecteer minstens één dag voor het schema.",
   "Chemin de fichier non autorisé : {path}": "Bestandspad niet toegestaan: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Het doelpad bevat een symbolische koppeling.",
   "Le chemin sort du dossier de destination.": "Het pad ligt buiten de doelmap.",
   "Filtre trop long.": "Filter te lang.",
-  "La liste contient un conflit entre fichier et dossier.": "De lijst bevat een conflict tussen een bestand en een map."
+  "La liste contient un conflit entre fichier et dossier.": "De lijst bevat een conflict tussen een bestand en een map.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Het wachtwoord wordt niet opgeslagen. Alleen de sessie wordt bewaard; verbind het account opnieuw wanneer deze verloopt."
 }

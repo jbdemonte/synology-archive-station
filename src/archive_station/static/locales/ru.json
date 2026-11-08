@@ -356,19 +356,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Учётная запись Internet Archive изменилась. Повторите попытку.",
   "Impossible d’enregistrer la session Internet Archive.": "Не удалось сохранить сеанс Internet Archive.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive отказал в доступе. Проверьте учётную запись в настройках и её права.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Сохранить учётные данные для автоматического переподключения.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Пароль хранится на этом NAS в зашифрованном виде. Снимите флажок, чтобы сохранить только сеанс.",
   "Session partagée par les administrateurs du NAS.": "Сеанс используется совместно администраторами NAS.",
-  "Reconnexion automatique activée.": "Автоматическое переподключение включено.",
-  "Reconnexion automatique désactivée.": "Автоматическое переподключение отключено.",
-  "Oublier le mot de passe": "Забыть пароль",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Не удалось прочитать или сохранить учётные данные. Подключите учётную запись заново.",
-  "La session sera renouvelée au prochain téléchargement.": "Сеанс будет обновлён при следующей загрузке.",
   "Archive.org est indisponible : {error}": "Archive.org недоступен: {error}",
   "Select at least one schedule day": "Выберите хотя бы один день для расписания.",
   "Chemin de fichier non autorisé : {path}": "Недопустимый путь к файлу: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Путь назначения содержит символическую ссылку.",
   "Le chemin sort du dossier de destination.": "Путь находится за пределами папки назначения.",
   "Filtre trop long.": "Фильтр слишком длинный.",
-  "La liste contient un conflit entre fichier et dossier.": "Список содержит конфликт между файлом и папкой."
+  "La liste contient un conflit entre fichier et dossier.": "Список содержит конфликт между файлом и папкой.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Пароль не сохраняется. Сохраняется только сеанс; по истечении его срока подключите аккаунт заново."
 }

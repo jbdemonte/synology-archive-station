@@ -356,19 +356,14 @@
   "Le compte Internet Archive a changé. Réessayer.": "Účet Internet Archive se změnil. Zkuste to znovu.",
   "Impossible d’enregistrer la session Internet Archive.": "Relaci Internet Archive nelze uložit.",
   "Accès refusé par Internet Archive. Vérifier le compte dans les paramètres et ses autorisations.": "Internet Archive odmítlo přístup. Zkontrolujte účet v nastavení a jeho oprávnění.",
-  "Mémoriser les identifiants pour se reconnecter automatiquement.": "Zapamatovat přihlašovací údaje pro automatické opětovné připojení.",
-  "Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session.": "Heslo je na tomto NAS šifrováno. Zrušením zaškrtnutí uložíte pouze relaci.",
   "Session partagée par les administrateurs du NAS.": "Relace sdílená správci NAS.",
-  "Reconnexion automatique activée.": "Automatické opětovné připojení zapnuto.",
-  "Reconnexion automatique désactivée.": "Automatické opětovné připojení vypnuto.",
-  "Oublier le mot de passe": "Zapomenout heslo",
   "Impossible de lire ou d’enregistrer les identifiants mémorisés. Reconnecter le compte.": "Uložené přihlašovací údaje nelze přečíst nebo uložit. Připojte účet znovu.",
-  "La session sera renouvelée au prochain téléchargement.": "Relace bude obnovena při příštím stahování.",
   "Archive.org est indisponible : {error}": "Archive.org není dostupný: {error}",
   "Select at least one schedule day": "Vyberte alespoň jeden den rozvrhu.",
   "Chemin de fichier non autorisé : {path}": "Nepovolená cesta k souboru: {path}",
   "Un lien symbolique se trouve dans le chemin de destination.": "Cílová cesta obsahuje symbolický odkaz.",
   "Le chemin sort du dossier de destination.": "Cesta je mimo cílovou složku.",
   "Filtre trop long.": "Filtr je příliš dlouhý.",
-  "La liste contient un conflit entre fichier et dossier.": "Seznam obsahuje konflikt mezi souborem a složkou."
+  "La liste contient un conflit entre fichier et dossier.": "Seznam obsahuje konflikt mezi souborem a složkou.",
+  "Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire.": "Heslo se neukládá. Uchovává se pouze relace; po jejím vypršení účet znovu připojte."
 }

@@ -759,13 +759,6 @@
               Compte Internet Archive
             </h3>
             <p id="archive-account-status" role="status"></p>
-            <p id="archive-account-reconnect-status" class="field-help"></p>
-            <p
-              id="archive-account-reconnect-error"
-              class="error"
-              role="alert"
-              hidden
-            ></p>
             <p
               class="field-help"
               data-i18n="Le compte doit être autorisé à télécharger les fichiers restreints."
@@ -780,14 +773,6 @@
                 data-i18n="Se connecter"
               >
                 Se connecter
-              </button>
-              <button
-                id="archive-account-forget"
-                type="button"
-                data-i18n="Oublier le mot de passe"
-                hidden
-              >
-                Oublier le mot de passe
               </button>
               <button
                 id="archive-account-disconnect"
@@ -1089,20 +1074,12 @@
             maxlength="4096"
             required
           />
-          <label class="checkbox">
-            <input id="archive-account-remember" type="checkbox" checked />
-            <span
-              data-i18n="Mémoriser les identifiants pour se reconnecter automatiquement."
-            >
-              Mémoriser les identifiants pour se reconnecter automatiquement.
-            </span>
-          </label>
           <p
             class="field-help"
-            data-i18n="Le mot de passe est chiffré sur ce NAS. Décocher pour conserver uniquement la session."
+            data-i18n="Le mot de passe n’est pas enregistré. Seule la session est conservée ; reconnecter le compte quand elle expire."
           >
-            Le mot de passe est chiffré sur ce NAS. Décocher pour conserver
-            uniquement la session.
+            Le mot de passe n’est pas enregistré. Seule la session est conservée
+            ; reconnecter le compte quand elle expire.
           </p>
           <p
             class="field-help"

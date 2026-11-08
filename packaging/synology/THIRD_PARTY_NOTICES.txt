@@ -10,14 +10,5 @@ Waitress 3.0.2 is distributed under the Zope Public License 2.1.
 Its license is included in vendor/waitress-3.0.2.dist-info/.
 Source: https://github.com/Pylons/waitress/tree/v3.0.2
 
-Cryptography 50.0.2 provides authenticated encryption for saved credentials.
-Its license files are included under vendor/cryptography-50.0.2.dist-info/.
-Source: https://github.com/pyca/cryptography/tree/50.0.2
-
-CFFI 2.1.1 and pycparser 3.12 are dependencies of cryptography.
-Their license files are included under their respective vendor/*.dist-info/ directories.
-Sources: https://pypi.org/project/cffi/2.1.1/
-         https://pypi.org/project/pycparser/3.12/
-
 Archive Station is an independent community project. It is not affiliated
 with Internet Archive or Synology. No archive content is included in the package.
