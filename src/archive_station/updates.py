@@ -13,7 +13,7 @@ from urllib.request import Request, urlopen
 from . import __package_version__
 
 LOG = logging.getLogger(__name__)
-REPOSITORY = "jbdemonte/synology-archive-downloader"
+REPOSITORY = "jbdemonte/synology-archive-station"
 RELEASES_URL = f"https://github.com/{REPOSITORY}/releases"
 API_URL = f"https://api.github.com/repos/{REPOSITORY}/releases?per_page=100"
 INTERVAL = 24 * 60 * 60

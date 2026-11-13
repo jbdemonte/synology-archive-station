@@ -158,7 +158,7 @@ try {
               state: "available",
               latest_version: "99.0.0-1",
               release_url:
-                "https://github.com/jbdemonte/synology-archive-downloader/releases/tag/v99.0.0-1",
+                "https://github.com/jbdemonte/synology-archive-station/releases/tag/v99.0.0-1",
             };
           await route.fulfill({ json: body });
         } else await route.fulfill({ response });

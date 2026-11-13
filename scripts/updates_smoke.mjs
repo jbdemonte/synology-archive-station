@@ -10,7 +10,7 @@ const page = await browser.newPage({
 });
 const base = process.env.TEST_URL || "http://127.0.0.1:8275";
 const releaseURL =
-  "https://github.com/jbdemonte/synology-archive-downloader/releases/tag/v0.2.0-8";
+  "https://github.com/jbdemonte/synology-archive-station/releases/tag/v0.2.0-8";
 let checks = 0;
 let update = { state: "disabled", current_version: "0.2.0-7", retry_after: 0 };
 try {

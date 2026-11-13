@@ -35,6 +35,6 @@ after the upgrade. Do not delete `.archive-station-parts` if you want partial-fi
   for active workers to stop before changing it. Existing tasks keep their original paths.
 - A checksum confirms that the file matches the published digest; it is not a publisher signature.
 
-Documentation: https://github.com/jbdemonte/synology-archive-downloader
+Documentation: https://github.com/jbdemonte/synology-archive-station
 
 This independent community package is not published by Synology or Internet Archive.

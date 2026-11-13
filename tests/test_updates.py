@@ -75,7 +75,7 @@ class UpdateTests(unittest.TestCase):
         self.assertEqual(result["retry_after"], 60)
         self.assertEqual(
             result["release_url"],
-            "https://github.com/jbdemonte/synology-archive-downloader/releases/tag/v0.2.0-10",
+            "https://github.com/jbdemonte/synology-archive-station/releases/tag/v0.2.0-10",
         )
         self.updates.request()
         self.assertEqual(self.fetch.call_count, 1)

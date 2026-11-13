@@ -53,7 +53,7 @@ DSM access is restricted to administrator sessions. The internal API listens on 
 
 ## Install
 
-1. Download the `.spk` from [GitHub Releases](https://github.com/jbdemonte/synology-archive-downloader/releases), or build it with `make build` (see below).
+1. Download the `.spk` from [GitHub Releases](https://github.com/jbdemonte/synology-archive-station/releases), or build it with `make build` (see below).
 2. Open **Package Center → Manual Install** and select `ArchiveStation-1.1.1-1-x86_64.spk` (local builds place it in `dist/`).
 3. Launch **Archive Station** from the DSM main menu.
 4. Open **Settings** to choose a destination and transfer limits.
@@ -82,7 +82,7 @@ The folder picker marks **read/write in green**, **read-only in blue**, and **in
 
 ## Upgrade while downloads are running
 
-1. Download the newer `.spk` and its `.spk.sha256` file from [GitHub Releases](https://github.com/jbdemonte/synology-archive-downloader/releases). To check the package download, run this command from their directory:
+1. Download the newer `.spk` and its `.spk.sha256` file from [GitHub Releases](https://github.com/jbdemonte/synology-archive-station/releases). To check the package download, run this command from their directory:
 
    ```sh
    shasum -a 256 -c ArchiveStation-1.1.1-1-x86_64.spk.sha256

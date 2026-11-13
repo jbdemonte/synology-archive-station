@@ -1129,7 +1129,7 @@ function renderUpdates(update = state.updates) {
   if (!update) return;
   state.updates = update;
   const safeLink =
-    /^https:\/\/github\.com\/jbdemonte\/synology-archive-downloader\/releases\/tag\/v?\d+\.\d+\.\d+(?:-\d+)?$/.test(
+    /^https:\/\/github\.com\/jbdemonte\/synology-archive-station\/releases\/tag\/v?\d+\.\d+\.\d+(?:-\d+)?$/.test(
       update.release_url || "",
     );
   const supported = state.settings?.distribution?.update_checks !== false;

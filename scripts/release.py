@@ -15,7 +15,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REPOSITORY = "jbdemonte/synology-archive-downloader"
+REPOSITORY = "jbdemonte/synology-archive-station"
 
 
 def git(root, *args):
